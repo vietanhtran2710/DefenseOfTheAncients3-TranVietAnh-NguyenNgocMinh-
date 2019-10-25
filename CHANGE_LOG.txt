@@ -1,6 +1,0 @@
-[15-10-2019 5:23PM] 
-- create GUI class
-- create myTexture for loading texture 
-- show Background using myTexture
-- add resource files in "res" folder
-- update lib folder

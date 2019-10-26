@@ -20,7 +20,8 @@ public class GUI {
     private myTexture background;
     private myTexture testButton;
     private long window;
-    public  boolean isPressed;
+    public boolean isPressed;
+    public boolean onMouseHover = false;
 
     public static double getCursorPosX(long windowID) {
         DoubleBuffer posX = BufferUtils.createDoubleBuffer(1);
@@ -28,13 +29,28 @@ public class GUI {
         return posX.get(0);
     }
 
+    public static double getCursorPosY(long windowID) {
+        DoubleBuffer posY = BufferUtils.createDoubleBuffer(1);
+        glfwGetCursorPos(windowID, null, posY);
+        return posY.get(0);
+    }
+
 
     public void initLoop () {
+        String backgroundImageSource = "src/res/GFX/Background/Background_main_screen.jpg";
+        String buttonImageSource = "src/res/GFX/Button/button.png";
         // Background
-        this.background = new myTexture("src/res/GFX/Background/Background_main_screen.jpg");
+        Point topLeft = new Point(-1.0f, 1.0f); Point topRight = new Point(1.0f, 1.0f);
+        Point bottomLeft = new Point(1.0f, -1.0f); Point bottomRight = new Point(-1.0f, -1.0f);
+        this.background = new myTexture(backgroundImageSource, GL_QUADS, topLeft, topRight, bottomLeft, bottomRight);
 
         // Button
-        this.testButton = new myTexture("src/res/GFX/Button/button.png");
+        topLeft = new Point(-0.25f, 0.1f); topRight = new Point(0.25f, 0.1f);
+        bottomLeft = new Point(0.25f, -0.1f); bottomRight = new Point(-0.25f, -0.1f);
+        this.testButton = new myTexture(buttonImageSource, GL_POLYGON, topLeft, topRight, bottomLeft, bottomRight);
+
+        System.out.println(testButton.getTopLeftCoordinate().getX() + " " + testButton.getTopLeftCoordinate().getY());
+        System.out.println(testButton.getBottomRightCoordinate().getX() + " " + testButton.getBottomRightCoordinate().getY());
     }
 
     public void loop(long window) {
@@ -51,56 +67,41 @@ public class GUI {
         }
     }
 
+    public boolean checkMouseHover() {
+        double posX = getCursorPosX(this.window);
+        double posY = getCursorPosY(this.window);
+        Point topLeft = testButton.getTopLeftCoordinate();
+        Point bottomRight = testButton.getBottomRightCoordinate();
+        if ((posX >= topLeft.getX()) && (posX <= bottomRight.getX()))
+            if ((posY >= topLeft.getY()) && (posY <= bottomRight.getY()))
+                return true;
+        return false;
+    }
+
     public void render(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
         background.bind();
-
-        glBegin(GL_QUADS);
-        {
-            // Top left
-            glTexCoord2f(0, 0);
-            glVertex2f(-1.5f, 1.5f);
-
-            // Top right
-            glTexCoord2f(1, 0);
-            glVertex2f(1.5f, 1.5f);
-
-            // Bottom left
-            glTexCoord2f(1, 1);
-            glVertex2f(1.5f, -1.5f);
-
-            // Bottom right
-            glTexCoord2f(0, 1);
-            glVertex2f(-1.5f, -1.5f);
-        }
-        glEnd();
+        background.display();
 
         testButton.bind();
-
-        glBegin(GL_POLYGON);
-        {
-            // Top left
-            glTexCoord2f(0, 0);
-            glVertex2f(-0.25f, 0.1f);
-
-            // Top right
-            glTexCoord2f(1f, 0);
-            glVertex2f(0.25f, 0.1f);
-
-            // Bottom right
-            glTexCoord2f(1f, 1f);
-            glVertex2f(0.25f, -0.1f);
-
-            // Bottom left
-            glTexCoord2f(0, 1f);
-            glVertex2f(-0.25f, -0.1f);
-        }
-        glEnd();
+        testButton.display();
 
         if(glfwGetKey(this.window, GLFW_KEY_SPACE)== GLFW_TRUE) this.isPressed = true;
 
-        System.out.println(getCursorPosX(this.window));
+        if (checkMouseHover()) {
+            if (!onMouseHover) {
+                testButton.changeImage("src/res/GFX/Button/button-selected.png");
+                onMouseHover = true;
+            }
+        }
+        else
+            if (onMouseHover) {
+                testButton.changeImage("src/res/GFX/Button/button.png");
+                onMouseHover = false;
+            }
+
+        System.out.println(getCursorPosX(this.window) + " " + getCursorPosY(this.window));
 
         glfwSwapBuffers(window); // swap the color buffers
 

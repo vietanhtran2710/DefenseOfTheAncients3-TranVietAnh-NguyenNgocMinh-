@@ -87,7 +87,9 @@ public class GUI {
         testButton.bind();
         testButton.display();
 
-        if(glfwGetKey(this.window, GLFW_KEY_SPACE)== GLFW_TRUE) this.isPressed = true;
+        if (glfwGetMouseButton(this.window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_TRUE)
+            if (onMouseHover)
+                this.isPressed = true;
 
         if (checkMouseHover()) {
             if (!onMouseHover) {

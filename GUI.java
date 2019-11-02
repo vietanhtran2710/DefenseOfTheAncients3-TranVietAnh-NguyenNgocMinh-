@@ -37,8 +37,8 @@ public class GUI {
 
 
     public void initLoop () {
-        String backgroundImageSource = "src/res/GFX/Background/Background_main_screen.jpg";
-        String buttonImageSource = "src/res/GFX/Button/button.png";
+        String backgroundImageSource = "src/res/GFX/GUI/Background/Background_main_screen.jpg";
+        String buttonImageSource = "src/res/GFX/GUI/Button/button.png";
         // Background
         Point topLeft = new Point(-1.0f, 1.0f); Point topRight = new Point(1.0f, 1.0f);
         Point bottomLeft = new Point(1.0f, -1.0f); Point bottomRight = new Point(-1.0f, -1.0f);

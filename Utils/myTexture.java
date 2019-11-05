@@ -1,3 +1,5 @@
+package Utils;
+
 import org.lwjgl.BufferUtils;
 import org.lwjgl.system.MemoryStack;
 

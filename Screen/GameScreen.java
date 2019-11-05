@@ -1,3 +1,5 @@
+package Screen;
+
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;

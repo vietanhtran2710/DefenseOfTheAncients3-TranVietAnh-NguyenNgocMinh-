@@ -1,3 +1,5 @@
+package Screen;
+
 import java.io.FileNotFoundException;
 
 public class MainWindow {

@@ -4,10 +4,13 @@ import org.lwjgl.opengl.*;
 import org.lwjgl.openvr.Texture;
 import org.lwjgl.system.*;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.*;
 
 import static org.lwjgl.glfw.Callbacks.*;
@@ -34,7 +37,6 @@ public class GUI {
         glfwGetCursorPos(windowID, null, posY);
         return posY.get(0);
     }
-
 
     public void initLoop () {
         String backgroundImageSource = "src/res/GFX/Background/Background_main_screen.jpg";
@@ -103,7 +105,7 @@ public class GUI {
                 onMouseHover = false;
             }
 
-        System.out.println(getCursorPosX(this.window) + " " + getCursorPosY(this.window));
+        //System.out.println(getCursorPosX(this.window) + " " + getCursorPosY(this.window));
 
         glfwSwapBuffers(window); // swap the color buffers
 

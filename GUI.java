@@ -95,13 +95,13 @@ public class GUI {
 
         if (checkMouseHover()) {
             if (!onMouseHover) {
-                testButton.changeImage("src/res/GFX/Button/button-selected.png");
+                testButton.changeImage("src/res/GFX/GUI/Button/button-selected.png");
                 onMouseHover = true;
             }
         }
         else
             if (onMouseHover) {
-                testButton.changeImage("src/res/GFX/Button/button.png");
+                testButton.changeImage("src/res/GFX/GUI/Button/button.png");
                 onMouseHover = false;
             }
 

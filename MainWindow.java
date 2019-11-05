@@ -1,4 +1,4 @@
-package Screen;
+import Screen.ShowScreen;
 
 import java.io.FileNotFoundException;
 

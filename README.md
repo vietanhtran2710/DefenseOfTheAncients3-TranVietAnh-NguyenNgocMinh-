@@ -2,11 +2,30 @@
 OOP Game Project
 ```bash
 .
-├── GameScreen.java
-├── GUI.java
+├── Entity
+│   ├── Enemies
+│   │   ├── BossEnemy.java
+│   │   ├── Enemy.java
+│   │   ├── NormalEnemy.java
+│   │   ├── SmallerEnemy.java
+│   │   └── TankerEnemy.java
+│   ├── GameEntity.java
+│   ├── GameField.java
+│   ├── GameStage.java
+│   ├── Tile
+│   │   ├── GameTile.java
+│   │   ├── Mountain.java
+│   │   ├── Road.java
+│   │   ├── Spawner.java
+│   │   └── Target.java
+│   └── Towers
+│       ├── Bullet.java
+│       ├── MachineGunTower.java
+│       ├── NormalTower.java
+│       ├── SniperTower.java
+│       └── Tower.java
 ├── MainWindow.java
-├── myTexture.java
-├── Point.java
+├── README.md
 ├── res
 │   ├── GFX
 │   │   ├── Game
@@ -62,5 +81,12 @@ OOP Game Project
 │   │           ├── button-pressed.png
 │   │           └── button-selected.png
 │   └── SFX
-└── ShowScreen.java
+├── Screen
+│   ├── GameScreen.java
+│   ├── GUI.java
+│   └── ShowScreen.java
+└── Utils
+    ├── myTexture.java
+    └── Point.java
+
 ```

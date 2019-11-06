@@ -25,6 +25,7 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class GUI {
     private myTexture background;
     private myTexture testButton;
+    private myTexture road;
     private long window;
     public boolean isPressed;
     public boolean onMouseHover = false;

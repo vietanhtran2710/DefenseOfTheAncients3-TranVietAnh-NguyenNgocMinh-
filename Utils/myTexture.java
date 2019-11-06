@@ -1,5 +1,6 @@
+package Utils;
+
 import org.lwjgl.BufferUtils;
-import org.lwjgl.system.MemoryStack;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
@@ -41,6 +42,9 @@ public class myTexture {
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this.width, this.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         stbi_image_free(data);
     }
@@ -67,6 +71,43 @@ public class myTexture {
             // Bottom right
             glTexCoord2f(0, 1);
             glVertex2f(this.bottomRightVertex.getX(), this.bottomRightVertex.getY());
+        }
+        glEnd();
+    }
+
+    public void displayByIntCoordinate(int x, int y) {
+        final int midX = 1366 / 2;
+        final int midY = 768 / 2;
+
+        float topLeftVertexX = (float)(x - midX) / midX;
+        float topLeftVertexY = (float)(midY - y) / midY;
+
+        float topRightVertexX = (float)(x + this.width - midX) / midX;
+        float topRightVertexY = (float)(midY - y) / midY;
+
+        float bottomLeftVertexX = (float)(x - midX) / midX;
+        float bottomLeftVertexY = (float)(midY - (y + this.height)) / midY;
+
+        float bottomRightVertexX = (float)(x + this.width - midX) / midX;
+        float bottomRightVertexY = (float)(midY - (y + this.height)) / midY;
+
+        glBegin(this.mode);
+        {
+            // Top left
+            glTexCoord2f(0, 0);
+            glVertex2f(topLeftVertexX, topLeftVertexY);
+
+            // Top right
+            glTexCoord2f(1, 0);
+            glVertex2f(topRightVertexX, topRightVertexY);
+
+            // Bottom left
+            glTexCoord2f(1, 1);
+            glVertex2f(bottomRightVertexX, bottomRightVertexY);
+
+            // Bottom right
+            glTexCoord2f(0, 1);
+            glVertex2f(bottomLeftVertexX, bottomLeftVertexY);
         }
         glEnd();
     }

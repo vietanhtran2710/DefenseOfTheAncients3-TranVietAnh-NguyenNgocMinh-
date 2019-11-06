@@ -1,13 +1,19 @@
+package Screen;
+
+import Utils.*;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
 import org.lwjgl.openvr.Texture;
 import org.lwjgl.system.*;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.*;
 
 import static org.lwjgl.glfw.Callbacks.*;
@@ -19,6 +25,7 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class GUI {
     private myTexture background;
     private myTexture testButton;
+    private myTexture road;
     private long window;
     public boolean isPressed;
     public boolean onMouseHover = false;
@@ -35,19 +42,18 @@ public class GUI {
         return posY.get(0);
     }
 
-
     public void initLoop () {
         String backgroundImageSource = "src/res/GFX/GUI/Background/Background_main_screen.jpg";
         String buttonImageSource = "src/res/GFX/GUI/Button/button.png";
         // Background
-        Point topLeft = new Point(-1.0f, 1.0f); Point topRight = new Point(1.0f, 1.0f);
-        Point bottomLeft = new Point(1.0f, -1.0f); Point bottomRight = new Point(-1.0f, -1.0f);
-        this.background = new myTexture(backgroundImageSource, GL_QUADS, topLeft, topRight, bottomLeft, bottomRight);
+        Utils.Point topLeft = new Utils.Point(-1.0f, 1.0f); Utils.Point topRight = new Utils.Point(1.0f, 1.0f);
+        Utils.Point bottomLeft = new Utils.Point(1.0f, -1.0f); Utils.Point bottomRight = new Utils.Point(-1.0f, -1.0f);
+        this.background = new Utils.myTexture(backgroundImageSource, GL_QUADS, topLeft, topRight, bottomLeft, bottomRight);
 
         // Button
-        topLeft = new Point(-0.25f, 0.1f); topRight = new Point(0.25f, 0.1f);
-        bottomLeft = new Point(0.25f, -0.1f); bottomRight = new Point(-0.25f, -0.1f);
-        this.testButton = new myTexture(buttonImageSource, GL_POLYGON, topLeft, topRight, bottomLeft, bottomRight);
+        topLeft = new Utils.Point(-0.25f, 0.1f); topRight = new Utils.Point(0.25f, 0.1f);
+        bottomLeft = new Utils.Point(0.25f, -0.1f); bottomRight = new Utils.Point(-0.25f, -0.1f);
+        this.testButton = new Utils.myTexture(buttonImageSource, GL_POLYGON, topLeft, topRight, bottomLeft, bottomRight);
 
         System.out.println(testButton.getTopLeftCoordinate().getX() + " " + testButton.getTopLeftCoordinate().getY());
         System.out.println(testButton.getBottomRightCoordinate().getX() + " " + testButton.getBottomRightCoordinate().getY());
@@ -70,8 +76,8 @@ public class GUI {
     public boolean checkMouseHover() {
         double posX = getCursorPosX(this.window);
         double posY = getCursorPosY(this.window);
-        Point topLeft = testButton.getTopLeftCoordinate();
-        Point bottomRight = testButton.getBottomRightCoordinate();
+        Utils.Point topLeft = testButton.getTopLeftCoordinate();
+        Utils.Point bottomRight = testButton.getBottomRightCoordinate();
         if ((posX >= topLeft.getX()) && (posX <= bottomRight.getX()))
             if ((posY >= topLeft.getY()) && (posY <= bottomRight.getY()))
                 return true;
@@ -93,17 +99,17 @@ public class GUI {
 
         if (checkMouseHover()) {
             if (!onMouseHover) {
-                testButton.changeImage("src/res/GFX/Button/button-selected.png");
+                testButton.changeImage("src/res/GFX/GUI/Button/button-selected.png");
                 onMouseHover = true;
             }
         }
         else
             if (onMouseHover) {
-                testButton.changeImage("src/res/GFX/Button/button.png");
+                testButton.changeImage("src/res/GFX/GUI/Button/button.png");
                 onMouseHover = false;
             }
 
-        System.out.println(getCursorPosX(this.window) + " " + getCursorPosY(this.window));
+        //System.out.println(getCursorPosX(this.window) + " " + getCursorPosY(this.window));
 
         glfwSwapBuffers(window); // swap the color buffers
 

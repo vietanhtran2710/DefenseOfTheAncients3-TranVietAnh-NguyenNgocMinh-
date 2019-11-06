@@ -1,6 +1,6 @@
 # Defense Of The Ancients 3 
-#- Tran Viet Anh - 
-#- Nguyen Ngoc Minh -
+##- Tran Viet Anh - 
+##- Nguyen Ngoc Minh -
 OOP Game Project
 ```bash
 .

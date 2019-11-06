@@ -27,6 +27,7 @@ OOP Game Project
 │       ├── SniperTower.java
 │       └── Tower.java
 ├── MainWindow.java
+├── mapInfo.txt
 ├── README.md
 ├── res
 │   ├── GFX
@@ -49,6 +50,7 @@ OOP Game Project
 │   │   │   │   │   ├── Background.png
 │   │   │   │   │   └── Background.psd
 │   │   │   │   ├── Road
+│   │   │   │   │   ├── mountain.png
 │   │   │   │   │   ├── Road_doc.png
 │   │   │   │   │   ├── Road_ngang.png
 │   │   │   │   │   ├── Road.psd

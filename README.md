@@ -1,7 +1,13 @@
 # Defense Of The Ancients 3 
-##- Tran Viet Anh - 
-##- Nguyen Ngoc Minh -
+
+## Contributor
+Tran Viet Anh
+Nguyen Ngoc Minh
+
+## Description
 OOP Game Project
+
+## Project structure
 ```bash
 .
 ├── Entity

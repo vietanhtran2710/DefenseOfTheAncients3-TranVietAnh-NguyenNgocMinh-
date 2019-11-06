@@ -1,4 +1,7 @@
 package Entity.Tile;
 
-public class GameTile {
+import Entity.GameEntity;
+
+public interface GameTile extends GameEntity {
+    public void render();
 }

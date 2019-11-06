@@ -55,8 +55,8 @@ public class GUI {
         bottomLeft = new Utils.Point(0.25f, -0.1f); bottomRight = new Utils.Point(-0.25f, -0.1f);
         this.testButton = new Utils.myTexture(buttonImageSource, GL_POLYGON, topLeft, topRight, bottomLeft, bottomRight);
 
-        System.out.println(testButton.getTopLeftCoordinate().getX() + " " + testButton.getTopLeftCoordinate().getY());
-        System.out.println(testButton.getBottomRightCoordinate().getX() + " " + testButton.getBottomRightCoordinate().getY());
+//        System.out.println(testButton.getTopLeftCoordinate().getX() + " " + testButton.getTopLeftCoordinate().getY());
+//        System.out.println(testButton.getBottomRightCoordinate().getX() + " " + testButton.getBottomRightCoordinate().getY());
     }
 
     public void loop(long window) {

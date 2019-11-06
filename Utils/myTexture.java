@@ -16,6 +16,35 @@ public class myTexture {
     private Point topLeftVertex, topRightVertex, bottomLeftVertex, bottomRightVertex;
     private Point topLeftCoordinate, bottomRightCoordinate;
 
+    public myTexture(String texturePath, int mode) {
+        this.mode = mode;
+
+//        float midX = (float)(1366) / 2; float midY = (float)(768) / 2;
+//        this.topLeftCoordinate = new Point(midX + midX * topLeftVertex.getX(), midY - midY * topLeftVertex.getY());
+//        this.bottomRightCoordinate = new Point(midX + midX * bottomLeftVertex.getX(), midY - midY * bottomRightVertex.getY());
+
+        IntBuffer width = BufferUtils.createIntBuffer(1);
+        IntBuffer height = BufferUtils.createIntBuffer(1);
+        IntBuffer comp = BufferUtils.createIntBuffer(1);
+
+        ByteBuffer data = stbi_load(texturePath, width, height, comp, 4);
+
+        id = glGenTextures();
+        this.width = width.get();
+        this.height = height.get();
+
+        glBindTexture(GL_TEXTURE_2D, id);
+
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this.width, this.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        stbi_image_free(data);
+    }
+
     public myTexture(String texturePath, int mode, Point topLeft, Point topRight, Point bottomLeft, Point bottomRight) {
         this.mode = mode;
         this.topLeftVertex = topLeft;

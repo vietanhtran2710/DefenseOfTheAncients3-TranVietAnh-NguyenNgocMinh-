@@ -1,5 +1,7 @@
 package Screen;
 
+import Entity.GameField;
+import Entity.GameStage;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -22,13 +24,17 @@ import static org.lwjgl.system.MemoryUtil.*;
 
 public class GameScreen {
     private long window;
-    private myTexture road;
+    private myTexture background;
+    private GameStage gameStage;
+    private GameField field;
 
     public void initLoop () {
-        String roadImageSource = "src/res/GFX/Game/Tilemap/Road/Road_ngang.png";
-        Utils.Point topLeft = new Utils.Point(0, 0); Utils.Point topRight = new Utils.Point(128, 0);
-        Utils.Point bottomLeft = new Utils.Point(0, 128); Utils.Point bottomRight = new Utils.Point(128, 128);
-        this.road = new Utils.myTexture(roadImageSource, GL_QUADS, topLeft, topRight, bottomLeft, bottomRight);
+        String backgroundImageSource = "src/res/GFX/Game/Tilemap/Ground/Background.png";
+        Utils.Point topLeft = new Utils.Point(-1.0f, 1.0f); Utils.Point topRight = new Utils.Point(1.0f, 1.0f);
+        Utils.Point bottomLeft = new Utils.Point(1.0f, -1.0f); Utils.Point bottomRight = new Utils.Point(-1.0f, -1.0f);
+        this.background = new Utils.myTexture(backgroundImageSource, GL_QUADS, topLeft, topRight, bottomLeft, bottomRight);
+        this.gameStage = new GameStage("src/mapInfo.txt");
+        this.field = new GameField(gameStage);
     }
 
     public void loop(long window) {
@@ -37,7 +43,6 @@ public class GameScreen {
 
         // Init attributes before loop
         initLoop();
-
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
         while ( !glfwWindowShouldClose(this.window)) {
@@ -48,8 +53,11 @@ public class GameScreen {
     public void render(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
-        road.bind();
-        road.displayByIntCoordinate(100, 100);
+//        road.bind();
+//        road.displayByIntCoordinate(0, 0);
+        background.bind();
+        background.display();
+        field.render();
 
         glfwSwapBuffers(window); // swap the c  olor buffers
 

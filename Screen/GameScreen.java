@@ -35,6 +35,8 @@ public class GameScreen {
         this.background = new Utils.myTexture(backgroundImageSource, GL_QUADS, topLeft, topRight, bottomLeft, bottomRight);
         this.gameStage = new GameStage("src/mapInfo.txt");
         this.field = new GameField(gameStage);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     public void loop(long window) {

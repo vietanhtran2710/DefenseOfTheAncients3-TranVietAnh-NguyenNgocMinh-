@@ -21,7 +21,7 @@ public class GameField {
         for (int i = 0; i < mapInfo.size(); i++)
             for (int j = 0; j < mapInfo.get(i).size(); j++) {
                 if (mapInfo.get(i).get(j) == 0) {
-                    tileList.add(new Mountain(j * 48, i * 48));
+                    //tileList.add(new Mountain(j * 48, i * 48));
                 }
                 else
                     if (mapInfo.get(i).get(j) == 9) {

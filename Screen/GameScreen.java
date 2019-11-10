@@ -53,8 +53,6 @@ public class GameScreen {
     public void render(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
-//        road.bind();
-//        road.displayByIntCoordinate(0, 0);
         background.bind();
         background.displayByVertex(
                 new Vertex(-1.0f, 1.0f),
@@ -62,6 +60,7 @@ public class GameScreen {
                 new Vertex(1.0f, -1.0f),
                 new Vertex(-1.0f, -1.0f)
         );
+
         field.render();
 
         glfwSwapBuffers(window); // swap the c  olor buffers

@@ -4,8 +4,9 @@ public class Player {
     private int live;
     private int cash;
 
-    public Player() {
-
+    public Player(int initCash) {
+        this.cash = 10;
+        this.live = 30;
     }
 
     public int getCash() {

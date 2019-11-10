@@ -22,14 +22,16 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
-public class GameScreen {
+public class GameScreen extends Screen{
     private long window;
     private myTexture background;
     private GameStage gameStage;
     private GameField field;
     private Menu menu;
+    private int isBuyingTower, isSelectingTower;
 
     public void initLoop () {
+        this.isBuyingTower = 0; this.isSelectingTower = 0;
         String backgroundImageSource = "src/res/GFX/Game/Tilemap/Ground/Background.png";
         this.background = new Utils.myTexture(backgroundImageSource, GL_QUADS);
         this.gameStage = new GameStage("src/mapInfo.txt");
@@ -52,6 +54,10 @@ public class GameScreen {
         }
     }
 
+    public void mouseClickHandle() {
+
+    }
+
     public void render(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
@@ -66,6 +72,10 @@ public class GameScreen {
         field.render();
 
         menu.render();
+
+        if (glfwGetMouseButton(this.window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_TRUE) {
+            mouseClickHandle();
+        }
 
         glfwSwapBuffers(window); // swap the c  olor buffers
 

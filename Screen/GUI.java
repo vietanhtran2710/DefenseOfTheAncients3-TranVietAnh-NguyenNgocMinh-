@@ -23,25 +23,13 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
-public class GUI {
+public class GUI extends Screen{
     private myTexture background;
     private myTexture testButton;
     private myTexture road;
     private long window;
     public boolean isPressed;
     public boolean onMouseHover = false;
-
-    public static double getCursorPosX(long windowID) {
-        DoubleBuffer posX = BufferUtils.createDoubleBuffer(1);
-        glfwGetCursorPos(windowID, posX, null);
-        return posX.get(0);
-    }
-
-    public static double getCursorPosY(long windowID) {
-        DoubleBuffer posY = BufferUtils.createDoubleBuffer(1);
-        glfwGetCursorPos(windowID, null, posY);
-        return posY.get(0);
-    }
 
     public void initLoop () {
         String backgroundImageSource = "src/res/GFX/GUI/Background/Background_main_screen.jpg";
@@ -69,15 +57,6 @@ public class GUI {
         }
     }
 
-    public boolean checkMouseHover(myTexture texture) {
-        double posX = getCursorPosX(this.window);
-        double posY = getCursorPosY(this.window);
-        if ((posX >= texture.getTopLeft().getX()) && (posX <= texture.getBottomRight().getX()))
-            if ((posY >= texture.getTopLeft().getY()) && (posY <= texture.getBottomRight().getY()))
-                return true;
-        return false;
-    }
-
     public void render(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
@@ -100,7 +79,7 @@ public class GUI {
             if (onMouseHover)
                 this.isPressed = true;
 
-        if (checkMouseHover(testButton)) {
+        if (checkMouseHover(testButton, this.window)) {
             if (!onMouseHover) {
                 testButton.changeImage("src/res/GFX/GUI/Button/button-selected.png");
                 onMouseHover = true;

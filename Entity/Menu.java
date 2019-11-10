@@ -46,10 +46,6 @@ public class Menu {
                     new Vertex(0.2f, 0),
                     new Vertex(0.2f, 1),
                     new Vertex(0, 1)
-//                    new Vertex(0, 0),
-//                    new Vertex(1, 0),
-//                    new Vertex(1, 1),
-//                    new Vertex(0, 1)
             );
         }
     }

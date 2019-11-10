@@ -10,9 +10,11 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 
 public class Menu {
     private List<myTexture> buttonList;
+    private List<Integer> priceList;
 
     public Menu() {
         buttonList = new ArrayList<>();
+        priceList = new ArrayList<>();
         myTexture normalTowerTexture = new myTexture(
                 "src/res/GFX/Game/Tower/Normal Tower/NormalTower.png",
                 GL_QUADS,
@@ -36,6 +38,10 @@ public class Menu {
                 624);
         machineGunTower.setDisplayWidth(48 * 2); machineGunTower.setDisplayHeight(48 * 2);
         buttonList.add(machineGunTower);
+
+        priceList.add(2);
+        priceList.add(5);
+        priceList.add(10);
     }
 
     public void render() {
@@ -48,5 +54,13 @@ public class Menu {
                     new Vertex(0, 1)
             );
         }
+    }
+
+    public List<myTexture> getButtonList() {
+        return buttonList;
+    }
+
+    public List<Integer> getPriceList() {
+        return priceList;
     }
 }

@@ -1,6 +1,7 @@
 package Entity;
 
 import Entity.Tile.*;
+import Entity.Towers.Tower;
 import org.lwjgl.system.CallbackI;
 
 import java.util.List;
@@ -8,9 +9,12 @@ import java.util.ArrayList;
 
 public class GameField {
     private List<GameTile> tileList;
+    private List<Tower> towers;
 
     public GameField(GameStage gameStage) {
         tileList = new ArrayList<>();
+        towers = new ArrayList<>();
+
         int[][] direction = {
                 {0, -1},
                 {-1, 0},
@@ -47,5 +51,15 @@ public class GameField {
     public void render() {
         for (int i = 0 ; i < tileList.size(); i++)
             tileList.get(i).render();
+        for (int i = 0 ; i < towers.size(); i++)
+            towers.get(i).render();
+    }
+
+    public List<GameTile> getTileList() {
+        return tileList;
+    }
+
+    public void addTower(Tower tower) {
+        towers.add(tower);
     }
 }

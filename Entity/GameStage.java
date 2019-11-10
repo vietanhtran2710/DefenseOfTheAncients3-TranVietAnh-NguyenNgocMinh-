@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameStage {
-    private int money;
+    private int initMoney;
     private List<List<Integer>> mapArr;
 
     private static String readLineByLine(String fileName) {
@@ -25,7 +25,7 @@ public class GameStage {
     public GameStage(String mapPath) {
         String inputData = readLineByLine(mapPath);
         String[] data = inputData.split("\n");
-        this.money = Integer.parseInt(data[0]);
+        this.initMoney = Integer.parseInt(data[0]);
         mapArr = new ArrayList<>();
         for (int i = 1; i < data.length; i++) {
             mapArr.add(new ArrayList<Integer>());
@@ -36,7 +36,7 @@ public class GameStage {
     }
 
     public int getMoney() {
-        return money;
+        return initMoney;
     }
 
     public List<List<Integer>> getMapArr() {

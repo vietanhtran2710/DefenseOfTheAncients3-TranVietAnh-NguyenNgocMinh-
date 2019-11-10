@@ -5,7 +5,7 @@ public class Player {
     private int cash;
 
     public Player(int initCash) {
-        this.cash = 10;
+        this.cash = initCash;
         this.live = 30;
     }
 

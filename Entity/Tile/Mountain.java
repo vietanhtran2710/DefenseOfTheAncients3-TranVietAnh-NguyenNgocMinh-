@@ -4,7 +4,7 @@ import Utils.myTexture;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class Mountain implements GameTile {
+public class Mountain extends GameTile {
     private int x;
     private int y;
     private myTexture texture;

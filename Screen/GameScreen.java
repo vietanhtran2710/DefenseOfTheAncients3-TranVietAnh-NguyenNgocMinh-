@@ -2,6 +2,14 @@ package Screen;
 
 import Entity.*;
 import Entity.Menu;
+import Entity.Tile.GameTile;
+import java.util.List;
+import java.util.ArrayList;
+
+import Entity.Towers.MachineGunTower;
+import Entity.Towers.NormalTower;
+import Entity.Towers.SniperTower;
+import Entity.Towers.Tower;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -29,12 +37,15 @@ public class GameScreen extends Screen{
     private GameField field;
     private Menu menu;
     private int isBuyingTower, isSelectingTower;
+    private Player player;
+    private boolean isMouseDown = false;
 
     public void initLoop () {
         this.isBuyingTower = 0; this.isSelectingTower = 0;
         String backgroundImageSource = "src/res/GFX/Game/Tilemap/Ground/Background.png";
         this.background = new Utils.myTexture(backgroundImageSource, GL_QUADS);
         this.gameStage = new GameStage("src/mapInfo.txt");
+        this.player = new Player(gameStage.getMoney());
         this.field = new GameField(gameStage);
         this.menu = new Menu();
         glEnable(GL_BLEND);
@@ -54,8 +65,55 @@ public class GameScreen extends Screen{
         }
     }
 
-    public void mouseClickHandle() {
+    public void placeTower(int tower, double x, double y) {
+        boolean validPosition = true;
+        List<GameTile> roads = field.getTileList();
+        for (int i = 0; i < roads.size(); i++) {
+            if (checkMouseHover(roads.get(i).getTexture(), this.window)) {
+                validPosition = false; break;
+            }
+        }
+        if (validPosition) {
+            int posX = (int) (Math.round(x) / 48 * 48);
+            int posY = (int) (Math.round(y) / 48 * 48);
+            Tower newTower = null;
+            switch (tower) {
+                case 1:
+                    newTower = new NormalTower(posX, posY);
+                    break;
+                case 2:
+                    newTower = new SniperTower(posX, posY);
+                    break;
+                case 3:
+                    newTower = new MachineGunTower(posX, posY);
+                    break;
+            }
+            field.addTower(newTower);
+            isBuyingTower = 0;
+        }
+    }
 
+    public void mouseClickHandle() {
+        double cursorX = getCursorPosX(this.window);
+        double cursorY = getCursorPosY(this.window);
+        System.out.println(cursorX + " " + cursorY);
+        if (isBuyingTower != 0) {
+            if ((0 <= cursorX) && (cursorX <= 1366))
+                if ((0 <= cursorY) && (cursorY <= 624)) {
+                    placeTower(isBuyingTower, cursorX, cursorY);
+                    System.out.println("Clicked on map");
+                }
+        }
+        else
+            if ((0 <= cursorX) && (cursorX <= 348) && (624 <= cursorY) && (cursorY <= 768)) {
+                for (int i = 0; i < menu.getButtonList().size(); i++)
+                    if (checkMouseHover(menu.getButtonList().get(i), this.window))
+                        if (player.getCash() >= menu.getPriceList().get(i)) {
+                            System.out.println("Clicked on item");
+                            this.isBuyingTower = i + 1;
+                            break;
+                        }
+            }
     }
 
     public void render(){
@@ -74,7 +132,13 @@ public class GameScreen extends Screen{
         menu.render();
 
         if (glfwGetMouseButton(this.window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_TRUE) {
-            mouseClickHandle();
+            if (!isMouseDown) {
+                mouseClickHandle();
+                isMouseDown = true;
+            }
+        }
+        else {
+            isMouseDown = false;
         }
 
         glfwSwapBuffers(window); // swap the c  olor buffers

@@ -4,11 +4,10 @@ import Utils.myTexture;
 
 import static org.lwjgl.opengl.GL11.*;
 
-public class Road implements GameTile {
+public class Road extends GameTile {
     private int x;
     private int y;
     private String imageSource;
-    private myTexture texture;
 
     public Road(int bitMask, int x, int y) {
         this.x = x;

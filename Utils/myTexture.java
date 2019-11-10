@@ -10,18 +10,14 @@ import static org.lwjgl.stb.STBImage.*;
 
 public class myTexture {
     private int id;
-    private int width;
-    private int height;
+    private int width, height;
+    private int displayWidth, displayHeight;
     private int mode;
-    private Point topLeftVertex, topRightVertex, bottomLeftVertex, bottomRightVertex;
-    private Point topLeftCoordinate, bottomRightCoordinate;
+    private Point topLeft, topRight, bottomLeft, bottomRight;
 
     public myTexture(String texturePath, int mode) {
         this.mode = mode;
-
-//        float midX = (float)(1366) / 2; float midY = (float)(768) / 2;
-//        this.topLeftCoordinate = new Point(midX + midX * topLeftVertex.getX(), midY - midY * topLeftVertex.getY());
-//        this.bottomRightCoordinate = new Point(midX + midX * bottomLeftVertex.getX(), midY - midY * bottomRightVertex.getY());
+        this.topLeft = new Point(0, 0);
 
         IntBuffer width = BufferUtils.createIntBuffer(1);
         IntBuffer height = BufferUtils.createIntBuffer(1);
@@ -32,6 +28,12 @@ public class myTexture {
         id = glGenTextures();
         this.width = width.get();
         this.height = height.get();
+        this.displayWidth = this.width;
+        this.displayHeight = this.height;
+
+        this.topRight = new Point(0, this.width);
+        this.bottomLeft = new Point(this.height, 0);
+        this.bottomRight = new Point(this.height, this.width);
 
         glBindTexture(GL_TEXTURE_2D, id);
 
@@ -45,16 +47,9 @@ public class myTexture {
         stbi_image_free(data);
     }
 
-    public myTexture(String texturePath, int mode, Point topLeft, Point topRight, Point bottomLeft, Point bottomRight) {
+    public myTexture(String texturePath, int mode, int topLeftX, int topLeftY) {
         this.mode = mode;
-        this.topLeftVertex = topLeft;
-        this.topRightVertex = topRight;
-        this.bottomLeftVertex = bottomLeft;
-        this.bottomRightVertex = bottomRight;
-
-        float midX = (float)(1366) / 2; float midY = (float)(768) / 2;
-        this.topLeftCoordinate = new Point(midX + midX * topLeftVertex.getX(), midY - midY * topLeftVertex.getY());
-        this.bottomRightCoordinate = new Point(midX + midX * bottomLeftVertex.getX(), midY - midY * bottomRightVertex.getY());
+        this.topLeft = new Point(topLeftX, topLeftY);
 
         IntBuffer width = BufferUtils.createIntBuffer(1);
         IntBuffer height = BufferUtils.createIntBuffer(1);
@@ -65,14 +60,17 @@ public class myTexture {
         id = glGenTextures();
         this.width = width.get();
         this.height = height.get();
+        this.displayWidth = this.width;
+        this.displayHeight = this.height;
+
+        this.topRight = new Point(topLeftX, this.width);
+        this.bottomLeft = new Point(this.height, topLeftY);
+        this.bottomRight = new Point(this.height, this.width);
 
         glBindTexture(GL_TEXTURE_2D, id);
 
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-//        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this.width, this.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
         stbi_image_free(data);
@@ -83,28 +81,43 @@ public class myTexture {
     }
 
     public void display() {
+        final int midX = 1366 / 2;
+        final int midY = 768 / 2;
+
+        float topLeftVertexX = (float)(this.topLeft.getX() - midX) / midX;
+        float topLeftVertexY = (float)(midY - this.topLeft.getX()) / midY;
+
+        float topRightVertexX = (float)(this.topRight.getX() + this.width - midX) / midX;
+        float topRightVertexY = (float)(midY - this.topRight.getY()) / midY;
+
+        float bottomLeftVertexX = (float)(this.bottomLeft.getX() - midX) / midX;
+        float bottomLeftVertexY = (float)(midY - (bottomLeft.getY() + this.height)) / midY;
+
+        float bottomRightVertexX = (float)(this.bottomRight.getX() + this.width - midX) / midX;
+        float bottomRightVertexY = (float)(midY - (this.bottomRight.getY() + this.height)) / midY;
+
         glBegin(this.mode);
         {
             // Top left
             glTexCoord2f(0, 0);
-            glVertex2f(this.topLeftVertex.getX(), this.topLeftVertex.getY());
+            glVertex2f(topLeftVertexX, topLeftVertexY);
 
             // Top right
             glTexCoord2f(1, 0);
-            glVertex2f(this.topRightVertex.getX(), this.topRightVertex.getY());
+            glVertex2f(topRightVertexX, topRightVertexY);
 
             // Bottom left
             glTexCoord2f(1, 1);
-            glVertex2f(this.bottomLeftVertex.getX(), this.bottomLeftVertex.getY());
+            glVertex2f(bottomRightVertexX, bottomRightVertexY);
 
             // Bottom right
             glTexCoord2f(0, 1);
-            glVertex2f(this.bottomRightVertex.getX(), this.bottomRightVertex.getY());
+            glVertex2f(bottomLeftVertexX, bottomLeftVertexY);
         }
         glEnd();
     }
 
-    public void displayByIntCoordinate(int x, int y) {
+    public void displayByOtherCoordinate(int x, int y) {
         final int midX = 1366 / 2;
         final int midY = 768 / 2;
 
@@ -141,6 +154,28 @@ public class myTexture {
         glEnd();
     }
 
+    public void displayByVertex(Vertex topLeft, Vertex topRight, Vertex bottomLeft, Vertex bottomRight) {
+        glBegin(this.mode);
+        {
+            // Top left
+            glTexCoord2f(0, 0);
+            glVertex2f(topLeft.getX(), topLeft.getY());
+
+            // Top right
+            glTexCoord2f(1, 0);
+            glVertex2f(topRight.getX(), topRight.getY());
+
+            // Bottom left
+            glTexCoord2f(1, 1);
+            glVertex2f(bottomLeft.getX(), bottomLeft.getY());
+
+            // Bottom right
+            glTexCoord2f(0, 1);
+            glVertex2f(bottomRight.getX(), bottomRight.getY());
+        }
+        glEnd();
+    }
+
     public void changeImage(String imagePath) {
         IntBuffer width = BufferUtils.createIntBuffer(1);
         IntBuffer height = BufferUtils.createIntBuffer(1);
@@ -162,11 +197,35 @@ public class myTexture {
         this.bind();
     }
 
-    public Point getTopLeftCoordinate() {
-        return topLeftCoordinate;
+    public Point getTopLeft() {
+        return topLeft;
     }
 
-    public Point getBottomRightCoordinate() {
-        return bottomRightCoordinate;
+    public Point getTopRight() {
+        return topRight;
+    }
+
+    public Point getBottomLeft() {
+        return bottomLeft;
+    }
+
+    public Point getBottomRight() {
+        return bottomRight;
+    }
+
+    public void setTopLeft(Point topLeft) {
+        this.topLeft = topLeft;
+    }
+
+    public void setDisplayHeight(int displayHeight) {
+        this.displayHeight = displayHeight;
+        this.bottomLeft.setY(this.topLeft.getY() + this.displayHeight);
+        this.bottomRight.setY(this.topLeft.getY() + this.displayHeight);
+    }
+
+    public void setDisplayWidth(int displayWidth) {
+        this.displayWidth = displayWidth;
+        this.topRight.setX(this.topLeft.getX() + this.displayWidth);
+        this.bottomRight.setX(this.topLeft.getX() + this.displayWidth);
     }
 }

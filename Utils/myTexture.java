@@ -176,6 +176,85 @@ public class myTexture {
         glEnd();
     }
 
+    public void displayByPartitionVertex(
+            Vertex topLeft, Vertex topRight, Vertex bottomLeft, Vertex bottomRight
+    ) {
+        final int midX = 1366 / 2;
+        final int midY = 768 / 2;
+
+        float topLeftVertexX = (float)(this.topLeft.getX() - midX) / midX;
+        float topLeftVertexY = (float)(midY - this.topLeft.getY()) / midY;
+
+        float topRightVertexX = (float)(this.topLeft.getX() + this.displayWidth - midX) / midX;
+        float topRightVertexY = (float)(midY - this.topLeft.getY()) / midY;
+
+        float bottomLeftVertexX = (float)(this.topLeft.getX() - midX) / midX;
+        float bottomLeftVertexY = (float)(midY - (this.topLeft.getY() + this.displayHeight)) / midY;
+
+        float bottomRightVertexX = (float)(this.topLeft.getX() + this.displayWidth - midX) / midX;
+        float bottomRightVertexY = (float)(midY - (this.topLeft.getY() + this.displayHeight)) / midY;
+
+        glBegin(this.mode);
+        {
+            // Top left
+            glTexCoord2f(topLeft.getX(), topLeft.getY());
+            glVertex2f(topLeftVertexX, topLeftVertexY);
+
+            // Top right
+            glTexCoord2f(topRight.getX(), topRight.getY());
+            glVertex2f(topRightVertexX, topRightVertexY);
+
+            // Bottom left
+            glTexCoord2f(bottomLeft.getX(), bottomLeft.getY());
+            glVertex2f(bottomRightVertexX, bottomRightVertexY);
+
+            // Bottom right
+            glTexCoord2f(bottomRight.getX(), bottomRight.getY());
+            glVertex2f(bottomLeftVertexX, bottomLeftVertexY);
+        }
+        glEnd();
+    }
+
+    public void displayByOtherCoordinatePartitionVertex(
+            int x, int y,
+            Vertex topLeft, Vertex topRight, Vertex bottomLeft, Vertex bottomRight
+    ) {
+        final int midX = 1366 / 2;
+        final int midY = 768 / 2;
+
+        float topLeftVertexX = (float)(x - midX) / midX;
+        float topLeftVertexY = (float)(midY - y) / midY;
+
+        float topRightVertexX = (float)(x + this.displayWidth - midX) / midX;
+        float topRightVertexY = (float)(midY - y) / midY;
+
+        float bottomLeftVertexX = (float)(x - midX) / midX;
+        float bottomLeftVertexY = (float)(midY - (y + this.displayHeight)) / midY;
+
+        float bottomRightVertexX = (float)(x + this.displayWidth - midX) / midX;
+        float bottomRightVertexY = (float)(midY - (y + this.displayHeight)) / midY;
+
+        glBegin(this.mode);
+        {
+            // Top left
+            glTexCoord2f(topLeft.getX(), topLeft.getY());
+            glVertex2f(topLeftVertexX, topLeftVertexY);
+
+            // Top right
+            glTexCoord2f(topRight.getX(), topRight.getY());
+            glVertex2f(topRightVertexX, topRightVertexY);
+
+            // Bottom left
+            glTexCoord2f(bottomLeft.getX(), bottomLeft.getY());
+            glVertex2f(bottomRightVertexX, bottomRightVertexY);
+
+            // Bottom right
+            glTexCoord2f(bottomRight.getX(), bottomRight.getY());
+            glVertex2f(bottomLeftVertexX, bottomLeftVertexY);
+        }
+        glEnd();
+    }
+
     public void changeImage(String imagePath) {
         IntBuffer width = BufferUtils.createIntBuffer(1);
         IntBuffer height = BufferUtils.createIntBuffer(1);

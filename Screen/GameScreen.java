@@ -1,7 +1,7 @@
 package Screen;
 
-import Entity.GameField;
-import Entity.GameStage;
+import Entity.*;
+import Entity.Menu;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -27,12 +27,14 @@ public class GameScreen {
     private myTexture background;
     private GameStage gameStage;
     private GameField field;
+    private Menu menu;
 
     public void initLoop () {
         String backgroundImageSource = "src/res/GFX/Game/Tilemap/Ground/Background.png";
         this.background = new Utils.myTexture(backgroundImageSource, GL_QUADS);
         this.gameStage = new GameStage("src/mapInfo.txt");
         this.field = new GameField(gameStage);
+        this.menu = new Menu();
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
@@ -62,6 +64,8 @@ public class GameScreen {
         );
 
         field.render();
+
+        menu.render();
 
         glfwSwapBuffers(window); // swap the c  olor buffers
 

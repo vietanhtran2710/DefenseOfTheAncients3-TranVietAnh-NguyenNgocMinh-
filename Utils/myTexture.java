@@ -85,16 +85,16 @@ public class myTexture {
         final int midY = 768 / 2;
 
         float topLeftVertexX = (float)(this.topLeft.getX() - midX) / midX;
-        float topLeftVertexY = (float)(midY - this.topLeft.getX()) / midY;
+        float topLeftVertexY = (float)(midY - this.topLeft.getY()) / midY;
 
-        float topRightVertexX = (float)(this.topRight.getX() + this.width - midX) / midX;
-        float topRightVertexY = (float)(midY - this.topRight.getY()) / midY;
+        float topRightVertexX = (float)(this.topLeft.getX() + this.width - midX) / midX;
+        float topRightVertexY = (float)(midY - this.topLeft.getY()) / midY;
 
-        float bottomLeftVertexX = (float)(this.bottomLeft.getX() - midX) / midX;
-        float bottomLeftVertexY = (float)(midY - (bottomLeft.getY() + this.height)) / midY;
+        float bottomLeftVertexX = (float)(this.topLeft.getX() - midX) / midX;
+        float bottomLeftVertexY = (float)(midY - (topLeft.getY() + this.height)) / midY;
 
-        float bottomRightVertexX = (float)(this.bottomRight.getX() + this.width - midX) / midX;
-        float bottomRightVertexY = (float)(midY - (this.bottomRight.getY() + this.height)) / midY;
+        float bottomRightVertexX = (float)(this.topLeft.getX() + this.width - midX) / midX;
+        float bottomRightVertexY = (float)(midY - (this.topLeft.getY() + this.height)) / midY;
 
         glBegin(this.mode);
         {

@@ -12,12 +12,12 @@ public class Mountain implements GameTile {
     public Mountain(int x, int y) {
         this.x = x;
         this.y = y;
-        this.texture = new myTexture("src/res/GFX/Game/Tilemap/Road/mountain.png", GL_QUADS);
+        this.texture = new myTexture("src/res/GFX/Game/Tilemap/Road/mountain.png", GL_QUADS, this.x, this.y);
     }
 
     public void render() {
         this.texture.bind();
-        this.texture.displayByIntCoordinate(this.x, this.y);
+        this.texture.display();
     }
 
 }

@@ -30,9 +30,7 @@ public class GameScreen {
 
     public void initLoop () {
         String backgroundImageSource = "src/res/GFX/Game/Tilemap/Ground/Background.png";
-        Utils.Point topLeft = new Utils.Point(-1.0f, 1.0f); Utils.Point topRight = new Utils.Point(1.0f, 1.0f);
-        Utils.Point bottomLeft = new Utils.Point(1.0f, -1.0f); Utils.Point bottomRight = new Utils.Point(-1.0f, -1.0f);
-        this.background = new Utils.myTexture(backgroundImageSource, GL_QUADS, topLeft, topRight, bottomLeft, bottomRight);
+        this.background = new Utils.myTexture(backgroundImageSource, GL_QUADS);
         this.gameStage = new GameStage("src/mapInfo.txt");
         this.field = new GameField(gameStage);
         glEnable(GL_BLEND);
@@ -58,7 +56,12 @@ public class GameScreen {
 //        road.bind();
 //        road.displayByIntCoordinate(0, 0);
         background.bind();
-        background.display();
+        background.displayByVertex(
+                new Vertex(-1.0f, 1.0f),
+                new Vertex(1.0f, 1.0f),
+                new Vertex(1.0f, -1.0f),
+                new Vertex(-1.0f, -1.0f)
+        );
         field.render();
 
         glfwSwapBuffers(window); // swap the c  olor buffers

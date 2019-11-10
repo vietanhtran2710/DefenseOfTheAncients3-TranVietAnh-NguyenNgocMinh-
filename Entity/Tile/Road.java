@@ -37,11 +37,11 @@ public class Road implements GameTile {
             case 11:
                 imageSource = "src/res/GFX/Game/Tilemap/Target/Target.png";
         }
-        this.texture = new myTexture(this.imageSource, GL_QUADS);
+        this.texture = new myTexture(this.imageSource, GL_QUADS, this.x, this.y);
     }
 
     public void render() {
         this.texture.bind();
-        this.texture.displayByIntCoordinate(this.x, this.y);
+        this.texture.display();
     }
 }

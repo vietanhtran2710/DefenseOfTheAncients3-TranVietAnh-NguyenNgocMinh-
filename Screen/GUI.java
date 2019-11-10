@@ -1,6 +1,7 @@
 package Screen;
 
 import Utils.*;
+import Utils.Point;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -46,17 +47,12 @@ public class GUI {
         String backgroundImageSource = "src/res/GFX/GUI/Background/Background_main_screen.jpg";
         String buttonImageSource = "src/res/GFX/GUI/Button/button.png";
         // Background
-        Utils.Point topLeft = new Utils.Point(-1.0f, 1.0f); Utils.Point topRight = new Utils.Point(1.0f, 1.0f);
-        Utils.Point bottomLeft = new Utils.Point(1.0f, -1.0f); Utils.Point bottomRight = new Utils.Point(-1.0f, -1.0f);
-        this.background = new Utils.myTexture(backgroundImageSource, GL_QUADS, topLeft, topRight, bottomLeft, bottomRight);
+        this.background = new Utils.myTexture(backgroundImageSource, GL_QUADS);
 
         // Button
-        topLeft = new Utils.Point(-0.25f, 0.1f); topRight = new Utils.Point(0.25f, 0.1f);
-        bottomLeft = new Utils.Point(0.25f, -0.1f); bottomRight = new Utils.Point(-0.25f, -0.1f);
-        this.testButton = new Utils.myTexture(buttonImageSource, GL_POLYGON, topLeft, topRight, bottomLeft, bottomRight);
-
-//        System.out.println(testButton.getTopLeftCoordinate().getX() + " " + testButton.getTopLeftCoordinate().getY());
-//        System.out.println(testButton.getBottomRightCoordinate().getX() + " " + testButton.getBottomRightCoordinate().getY());
+        this.testButton = new Utils.myTexture(buttonImageSource, GL_POLYGON, 513, 346);
+        testButton.setDisplayHeight(768 / 10);
+        testButton.setDisplayWidth(1366 / 4);
     }
 
     public void loop(long window) {
@@ -73,13 +69,11 @@ public class GUI {
         }
     }
 
-    public boolean checkMouseHover() {
+    public boolean checkMouseHover(myTexture texture) {
         double posX = getCursorPosX(this.window);
         double posY = getCursorPosY(this.window);
-        Utils.Point topLeft = testButton.getTopLeftCoordinate();
-        Utils.Point bottomRight = testButton.getBottomRightCoordinate();
-        if ((posX >= topLeft.getX()) && (posX <= bottomRight.getX()))
-            if ((posY >= topLeft.getY()) && (posY <= bottomRight.getY()))
+        if ((posX >= texture.getTopLeft().getX()) && (posX <= texture.getBottomRight().getX()))
+            if ((posY >= texture.getTopLeft().getY()) && (posY <= texture.getBottomRight().getY()))
                 return true;
         return false;
     }
@@ -88,16 +82,25 @@ public class GUI {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
         background.bind();
-        background.display();
+        background.displayByVertex(
+                new Vertex(-1.0f, 1.0f),
+                new Vertex(1.0f, 1.0f),
+                new Vertex(1.0f, -1.0f),
+                new Vertex(-1.0f, -1.0f)
+        );
 
         testButton.bind();
-        testButton.display();
+        testButton.displayByVertex(new Vertex(-0.25f, 0.1f),
+                new Vertex(0.25f, 0.1f),
+                new Vertex(0.25f, -0.1f),
+                new Vertex(-0.25f, -0.1f)
+        );
 
         if (glfwGetMouseButton(this.window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_TRUE)
             if (onMouseHover)
                 this.isPressed = true;
 
-        if (checkMouseHover()) {
+        if (checkMouseHover(testButton)) {
             if (!onMouseHover) {
                 testButton.changeImage("src/res/GFX/GUI/Button/button-selected.png");
                 onMouseHover = true;
@@ -108,8 +111,6 @@ public class GUI {
                 testButton.changeImage("src/res/GFX/GUI/Button/button.png");
                 onMouseHover = false;
             }
-
-        //System.out.println(getCursorPosX(this.window) + " " + getCursorPosY(this.window));
 
         glfwSwapBuffers(window); // swap the color buffers
 

@@ -18,7 +18,8 @@ import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.MemoryUtil.*;
 
 public class ShowScreen {
-    protected long window;
+    private long window;
+    private boolean isFullsrceen = false;
 
     public void run() throws FileNotFoundException {
 
@@ -48,9 +49,11 @@ public class ShowScreen {
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // the window won't be resizable
 
         // Create the game window
-        //window = glfwCreateWindow(1366, 768, "Defense of the Ancients 3", NULL, NULL);
+        if (!isFullsrceen)
+        window = glfwCreateWindow(1366, 768, "Defense of the Ancients 3", NULL, NULL);
         //Fullscreen mode
-        window = glfwCreateWindow(1366, 768, "Defense of the Ancients 3", glfwGetPrimaryMonitor(), NULL);
+        else
+            window = glfwCreateWindow(1366, 768, "Defense of the Ancients 3", glfwGetPrimaryMonitor(), NULL);
 
         if (window == NULL)
             throw new RuntimeException("Failed to create the game window");

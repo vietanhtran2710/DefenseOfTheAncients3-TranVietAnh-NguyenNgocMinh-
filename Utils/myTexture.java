@@ -63,9 +63,9 @@ public class myTexture {
         this.displayWidth = this.width;
         this.displayHeight = this.height;
 
-        this.topRight = new Point(topLeftX, this.width);
-        this.bottomLeft = new Point(this.height, topLeftY);
-        this.bottomRight = new Point(this.height, this.width);
+        this.topRight = new Point(topLeftX, topLeft.getY() + this.displayWidth);
+        this.bottomLeft = new Point(topLeft.getX() + this.displayHeight, topLeftY);
+        this.bottomRight = new Point(topLeft.getX() + this.displayHeight, topLeft.getY() + this.displayWidth);
 
         glBindTexture(GL_TEXTURE_2D, id);
 

@@ -77,6 +77,7 @@ public class GameScreen extends Screen{
                 validPosition = false; break;
             }
         }
+        System.out.println(validPosition);
         if (validPosition) {
             int posX = (int) (Math.round(x) / 48 * 48);
             int posY = (int) (Math.round(y) / 48 * 48);
@@ -166,7 +167,7 @@ public class GameScreen extends Screen{
             isMouseDown = false;
         }
 
-        glfwSwapBuffers(window); // swap the c  olor buffers
+        glfwSwapBuffers(window); // swap the color buffers
 
         // Poll for window events. The key callback above will only be
         // invoked during this call.

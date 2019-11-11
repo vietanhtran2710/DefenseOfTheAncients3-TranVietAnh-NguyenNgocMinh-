@@ -124,13 +124,18 @@ public class GameScreen extends Screen{
             }
             else {
                 List<Tower> towers = field.getTowers();
+                boolean towerClicked = false;
                 for (int i = 0; i < towers.size(); i++) {
                     if (checkMouseHover(towers.get(i).getTexture(), this.window)) {
+                        towerClicked = true;
                         this.isSelectingTower = 1;
                         this.selectionX = (int) (Math.round(cursorX) / 48 * 48) - 40;
                         this.selectionY = (int) (Math.round(cursorY) / 48 * 48) - 50;
+                        break;
                     }
                 }
+                if ((!towerClicked) && (isSelectingTower != 0))
+                    isSelectingTower = 0;
             }
     }
 

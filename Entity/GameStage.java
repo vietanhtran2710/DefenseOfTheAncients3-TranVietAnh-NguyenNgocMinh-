@@ -25,13 +25,13 @@ public class GameStage {
     public GameStage(String mapPath) {
         String inputData = readLineByLine(mapPath);
         String[] data = inputData.split("\n");
-        this.initMoney = Integer.parseInt(data[0]);
+        this.initMoney = Integer.parseInt(data[0].trim());
         mapArr = new ArrayList<>();
         for (int i = 1; i < data.length; i++) {
             mapArr.add(new ArrayList<Integer>());
             String[] itemList = data[i].split(" ");
             for (int j = 0; j < itemList.length; j++)
-                mapArr.get(i - 1).add(Integer.decode(itemList[j]));
+                mapArr.get(i - 1).add(Integer.decode(itemList[j].trim()));
         }
     }
 

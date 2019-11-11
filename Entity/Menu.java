@@ -11,6 +11,8 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 public class Menu {
     private List<myTexture> buttonList;
     private List<Integer> priceList;
+    private int playX = 1193;
+    private int playY = 657;
 
     public Menu() {
         buttonList = new ArrayList<>();

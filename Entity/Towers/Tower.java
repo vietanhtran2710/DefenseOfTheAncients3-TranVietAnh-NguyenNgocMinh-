@@ -15,10 +15,10 @@ public class Tower {
 
     public void render() {
         texture.bind();
-        Vertex topLeft = new Vertex(0, 0);
+        Vertex topLeft = new Vertex((this.level - 1) * 0.2f, 0);
         Vertex topRight = new Vertex(this.level * 0.2f, 0);
         Vertex bottomLeft = new Vertex(this.level * 0.2f, 1);
-        Vertex bottomRight = new Vertex(0, 1);
+        Vertex bottomRight = new Vertex((this.level - 1) * 0.2f, 1);
         texture.displayByPartitionVertex(topLeft, topRight, bottomLeft, bottomRight);
     }
 

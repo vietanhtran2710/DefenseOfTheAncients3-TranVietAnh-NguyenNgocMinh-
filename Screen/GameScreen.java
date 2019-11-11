@@ -1,6 +1,9 @@
 package Screen;
 
 import Entity.*;
+import Entity.Enemies.BossEnemy;
+import Entity.Enemies.Enemy;
+import Entity.Enemies.NormalEnemy;
 import Entity.Menu;
 import Entity.Tile.GameTile;
 import java.util.List;
@@ -42,6 +45,8 @@ public class GameScreen extends Screen{
     private Player player;
     private boolean isMouseDown = false;
 
+    private final double FPS = 20.0;
+
     public void initLoop () {
         this.isBuyingTower = 0; this.isSelectingTower = 0;
         String backgroundImageSource = "src/res/GFX/Game/Tilemap/Ground/Background.png";
@@ -53,6 +58,10 @@ public class GameScreen extends Screen{
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         upgradeAndSell = new myTexture("src/res/GFX/Game/Tower/BuyNUpgrade.png", GL_QUADS);
+
+        // Test Enemy
+        this.field.addEnemy(new BossEnemy(48, 48));
+
     }
 
     public void loop(long window) {
@@ -62,10 +71,39 @@ public class GameScreen extends Screen{
         // Init attributes before loop
         initLoop();
 
+        // Limit frame per second
+        double frame_cap = 1.0 / FPS;
+        double time = Timer.getTime();
+        double unprocessed = 0;
+
+        double frame_time = 0;
+        double frames = 0;
+
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
         while ( !glfwWindowShouldClose(this.window)) {
-            render();
+            // limit frame
+            boolean can_render = false;
+            double time_2 = Timer.getTime();
+            double timePassed = time_2 - time;
+            unprocessed += timePassed;
+            frame_time += timePassed;
+            time = time_2;
+
+            while (unprocessed >= frame_cap) {
+                unprocessed -= frame_cap;
+                can_render = true;
+                if(frame_time >= 1.0) {
+                    frame_time = 0;
+                    System.out.println("FPS: " + frames);
+                    frames = 0;
+                }
+            }
+
+            if (can_render) {
+                render();
+                frames++;
+            }
         }
     }
 

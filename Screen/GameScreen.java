@@ -61,6 +61,7 @@ public class GameScreen extends Screen{
 
         // Init attributes before loop
         initLoop();
+
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
         while ( !glfwWindowShouldClose(this.window)) {

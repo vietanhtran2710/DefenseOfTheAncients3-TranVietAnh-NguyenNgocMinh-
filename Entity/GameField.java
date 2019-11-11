@@ -59,6 +59,10 @@ public class GameField {
         return tileList;
     }
 
+    public List<Tower> getTowers() {
+        return towers;
+    }
+
     public void addTower(Tower tower) {
         towers.add(tower);
     }

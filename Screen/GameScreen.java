@@ -33,10 +33,12 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class GameScreen extends Screen{
     private long window;
     private myTexture background;
+    private myTexture upgradeAndSell;
     private GameStage gameStage;
     private GameField field;
     private Menu menu;
     private int isBuyingTower, isSelectingTower;
+    private int selectionX, selectionY;
     private Player player;
     private boolean isMouseDown = false;
 
@@ -50,6 +52,7 @@ public class GameScreen extends Screen{
         this.menu = new Menu();
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        upgradeAndSell = new myTexture("src/res/GFX/Game/Tower/BuyNUpgrade.png", GL_QUADS);
     }
 
     public void loop(long window) {
@@ -100,20 +103,38 @@ public class GameScreen extends Screen{
         if (isBuyingTower != 0) {
             if ((0 <= cursorX) && (cursorX <= 1366))
                 if ((0 <= cursorY) && (cursorY <= 624)) {
+                    this.isSelectingTower = 0;
                     placeTower(isBuyingTower, cursorX, cursorY);
                     System.out.println("Clicked on map");
                 }
         }
         else
             if ((0 <= cursorX) && (cursorX <= 348) && (624 <= cursorY) && (cursorY <= 768)) {
-                for (int i = 0; i < menu.getButtonList().size(); i++)
-                    if (checkMouseHover(menu.getButtonList().get(i), this.window))
+                List<myTexture> tiles = menu.getButtonList();
+                for (int i = 0; i < tiles.size(); i++)
+                    if (checkMouseHover(tiles.get(i), this.window))
                         if (player.getCash() >= menu.getPriceList().get(i)) {
                             System.out.println("Clicked on item");
                             this.isBuyingTower = i + 1;
+                            this.isSelectingTower = 0;
                             break;
                         }
             }
+            else {
+                List<Tower> towers = field.getTowers();
+                for (int i = 0; i < towers.size(); i++) {
+                    if (checkMouseHover(towers.get(i).getTexture(), this.window)) {
+                        this.isSelectingTower = 1;
+                        this.selectionX = (int) (Math.round(cursorX) / 48 * 48) - 40;
+                        this.selectionY = (int) (Math.round(cursorY) / 48 * 48) - 50;
+                    }
+                }
+            }
+    }
+
+    public void renderUpgradeAndSell() {
+        upgradeAndSell.bind();
+        upgradeAndSell.displayByOtherCoordinate(selectionX, selectionY);
     }
 
     public void render(){
@@ -130,6 +151,9 @@ public class GameScreen extends Screen{
         field.render();
 
         menu.render();
+
+        if (isSelectingTower == 1)
+            renderUpgradeAndSell();
 
         if (glfwGetMouseButton(this.window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_TRUE) {
             if (!isMouseDown) {

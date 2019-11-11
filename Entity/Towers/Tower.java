@@ -21,4 +21,8 @@ public class Tower {
         Vertex bottomRight = new Vertex(0, 1);
         texture.displayByPartitionVertex(topLeft, topRight, bottomLeft, bottomRight);
     }
+
+    public myTexture getTexture() {
+        return texture;
+    }
 }

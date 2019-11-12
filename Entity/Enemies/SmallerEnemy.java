@@ -6,14 +6,14 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 
 public class SmallerEnemy extends Enemy{
     public SmallerEnemy(int initDirection, int x, int y) {
-//        super();
-//        this.hitPoint = 10;
-//        this.amor = 1;
-//        this.damage = 10;
-//        this.speed = 3;
-//        this.bounty = 10;
-//        this.costumes = 4;
-        super(initDirection);
+        super(initDirection, x, y);
+        this.health = 10;
+        this.currentHealth = 10;
+        this.damage = 10;
+        this.movementSpeed = 3;
+        this.bounty = 10;
+        this.animationPartLength = 4;
+        this.animationPart = 1;
         this.texture = new myTexture(
                 "src/res/GFX/Game/Enemy/Smaller Enemy/SmallerEnemy_Walk.png",
                 GL_QUADS, x, y);

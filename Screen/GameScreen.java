@@ -141,6 +141,24 @@ public class GameScreen extends Screen{
         double cursorX = getCursorPosX(this.window);
         double cursorY = getCursorPosY(this.window);
 
+        if (isSelectingTower != 0) {
+            if ((selectionX + 40 <= cursorX) && (cursorX <= selectionX + 80))
+                if ((selectionY + 6 <= cursorY) && (cursorY <= selectionY + 40)) {
+                    field.upgradeTower(player, selectionX, selectionY);
+                    System.out.println("upgrade tower");
+                    isSelectingTower = 0;
+                    return;
+                }
+
+            if ((selectionX + 50 <= cursorX) && (cursorX <= selectionX + 70))
+                if ((selectionY + 100 <= cursorY) && (cursorY <= selectionY + 120)) {
+                    field.sellTower(player, selectionX, selectionY);
+                    System.out.println("sell tower");
+                    isSelectingTower = 0;
+                    return;
+                }
+        }
+
         if ((1193 <= cursorX) && (cursorX <= 1193 + 48 * 2))
             if ((657 <= cursorY) && (cursorY <= 657 + 48 * 2)) {
                 Spawner spawner = field.getSpawner();

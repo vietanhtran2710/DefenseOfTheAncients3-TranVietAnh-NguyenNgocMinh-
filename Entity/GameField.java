@@ -3,6 +3,7 @@ package Entity;
 import Entity.Enemies.Enemy;
 import Entity.Tile.*;
 import Entity.Towers.Tower;
+import Utils.Point;
 import Utils.myTexture;
 import org.lwjgl.system.CallbackI;
 
@@ -112,6 +113,32 @@ public class GameField {
                         }
                     }
             }
+    }
+
+    public void upgradeTower(Player player, int selectionX, int selectionY) {
+        int towerX = selectionX + 40;
+        int towerY = selectionY + 50;
+        for (int i = 0; i < towers.size(); i++) {
+            Point towerTopLeft = towers.get(i).getTexture().getTopLeft();
+            if ((towerX == towerTopLeft.getX()) && (towerY == towerTopLeft.getY())) {
+                if (towers.get(i).getLevel() < 4) {
+                    towers.get(i).setLevel();
+                    return ;
+                }
+            }
+        }
+    }
+
+    public void sellTower(Player player, int selectionX, int selectionY) {
+        int towerX = selectionX + 40;
+        int towerY = selectionY + 50;
+        for (int i = 0; i < towers.size(); i++) {
+            Point towerTopLeft = towers.get(i).getTexture().getTopLeft();
+            if ((towerX == towerTopLeft.getX()) && (towerY == towerTopLeft.getY())) {
+                towers.remove(i);
+                return ;
+            }
+        }
     }
 
     public void render() {

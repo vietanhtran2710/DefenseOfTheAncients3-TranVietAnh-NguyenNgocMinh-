@@ -22,6 +22,14 @@ public class Tower {
         texture.displayByPartitionVertex(topLeft, topRight, bottomLeft, bottomRight);
     }
 
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel() {
+        this.level++;
+    }
+
     public myTexture getTexture() {
         return texture;
     }

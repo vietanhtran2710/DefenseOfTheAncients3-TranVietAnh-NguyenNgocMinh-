@@ -25,7 +25,7 @@ import static org.lwjgl.system.MemoryUtil.*;
 
 public class GUI extends Screen{
     private myTexture background;
-    private myTexture testButton;
+    private myTexture StartButton;
     private myTexture road;
     private long window;
     public boolean isPressed;
@@ -38,9 +38,15 @@ public class GUI extends Screen{
         this.background = new Utils.myTexture(backgroundImageSource, GL_QUADS);
 
         // Button
-        this.testButton = new Utils.myTexture(buttonImageSource, GL_POLYGON, 513, 346);
-        testButton.setDisplayHeight(768 / 10);
-        testButton.setDisplayWidth(1366 / 4);
+        this.StartButton = new Utils.myTexture(buttonImageSource, GL_POLYGON, 541, 343);
+        StartButton.setDisplayHeight(110);
+        StartButton.setDisplayWidth(300);
+
+        System.out.println(StartButton.getTopLeft().getX() + " " + StartButton.getTopLeft().getY());
+        System.out.println(StartButton.getBottomRight().getX() + " " + StartButton.getBottomRight().getY());
+
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     public void loop(long window) {
@@ -68,26 +74,30 @@ public class GUI extends Screen{
                 new Vertex(-1.0f, -1.0f)
         );
 
-        testButton.bind();
-        testButton.displayByVertex(new Vertex(-0.25f, 0.1f),
+        StartButton.bind();
+        StartButton.displayByVertex(
+                new Vertex(-0.25f, 0.1f),
                 new Vertex(0.25f, 0.1f),
-                new Vertex(0.25f, -0.1f),
-                new Vertex(-0.25f, -0.1f)
+                new Vertex(0.25f, -0.2f),
+                new Vertex(-0.25f, -0.2f)
         );
 
-        if (glfwGetMouseButton(this.window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_TRUE)
-            if (onMouseHover)
+        if (glfwGetMouseButton(this.window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_TRUE) {
+            System.out.println(Screen.getCursorPosX(this.window) + " " + Screen.getCursorPosY(this.window));
+            if (onMouseHover) {
                 this.isPressed = true;
+            }
+        }
 
-        if (checkMouseHover(testButton, this.window)) {
+        if (checkMouseHover(StartButton, this.window)) {
             if (!onMouseHover) {
-                testButton.changeImage("src/res/GFX/GUI/Button/button-selected.png");
+                StartButton.changeImage("src/res/GFX/GUI/Button/button-selected.png");
                 onMouseHover = true;
             }
         }
         else
             if (onMouseHover) {
-                testButton.changeImage("src/res/GFX/GUI/Button/button.png");
+                StartButton.changeImage("src/res/GFX/GUI/Button/button.png");
                 onMouseHover = false;
             }
 

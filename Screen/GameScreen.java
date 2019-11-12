@@ -46,7 +46,7 @@ public class GameScreen extends Screen{
     private Player player;
     private boolean isMouseDown = false;
     private int tick, rate = 3;
-    private int FPS = 20;
+    private int FPS = 50;
 
     //private final double FPS = 20.0;
 
@@ -62,9 +62,6 @@ public class GameScreen extends Screen{
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         upgradeAndSell = new myTexture("src/res/GFX/Game/Tower/BuyNUpgrade.png", GL_QUADS);
-
-        // Test Enemy
-        this.field.addEnemy(new BossEnemy(2, 48, 48));
 
     }
 
@@ -99,7 +96,7 @@ public class GameScreen extends Screen{
                 can_render = true;
                 if(frame_time >= 1.0) {
                     frame_time = 0;
-                    System.out.println("FPS: " + frames);
+                    //System.out.println("FPS: " + frames);
                     frames = 0;
                 }
             }

@@ -16,7 +16,8 @@ OOP Game Project
 │   │   ├── Enemy.java
 │   │   ├── NormalEnemy.java
 │   │   ├── SmallerEnemy.java
-│   │   └── TankerEnemy.java
+│   │   ├── TankerEnemy.java
+|   |   └── HealthBar.java
 │   ├── GameEntity.java
 │   ├── GameField.java
 │   ├── GameStage.java
@@ -103,5 +104,6 @@ OOP Game Project
 └── Utils
     ├── myTexture.java
     ├── Point.java
+    ├── Timer.java
     └── Vertex.java
 ```

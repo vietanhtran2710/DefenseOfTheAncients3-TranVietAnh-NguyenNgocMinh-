@@ -49,7 +49,7 @@ public class Spawner extends Road{
     public void spawnEnemy(GameField field) {
         field.getEnemies().add(this.wave.get(this.spawnIndex));
         this.spawnIndex++;
-        this.spawnCooldown = 10;
+        this.spawnCooldown = 15;
         if (this.spawnIndex == this.wave.size())
             this.isSpawning = false;
     }

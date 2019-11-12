@@ -44,7 +44,7 @@ public class GameScreen extends Screen{
     private int selectionX, selectionY;
     private Player player;
     private boolean isMouseDown = false;
-    private int tick, rate = 5;
+    private int tick, rate = 3;
 
     //private final double FPS = 20.0;
 
@@ -146,12 +146,7 @@ public class GameScreen extends Screen{
         if ((1193 <= cursorX) && (cursorX <= 1193 + 48 * 2))
             if ((657 <= cursorY) && (cursorY <= 657 + 48 * 2)) {
                 Spawner spawner = field.getSpawner();
-                myTexture spawnerTexture = spawner.getTexture();
-                spawner.spawnEnemy(field, new BossEnemy(
-                        gameStage.getInitDirection(),
-                        spawnerTexture.getTopLeft().getX(),
-                        spawnerTexture.getTopLeft().getY())
-                );
+                spawner.setSpawning(true);
             }
 
         if (checkMouseHover(menu.getSoundButton(), this.window)) {
@@ -211,6 +206,14 @@ public class GameScreen extends Screen{
     public void updateDisplay() {
         Spawner spawner = field.getSpawner();
         spawner.updateAnimation();
+
+        if (spawner.isSpawning())
+            if (spawner.getSpawnCooldown() == 0) {
+                spawner.spawnEnemy(field);
+            }
+            else {
+                spawner.setSpawnCooldown();
+            }
 
         List<Enemy> enemies = field.getEnemies();
         for (int i = 0; i < enemies.size(); i++) {

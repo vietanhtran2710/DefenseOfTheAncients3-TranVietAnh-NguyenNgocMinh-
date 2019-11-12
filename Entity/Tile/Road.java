@@ -9,6 +9,11 @@ public class Road extends GameTile {
     private int y;
     private String imageSource;
 
+    public Road(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public Road(int bitMask, int x, int y) {
         this.x = x;
         this.y = y;
@@ -31,10 +36,6 @@ public class Road extends GameTile {
             case 12:
                 imageSource = "src/res/GFX/Game/Tilemap/Road/Road_turn34.png";
                 break;
-            case 0:
-                imageSource = "src/res/GFX/Game/Tilemap/Spawner/EnemyHouse.png";
-            case 11:
-                imageSource = "src/res/GFX/Game/Tilemap/Target/Target.png";
         }
         this.texture = new myTexture(this.imageSource, GL_QUADS, this.x, this.y);
     }

@@ -1,8 +1,13 @@
 package Entity.Tile;
 
+import Utils.myTexture;
+
+import static org.lwjgl.opengl.GL11.GL_QUADS;
+
 public class Target extends Road{
 
-    public Target(int bitMask, int x, int y) {
-        super(bitMask, x, y);
+    public Target(int x, int y) {
+        super(x, y);
+        this.texture = new myTexture("src/res/GFX/Game/Tilemap/Target/Target.png", GL_QUADS, x, y);
     }
 }

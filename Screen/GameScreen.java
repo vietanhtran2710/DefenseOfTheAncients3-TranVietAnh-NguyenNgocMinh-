@@ -1,11 +1,14 @@
 package Screen;
 
 import Entity.*;
+import Entity.Enemies.BossEnemy;
+import Entity.Enemies.Enemy;
 import Entity.Menu;
 import Entity.Tile.GameTile;
 import java.util.List;
 import java.util.ArrayList;
 
+import Entity.Tile.Spawner;
 import Entity.Towers.MachineGunTower;
 import Entity.Towers.NormalTower;
 import Entity.Towers.SniperTower;
@@ -41,9 +44,11 @@ public class GameScreen extends Screen{
     private int selectionX, selectionY;
     private Player player;
     private boolean isMouseDown = false;
+    private int tick, rate = 5;
 
     public void initLoop () {
         this.isBuyingTower = 0; this.isSelectingTower = 0;
+        this.tick = 0;
         String backgroundImageSource = "src/res/GFX/Game/Tilemap/Ground/Background.png";
         this.background = new Utils.myTexture(backgroundImageSource, GL_QUADS);
         this.gameStage = new GameStage("src/mapInfo.txt");
@@ -101,7 +106,41 @@ public class GameScreen extends Screen{
     public void mouseClickHandle() {
         double cursorX = getCursorPosX(this.window);
         double cursorY = getCursorPosY(this.window);
+
+        if ((1193 <= cursorX) && (cursorX <= 1193 + 48 * 2))
+            if ((657 <= cursorY) && (cursorY <= 657 + 48 * 2)) {
+                Spawner spawner = field.getSpawner();
+                myTexture spawnerTexture = spawner.getTexture();
+                spawner.spawnEnemy(field, new BossEnemy(
+                        gameStage.getInitDirection(),
+                        spawnerTexture.getTopLeft().getX(),
+                        spawnerTexture.getTopLeft().getY())
+                );
+            }
+
+        if (checkMouseHover(menu.getSoundButton(), this.window)) {
+            menu.setMuted(!menu.isMuted());
+            if (menu.isMuted())
+                menu.getSoundButton().changeImage("src/res/GFX/GUI/Button/Sound_off.png");
+            else
+                menu.getSoundButton().changeImage("src/res/GFX/GUI/Button/Sound_on.png");
+            return ;
+        }
+
         System.out.println(cursorX + " " + cursorY);
+
+        if ((0 <= cursorX) && (cursorX <= 348) && (624 <= cursorY) && (cursorY <= 768)) {
+            List<myTexture> tiles = menu.getButtonList();
+            for (int i = 0; i < tiles.size(); i++)
+                if (checkMouseHover(tiles.get(i), this.window))
+                    if (player.getCash() >= menu.getPriceList().get(i)) {
+                        System.out.println("Clicked on item");
+                        this.isBuyingTower = i + 1;
+                        this.isSelectingTower = 0;
+                        return ;
+                    }
+        }
+
         if (isBuyingTower != 0) {
             if ((0 <= cursorX) && (cursorX <= 1366))
                 if ((0 <= cursorY) && (cursorY <= 624)) {
@@ -111,18 +150,7 @@ public class GameScreen extends Screen{
                 }
         }
         else
-            if ((0 <= cursorX) && (cursorX <= 348) && (624 <= cursorY) && (cursorY <= 768)) {
-                List<myTexture> tiles = menu.getButtonList();
-                for (int i = 0; i < tiles.size(); i++)
-                    if (checkMouseHover(tiles.get(i), this.window))
-                        if (player.getCash() >= menu.getPriceList().get(i)) {
-                            System.out.println("Clicked on item");
-                            this.isBuyingTower = i + 1;
-                            this.isSelectingTower = 0;
-                            break;
-                        }
-            }
-            else {
+            {
                 List<Tower> towers = field.getTowers();
                 boolean towerClicked = false;
                 for (int i = 0; i < towers.size(); i++) {
@@ -144,8 +172,26 @@ public class GameScreen extends Screen{
         upgradeAndSell.displayByOtherCoordinate(selectionX, selectionY);
     }
 
+    public void updateDisplay() {
+        Spawner spawner = field.getSpawner();
+        spawner.updateAnimation();
+
+        List<Enemy> enemies = field.getEnemies();
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).updateAnimation();
+            enemies.get(i).move();
+        }
+        field.checkEnemyDirection();
+    }
+
     public void render(){
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
+
+        tick++;
+        if (tick == rate) {
+            updateDisplay();
+            tick = 0;
+        }
 
         background.bind();
         background.displayByVertex(

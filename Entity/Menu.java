@@ -80,4 +80,8 @@ public class Menu {
     public void setMuted(boolean muted) {
         isMuted = muted;
     }
+
+    public myTexture getSoundButton() {
+        return soundButton;
+    }
 }

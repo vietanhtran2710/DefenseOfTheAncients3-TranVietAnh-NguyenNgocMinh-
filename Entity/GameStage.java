@@ -9,6 +9,7 @@ import java.util.List;
 public class GameStage {
     private int initMoney;
     private List<List<Integer>> mapArr;
+    private int initDirection = 2;
 
     private static String readLineByLine(String fileName) {
         try {
@@ -41,5 +42,9 @@ public class GameStage {
 
     public List<List<Integer>> getMapArr() {
         return mapArr;
+    }
+
+    public int getInitDirection() {
+        return initDirection;
     }
 }

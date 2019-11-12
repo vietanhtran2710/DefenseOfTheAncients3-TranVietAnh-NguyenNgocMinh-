@@ -3,10 +3,6 @@ package Screen;
 import Entity.*;
 import Entity.Enemies.BossEnemy;
 import Entity.Enemies.Enemy;
-<<<<<<< HEAD
-=======
-import Entity.Enemies.NormalEnemy;
->>>>>>> 11980fe4d18fd81c7a05c34d7a1696f0b5dc42cc
 import Entity.Menu;
 import Entity.Tile.GameTile;
 import java.util.List;

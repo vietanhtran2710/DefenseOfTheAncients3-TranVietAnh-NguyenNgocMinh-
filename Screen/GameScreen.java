@@ -3,6 +3,7 @@ package Screen;
 import Entity.*;
 import Entity.Enemies.BossEnemy;
 import Entity.Enemies.Enemy;
+import Entity.Enemies.SmallerEnemy;
 import Entity.Menu;
 import Entity.Tile.GameTile;
 import java.util.List;
@@ -45,6 +46,7 @@ public class GameScreen extends Screen{
     private Player player;
     private boolean isMouseDown = false;
     private int tick, rate = 3;
+    private int FPS = 20;
 
     //private final double FPS = 20.0;
 
@@ -62,7 +64,7 @@ public class GameScreen extends Screen{
         upgradeAndSell = new myTexture("src/res/GFX/Game/Tower/BuyNUpgrade.png", GL_QUADS);
 
         // Test Enemy
-        //this.field.addEnemy(new BossEnemy(48, 48));
+        this.field.addEnemy(new BossEnemy(2, 48, 48));
 
     }
 
@@ -74,39 +76,38 @@ public class GameScreen extends Screen{
         initLoop();
 
         // Limit frame per second
-//        double frame_cap = 1.0 / FPS;
-//        double time = Timer.getTime();
-//        double unprocessed = 0;
-//
-//        double frame_time = 0;
-//        double frames = 0;
+        double frame_cap = 1.0 / FPS;
+        double time = Timer.getTime();
+        double unprocessed = 0;
+
+        double frame_time = 0;
+        double frames = 0;
 
         // Run the rendering loop until the user has attempted to close
         // the window or has pressed the ESCAPE key.
         while ( !glfwWindowShouldClose(this.window)) {
-            render();
             // limit frame
-//            boolean can_render = false;
-//            double time_2 = Timer.getTime();
-//            double timePassed = time_2 - time;
-//            unprocessed += timePassed;
-//            frame_time += timePassed;
-//            time = time_2;
-//
-//            while (unprocessed >= frame_cap) {
-//                unprocessed -= frame_cap;
-//                can_render = true;
-//                if(frame_time >= 1.0) {
-//                    frame_time = 0;
-//                    System.out.println("FPS: " + frames);
-//                    frames = 0;
-//                }
-//            }
-//
-//            if (can_render) {
-//                render();
-//                frames++;
-//            }
+            boolean can_render = false;
+            double time_2 = Timer.getTime();
+            double timePassed = time_2 - time;
+            unprocessed += timePassed;
+            frame_time += timePassed;
+            time = time_2;
+
+            while (unprocessed >= frame_cap) {
+                unprocessed -= frame_cap;
+                can_render = true;
+                if(frame_time >= 1.0) {
+                    frame_time = 0;
+                    System.out.println("FPS: " + frames);
+                    frames = 0;
+                }
+            }
+
+            if (can_render) {
+                render();
+                frames++;
+            }
         }
     }
 

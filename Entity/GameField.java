@@ -13,16 +13,22 @@ public class GameField {
     private List<GameTile> tileList;
     private List<Tower> towers;
     private List<Enemy> enemies;
+<<<<<<< HEAD
     private Spawner spawner;
     private Target target;
     private Path path;
+=======
+>>>>>>> 11980fe4d18fd81c7a05c34d7a1696f0b5dc42cc
 
     public GameField(GameStage gameStage) {
         tileList = new ArrayList<>();
         towers = new ArrayList<>();
         enemies = new ArrayList<>();
+<<<<<<< HEAD
         spawner = null; target = null;
         path = new Path();
+=======
+>>>>>>> 11980fe4d18fd81c7a05c34d7a1696f0b5dc42cc
 
         int[][] direction = {
                 {0, -1},
@@ -118,9 +124,13 @@ public class GameField {
             tileList.get(i).render();
         for (int i = 0 ; i < towers.size(); i++)
             towers.get(i).render();
+<<<<<<< HEAD
         spawner.render();
         target.render();
         for (int i = 0; i < enemies.size(); i++)
+=======
+        for (int i = 0 ; i < enemies.size(); i++)
+>>>>>>> 11980fe4d18fd81c7a05c34d7a1696f0b5dc42cc
             enemies.get(i).render();
     }
 
@@ -132,6 +142,7 @@ public class GameField {
         return towers;
     }
 
+<<<<<<< HEAD
     public List<Enemy> getEnemies() {
         return enemies;
     }
@@ -139,8 +150,15 @@ public class GameField {
     public Spawner getSpawner() {
         return spawner;
     }
+=======
+    public List<Enemy> getEnemies() {return enemies;}
+>>>>>>> 11980fe4d18fd81c7a05c34d7a1696f0b5dc42cc
 
     public void addTower(Tower tower) {
         towers.add(tower);
+    }
+
+    public void addEnemy(Enemy enemy) {
+        enemies.add(enemy);
     }
 }

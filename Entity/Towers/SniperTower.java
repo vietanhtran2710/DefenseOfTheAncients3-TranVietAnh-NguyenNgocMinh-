@@ -12,6 +12,14 @@ public class SniperTower extends Tower {
                 GL_QUADS, x, y);
         this.texture.setDisplayHeight(48);
         this.texture.setDisplayWidth(48);
+
+        this.bulletPrototype = new Bullet(
+                "src/res/GFX/Game/Tower/Sniper Tower/SniperBullet.png",
+                20, 10, x, y
+        );
+
+        this.shootCooldown = 0;
+        this.cooldownTime = 10;
     }
 
 }

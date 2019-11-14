@@ -1,5 +1,7 @@
 package Entity;
 
+import java.awt.*;
+
 public class Player {
     private int live;
     private int cash;

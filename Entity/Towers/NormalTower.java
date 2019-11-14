@@ -13,6 +13,14 @@ public class NormalTower extends Tower {
                 GL_QUADS, x, y);
         this.texture.setDisplayHeight(48);
         this.texture.setDisplayWidth(48);
+
+        this.bulletPrototype = new Bullet(
+                "src/res/GFX/Game/Tower/Normal Tower/NormalBullet.png",
+                10, 5, x, y
+                );
+
+        this.shootCooldown = 0;
+        this.cooldownTime = 10;
     }
 
 }

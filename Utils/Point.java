@@ -30,4 +30,10 @@ public class Point {
         this.x = x;
         this.y = y;
     }
+
+    public double distanceTo(Point other) {
+        return Math.sqrt(
+                (this.x - other.getX()) * (this.x - other.getX()) - (this.y - other.getY()) * (this.y - other.getY())
+        );
+    }
 }

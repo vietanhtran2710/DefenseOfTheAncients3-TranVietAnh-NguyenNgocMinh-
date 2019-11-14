@@ -10,10 +10,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 import Entity.Tile.Spawner;
-import Entity.Towers.MachineGunTower;
-import Entity.Towers.NormalTower;
-import Entity.Towers.SniperTower;
-import Entity.Towers.Tower;
+import Entity.Towers.*;
+import Utils.Point;
 import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
@@ -47,6 +45,8 @@ public class GameScreen extends Screen{
     private boolean isMouseDown = false;
     private int tick, rate = 3;
     private int FPS = 50;
+    private int dummyX = 0;
+    private int dummyY = 0;
 
     //private final double FPS = 20.0;
 
@@ -140,6 +140,8 @@ public class GameScreen extends Screen{
     public void mouseClickHandle() {
         double cursorX = getCursorPosX(this.window);
         double cursorY = getCursorPosY(this.window);
+        dummyX = (int)cursorX;
+        dummyY = (int)cursorY;
 
         if (isSelectingTower != 0) {
             if ((selectionX + 40 <= cursorX) && (cursorX <= selectionX + 80))
@@ -237,6 +239,63 @@ public class GameScreen extends Screen{
             enemies.get(i).move();
         }
         field.checkEnemyDirection();
+
+        List<Tower> towers = field.getTowers();
+        for (int i = 0; i < towers.size(); i++) {
+            Tower currentTower = towers.get(i);
+            if (currentTower.getShootCooldown() != 0)
+                currentTower.decreaseCooldown();
+            Point towerPosition = currentTower.getTexture().getTopLeft();
+            Enemy currentTarget = currentTower.getTarget();
+            if (currentTower.getTarget() != null) {
+                Point enemyPosition = currentTarget.getTexture().getTopLeft();
+                if (towerPosition.distanceTo(enemyPosition) > currentTower.getRange())
+                    currentTower.setTarget(null);
+            }
+            if (currentTower.getTarget() == null) {
+                List<Enemy> enemyList = field.getEnemies();
+                for (int j = 0; j < enemyList.size(); j++) {
+                    currentTarget = enemyList.get(j);
+                    Point enemyPosition = currentTarget.getTexture().getTopLeft();
+                    if (towerPosition.distanceTo(enemyPosition) <= currentTower.getRange())
+                        currentTower.setTarget(currentTarget);
+                }
+            }
+        }
+
+        for (int i = 0; i < towers.size(); i++) {
+            Tower currentTower = towers.get(i);
+            //currentTower.setTarget(new BossEnemy(0, dummyX, dummyY));
+            if ((currentTower.getShootCooldown() == 0) && (currentTower.getTarget() != null)) {
+                currentTower.shoot();
+                currentTower.setCooldown();
+            }
+        }
+
+        List<Integer> removeIndex = new ArrayList<>();
+        for (int i = 0; i < towers.size(); i++) {
+            Tower currentTower = towers.get(i);
+            List<Bullet> bullets = currentTower.getBulletList();
+            for (int j = 0; j < bullets.size(); j++) {
+                Bullet currentBullet = bullets.get(j);
+                if (currentBullet.getTexture().getTopLeft().distanceTo(
+                        currentBullet.getTarget().getTexture().getTopLeft()) <= currentBullet.getSpeed()) {
+                    currentBullet.hit();
+                    if (currentBullet.getTarget().getCurrentHealth() <= 0)
+                        currentTower.setTarget(null);
+                    bullets.remove(j); j--;
+                }
+                else
+                    bullets.get(j).move();
+            }
+        }
+
+        for (int i = 0; i < enemies.size(); i++)
+            if (enemies.get(i).getCurrentHealth() <= 0) {
+                //field.getEnemies().remove(i);
+                enemies.remove(i);
+                i--;
+            }
     }
 
     public void render(){

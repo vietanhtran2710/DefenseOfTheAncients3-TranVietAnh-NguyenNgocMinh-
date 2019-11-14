@@ -44,8 +44,8 @@ public class Enemy {
             this.animationPart = 1;
     }
 
-    public int getHealth() {
-        return health;
+    public int getCurrentHealth() {
+        return currentHealth;
     }
 
     public void move() {
@@ -73,8 +73,8 @@ public class Enemy {
         return movementSpeed;
     }
 
-    public void setHealth(int health) {
-        this.health = health;
+    public void setCurrentHealth(int health) {
+        this.currentHealth = health;
     }
 
     public void setMovementSpeed(int movementSpeed) {

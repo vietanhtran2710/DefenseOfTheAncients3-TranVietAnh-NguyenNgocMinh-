@@ -13,10 +13,12 @@ public class myTexture {
     private int width, height;
     private int displayWidth, displayHeight;
     private int mode;
+    private String source;
     private Point topLeft, topRight, bottomLeft, bottomRight;
 
     public myTexture(String texturePath, int mode) {
         this.mode = mode;
+        this.source = texturePath;
         this.topLeft = new Point(0, 0);
 
         IntBuffer width = BufferUtils.createIntBuffer(1);
@@ -49,6 +51,7 @@ public class myTexture {
 
     public myTexture(String texturePath, int mode, int topLeftX, int topLeftY) {
         this.mode = mode;
+        this.source = texturePath;
         this.topLeft = new Point(topLeftX, topLeftY);
 
         IntBuffer width = BufferUtils.createIntBuffer(1);
@@ -290,6 +293,10 @@ public class myTexture {
 
     public Point getBottomRight() {
         return bottomRight;
+    }
+
+    public String getSource() {
+        return source;
     }
 
     public void setTopLeft(Point topLeft) {

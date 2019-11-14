@@ -17,7 +17,7 @@ public class HealthBar {
     public void render(String color, int health, int currentHealth, int x, int y) {
         red = new myTexture("src/res/GFX/Game/Enemy/HealthBar/HealthBar_red.png", GL_QUADS, x, y);
         green = new myTexture("src/res/GFX/Game/Enemy/HealthBar/HealthBar_green.png", GL_QUADS, x, y);
-        emptyBar = new myTexture("src/res/GFX/Game/Enemy/HealthBar/HealthBar_red.png", GL_QUADS, x, y);
+        emptyBar = new myTexture("src/res/GFX/Game/Enemy/HealthBar/HealthBar_empty.png", GL_QUADS, x, y);
 
         Vertex topLeft = new Vertex(0, 0);
         Vertex topRight = new Vertex(1, 0);

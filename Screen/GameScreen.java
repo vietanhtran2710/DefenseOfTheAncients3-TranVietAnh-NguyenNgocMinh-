@@ -42,7 +42,7 @@ public class GameScreen extends Screen{
     private int isBuyingTower, isSelectingTower;
     private int selectionX, selectionY;
     private Player player;
-    private boolean isMouseDown = false;
+    private boolean isMouseDown = false, gameStarted = false;
     private int tick, rate = 3;
     private int FPS = 50;
     private int dummyX = 0;
@@ -55,9 +55,10 @@ public class GameScreen extends Screen{
         this.tick = 0;
         String backgroundImageSource = "src/res/GFX/Game/Tilemap/Ground/Background.png";
         this.background = new Utils.myTexture(backgroundImageSource, GL_QUADS);
-        this.gameStage = new GameStage("src/mapInfo.txt");
+        this.gameStage = new GameStage("src/mapInfo.txt", "src/waveInfo.txt");
         this.player = new Player(gameStage.getMoney());
         this.field = new GameField(gameStage);
+        this.field.getSpawner().setWave(gameStage.getWaves()[gameStage.getWavesIndex()]);
         this.menu = new Menu();
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -106,6 +107,14 @@ public class GameScreen extends Screen{
                 frames++;
             }
         }
+    }
+
+    public void gameWon() {
+
+    }
+
+    public void gameLost() {
+
     }
 
     public void placeTower(int tower, double x, double y) {
@@ -164,6 +173,7 @@ public class GameScreen extends Screen{
         if ((1193 <= cursorX) && (cursorX <= 1193 + 48 * 2))
             if ((657 <= cursorY) && (cursorY <= 657 + 48 * 2)) {
                 Spawner spawner = field.getSpawner();
+                this.gameStarted = true;
                 spawner.setSpawning(true);
             }
 
@@ -234,6 +244,14 @@ public class GameScreen extends Screen{
             }
 
         List<Enemy> enemies = field.getEnemies();
+        if ((enemies.size() == 0) && (!spawner.isSpawning()) && (gameStarted)) {
+            gameStarted = false;
+            gameStage.increaseWavesIndex();
+            if (gameStage.getWavesIndex() == gameStage.getWaves().length) {
+                gameWon(); return;
+            }
+            else spawner.setWave(gameStage.getWaves()[gameStage.getWavesIndex()]);
+        }
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).updateAnimation();
             enemies.get(i).move();

@@ -10,6 +10,8 @@ public class GameStage {
     private int initMoney;
     private List<List<Integer>> mapArr;
     private int initDirection = 2;
+    private String[] waves;
+    private int wavesIndex;
 
     private static String readLineByLine(String fileName) {
         try {
@@ -23,8 +25,11 @@ public class GameStage {
         return null;
     }
 
-    public GameStage(String mapPath) {
+    public GameStage(String mapPath, String wavePath) {
         String inputData = readLineByLine(mapPath);
+        String waveData = readLineByLine(wavePath);
+        waves = waveData.split("\n");
+        wavesIndex = 0;
         String[] data = inputData.split("\n");
         this.initMoney = Integer.parseInt(data[0].trim());
         mapArr = new ArrayList<>();
@@ -42,6 +47,18 @@ public class GameStage {
 
     public List<List<Integer>> getMapArr() {
         return mapArr;
+    }
+
+    public String[] getWaves() {
+        return waves;
+    }
+
+    public int getWavesIndex() {
+        return wavesIndex;
+    }
+
+    public void increaseWavesIndex() {
+        this.wavesIndex++;
     }
 
     public int getInitDirection() {

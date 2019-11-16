@@ -40,7 +40,6 @@ public class GameField {
                 else
                     if (mapInfo.get(i).get(j) == 9) {
                         spawner =  new Spawner(j * 48, i * 48);
-                        spawner.setWave("3 3 3 3 3 3 3 3 3");
                     }
                     else
                         if (mapInfo.get(i).get(j) == 8) {

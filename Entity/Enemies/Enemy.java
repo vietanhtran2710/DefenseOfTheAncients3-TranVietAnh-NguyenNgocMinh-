@@ -1,5 +1,6 @@
 package Entity.Enemies;
 
+import Utils.Point;
 import Utils.Vertex;
 import Utils.myTexture;
 
@@ -93,6 +94,10 @@ public class Enemy {
 
     public int getY() {
         return y;
+    }
+
+    public Point getCoordinate() {
+        return this.texture.getTopLeft();
     }
 
     public int getBounty() {

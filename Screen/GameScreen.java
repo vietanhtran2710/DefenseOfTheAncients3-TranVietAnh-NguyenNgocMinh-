@@ -240,6 +240,7 @@ public class GameScreen extends Screen{
     }
 
     public void updateDisplay() {
+        //Spawner animation
         Spawner spawner = field.getSpawner();
         spawner.updateAnimation();
 
@@ -251,6 +252,9 @@ public class GameScreen extends Screen{
                 spawner.setSpawnCooldown();
             }
 
+        List<Tower> towers = field.getTowers();
+
+        //Set up new wave
         List<Enemy> enemies = field.getEnemies();
         if ((enemies.size() == 0) && (!spawner.isSpawning()) && (gameStarted)) {
             gameStarted = false;
@@ -260,21 +264,51 @@ public class GameScreen extends Screen{
             }
             else spawner.setWave(gameStage.getWaves()[gameStage.getWavesIndex()]);
         }
+
+        //Bullets hitting
+        for (int i = 0; i < towers.size(); i++) {
+            Tower currentTower = towers.get(i);
+            List<Bullet> bullets = currentTower.getBulletList();
+            for (int j = 0; j < bullets.size(); j++) {
+                Bullet currentBullet = bullets.get(j);
+                if (currentBullet.isHit()) {
+                    System.out.println("hit");
+                    currentBullet.hit();
+                    if (currentBullet.getTarget().getCurrentHealth() <= 0)
+                        currentTower.setTarget(null);
+                    bullets.remove(j); j--;
+                }
+            }
+        }
+
+        for (int i = 0; i < towers.size(); i++) {
+            Tower currentTower = towers.get(i);
+            List<Bullet> bullets = currentTower.getBulletList();
+            for (int j = 0; j < bullets.size(); j++) {
+                Bullet currentBullet = bullets.get(j);
+                if (currentBullet.getTarget().getCurrentHealth() <= 0) {
+                    bullets.remove(j); j--;
+                }
+            }
+        }
+
+        //Move enemies and update new direction on the road
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).updateAnimation();
             enemies.get(i).move();
         }
         field.checkEnemyDirection();
 
-        List<Tower> towers = field.getTowers();
+
+        //Update target for towers
         for (int i = 0; i < towers.size(); i++) {
             Tower currentTower = towers.get(i);
             if (currentTower.getShootCooldown() != 0)
                 currentTower.decreaseCooldown();
-            Point towerPosition = currentTower.getTexture().getTopLeft();
+            Point towerPosition = currentTower.getCoordinate();
             Enemy currentTarget = currentTower.getTarget();
             if (currentTower.getTarget() != null) {
-                Point enemyPosition = currentTarget.getTexture().getTopLeft();
+                Point enemyPosition = currentTarget.getCoordinate();
                 if (towerPosition.distanceTo(enemyPosition) > currentTower.getRange())
                     currentTower.setTarget(null);
             }
@@ -282,13 +316,14 @@ public class GameScreen extends Screen{
                 List<Enemy> enemyList = field.getEnemies();
                 for (int j = 0; j < enemyList.size(); j++) {
                     currentTarget = enemyList.get(j);
-                    Point enemyPosition = currentTarget.getTexture().getTopLeft();
+                    Point enemyPosition = currentTarget.getCoordinate();
                     if (towerPosition.distanceTo(enemyPosition) <= currentTower.getRange())
                         currentTower.setTarget(currentTarget);
                 }
             }
         }
 
+        //Towers shooting
         for (int i = 0; i < towers.size(); i++) {
             Tower currentTower = towers.get(i);
             //currentTower.setTarget(new BossEnemy(0, dummyX, dummyY));
@@ -298,27 +333,17 @@ public class GameScreen extends Screen{
             }
         }
 
-        List<Integer> removeIndex = new ArrayList<>();
+        //Bullets moving
         for (int i = 0; i < towers.size(); i++) {
             Tower currentTower = towers.get(i);
             List<Bullet> bullets = currentTower.getBulletList();
-            for (int j = 0; j < bullets.size(); j++) {
-                Bullet currentBullet = bullets.get(j);
-                if (currentBullet.getTexture().getTopLeft().distanceTo(
-                        currentBullet.getTarget().getTexture().getTopLeft()) <= currentBullet.getSpeed()) {
-                    currentBullet.hit();
-                    if (currentBullet.getTarget().getCurrentHealth() <= 0)
-                        currentTower.setTarget(null);
-                    bullets.remove(j); j--;
-                }
-                else
-                    bullets.get(j).move();
-            }
+            System.out.println(bullets.size());
+            for (int j = 0; j < bullets.size(); j++)
+                bullets.get(j).move();
         }
 
         for (int i = 0; i < enemies.size(); i++)
             if (enemies.get(i).getCurrentHealth() <= 0) {
-                //field.getEnemies().remove(i);
                 enemies.remove(i);
                 i--;
             }

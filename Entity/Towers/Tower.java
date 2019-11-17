@@ -3,6 +3,7 @@ package Entity.Towers;
 import Entity.Enemies.Enemy;
 import Utils.Vertex;
 import Utils.myTexture;
+import Utils.Point;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,6 +73,10 @@ public class Tower {
 
     public void setTarget(Enemy target) {
         this.target = target;
+    }
+
+    public Point getCoordinate() {
+        return this.texture.getTopLeft();
     }
 
     public myTexture getTexture() {

@@ -31,9 +31,19 @@ public class Point {
         this.y = y;
     }
 
+    public void setCoordinate(Point newCoordinate) {
+        this.x = newCoordinate.x;
+        this.y = newCoordinate.y;
+    }
+
+    public boolean equals(Point other) {
+        return (this.x == other.x) && (this.y == other.y);
+    }
+
     public double distanceTo(Point other) {
         return Math.sqrt(
-                (this.x - other.getX()) * (this.x - other.getX()) - (this.y - other.getY()) * (this.y - other.getY())
+                (this.x - other.getX()) * (this.x - other.getX()) +
+                        (this.y - other.getY()) * (this.y - other.getY())
         );
     }
 }

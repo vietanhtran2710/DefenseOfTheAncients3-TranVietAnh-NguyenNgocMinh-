@@ -28,11 +28,15 @@ public class Sound {
     private int bufferPointer;
     private int sourcePointer;
 
+    private boolean isPlay;
+
     public Sound(String filePath) {
         this.filePath = filePath;
     }
 
     public void init() {
+        this.isPlay = false;
+
         this.defaultDeviceName = alcGetString(0, ALC_DEFAULT_DEVICE_SPECIFIER);
         this.device = alcOpenDevice(defaultDeviceName);
 
@@ -83,19 +87,17 @@ public class Sound {
         //Play the sound
         alSourcePlay(sourcePointer);
 
-        //try {
-            //Wait for a second
-            //Thread.sleep(milisecond);
-        //} catch (InterruptedException ignored) {
-        //}
-
+        this.isPlay = true;
     }
 
     public void delete() {
-        alDeleteSources(sourcePointer);
-        alDeleteBuffers(bufferPointer);
-        alcDestroyContext(context);
-        alcCloseDevice(device);
+        if (this.isPlay) {
+            alDeleteSources(sourcePointer);
+            alDeleteBuffers(bufferPointer);
+            alcDestroyContext(context);
+            alcCloseDevice(device);
+            this.isPlay = false;
+        }
     }
 
 }

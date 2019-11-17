@@ -19,7 +19,7 @@ public class myText {
     }
 
     private void init () {
-            this.width = new HashMap<Character, Integer>();
+        this.width = new HashMap<Character, Integer>();
         this.width.put(' ', 40);
         this.width.put('a', 41);
         this.width.put('b', 39);

@@ -13,13 +13,13 @@ public class Menu {
     private List<Integer> priceList;
     private final int playX = 1193;
     private int playY = 657;
-    private boolean isMuted = true;
+    private boolean isMuted = false;
     private myTexture soundButton;
 
     public Menu() {
         buttonList = new ArrayList<>();
         priceList = new ArrayList<>();
-        soundButton = new myTexture("src/res/GFX/GUI/Button/Sound_off.png", GL_QUADS, 1193 - 20 - 48 * 2, 657);
+        soundButton = new myTexture("src/res/GFX/GUI/Button/Sound_on.png", GL_QUADS, 1193 - 20 - 48 * 2, 657);
         soundButton.setDisplayWidth(48 * 2);
         soundButton.setDisplayHeight(48 * 2);
         myTexture normalTowerTexture = new myTexture(

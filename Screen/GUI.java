@@ -30,6 +30,7 @@ public class GUI extends Screen{
     private long window;
     public boolean isPressed;
     public boolean onMouseHover = false;
+    public Music backgroundMusic;
 
     public void initLoop () {
         String backgroundImageSource = "src/res/GFX/GUI/Background/Background_main_screen.jpg";
@@ -44,6 +45,8 @@ public class GUI extends Screen{
 
         System.out.println(StartButton.getTopLeft().getX() + " " + StartButton.getTopLeft().getY());
         System.out.println(StartButton.getBottomRight().getX() + " " + StartButton.getBottomRight().getY());
+
+        backgroundMusic = new Music("src/res/SFX/Underground_Prep.ogg");
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -61,6 +64,8 @@ public class GUI extends Screen{
         while ( !glfwWindowShouldClose(this.window) && !this.isPressed) {
             render();
         }
+
+        this.backgroundMusic.delete();
     }
 
     public void render(){
@@ -100,7 +105,7 @@ public class GUI extends Screen{
                 StartButton.changeImage("src/res/GFX/GUI/Button/button.png");
                 onMouseHover = false;
             }
-
+        backgroundMusic.playFor(52, false);
         glfwSwapBuffers(window); // swap the color buffers
 
         // Poll for window events. The key callback above will only be

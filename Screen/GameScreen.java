@@ -48,9 +48,13 @@ public class GameScreen extends Screen{
     private int dummyX = 0;
     private int dummyY = 0;
 
+    private Music backgroundMusic;
+    private Music loseMusic;
+    private Music winMusic;
+
     //private final double FPS = 20.0;
 
-    public void initLoop () {
+    public void initLoop () throws Exception {
         this.isBuyingTower = 0; this.isSelectingTower = 0;
         this.tick = 0;
         String backgroundImageSource = "src/res/GFX/Game/Tilemap/Ground/Background.png";
@@ -64,9 +68,12 @@ public class GameScreen extends Screen{
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         upgradeAndSell = new myTexture("src/res/GFX/Game/Tower/BuyNUpgrade.png", GL_QUADS);
 
+        backgroundMusic = new Music("src/res/SFX/Underground_Battle.ogg");
+        loseMusic = new Music("src/res/SFX/Death.ogg");
+        winMusic = new Music("src/res/SFX/Victory_Theme.ogg");
     }
 
-    public void loop(long window) {
+    public void loop(long window) throws Exception {
         this.window = window;
         glClearColor( 0.0f, 0.0f, 0.0f, 0.0f);
 
@@ -107,14 +114,15 @@ public class GameScreen extends Screen{
                 frames++;
             }
         }
+        this.backgroundMusic.delete();
     }
 
     public void gameWon() {
-
+        this.winMusic.playFor(56, false);
     }
 
     public void gameLost() {
-
+        this.loseMusic.playFor(2, false);
     }
 
     public void placeTower(int tower, double x, double y) {
@@ -317,6 +325,8 @@ public class GameScreen extends Screen{
     }
 
     public void render(){
+
+        backgroundMusic.playLoop(56, this.menu.isMuted());
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
         tick++;

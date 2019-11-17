@@ -21,7 +21,7 @@ public class ShowScreen {
     private long window;
     private boolean isFullsrceen = false;
 
-    public void run() throws FileNotFoundException {
+    public void run() throws Exception {
 
         System.out.print("Game Start!");
 

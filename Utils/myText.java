@@ -96,7 +96,7 @@ public class myText {
         for (int i = 0; i < this.text.length(); i++) {
             if (text.charAt(i) != '\n') {
                 myCharacter c = new myCharacter();
-                c.render(text.charAt(i), this.scale, x + extraSpace, tmp_y);
+                c.render(text.charAt(i), this.scale, x + extraSpace, tmp_y, this.width.get(text.charAt(i)));
                 extraSpace += (int) (this.width.get(text.charAt(i)) * this.scale);
             }
             else {

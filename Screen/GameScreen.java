@@ -135,7 +135,7 @@ public class GameScreen extends Screen{
                 validPosition = false; break;
             }
         }
-        System.out.println(validPosition);
+        //System.out.println(validPosition);
         if (validPosition) {
             int posX = (int) (Math.round(x) / 48 * 48);
             int posY = (int) (Math.round(y) / 48 * 48);
@@ -166,7 +166,7 @@ public class GameScreen extends Screen{
             if ((selectionX + 40 <= cursorX) && (cursorX <= selectionX + 80))
                 if ((selectionY + 6 <= cursorY) && (cursorY <= selectionY + 40)) {
                     field.upgradeTower(player, selectionX, selectionY);
-                    System.out.println("upgrade tower");
+                    //System.out.println("upgrade tower");
                     isSelectingTower = 0;
                     return;
                 }
@@ -174,7 +174,7 @@ public class GameScreen extends Screen{
             if ((selectionX + 50 <= cursorX) && (cursorX <= selectionX + 70))
                 if ((selectionY + 100 <= cursorY) && (cursorY <= selectionY + 120)) {
                     field.sellTower(player, selectionX, selectionY);
-                    System.out.println("sell tower");
+                    //System.out.println("sell tower");
                     isSelectingTower = 0;
                     return;
                 }
@@ -196,14 +196,14 @@ public class GameScreen extends Screen{
             return ;
         }
 
-        System.out.println(cursorX + " " + cursorY);
+        //System.out.println(cursorX + " " + cursorY);
 
         if ((0 <= cursorX) && (cursorX <= 348) && (624 <= cursorY) && (cursorY <= 768)) {
             List<myTexture> tiles = menu.getButtonList();
             for (int i = 0; i < tiles.size(); i++)
                 if (checkMouseHover(tiles.get(i), this.window))
                     if (player.getCash() >= menu.getPriceList().get(i)) {
-                        System.out.println("Clicked on item");
+                        //System.out.println("Clicked on item");
                         this.isBuyingTower = i + 1;
                         this.isSelectingTower = 0;
                         return ;
@@ -215,7 +215,7 @@ public class GameScreen extends Screen{
                 if ((0 <= cursorY) && (cursorY <= 624)) {
                     this.isSelectingTower = 0;
                     placeTower(isBuyingTower, cursorX, cursorY);
-                    System.out.println("Clicked on map");
+                    //System.out.println("Clicked on map");
                 }
         }
         else
@@ -274,7 +274,7 @@ public class GameScreen extends Screen{
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet currentBullet = bullets.get(j);
                 if (currentBullet.isHit()) {
-                    System.out.println("hit");
+                    //System.out.println("hit");
                     currentBullet.hit();
                     if (currentBullet.getTarget().getCurrentHealth() <= 0)
                         currentTower.setTarget(null);
@@ -283,6 +283,7 @@ public class GameScreen extends Screen{
             }
         }
 
+        //Remove bullets whose target is already killed
         for (int i = 0; i < towers.size(); i++) {
             Tower currentTower = towers.get(i);
             List<Bullet> bullets = currentTower.getBulletList();
@@ -339,16 +340,26 @@ public class GameScreen extends Screen{
         for (int i = 0; i < towers.size(); i++) {
             Tower currentTower = towers.get(i);
             List<Bullet> bullets = currentTower.getBulletList();
-            System.out.println(bullets.size());
+            //System.out.println(bullets.size());
             for (int j = 0; j < bullets.size(); j++)
                 bullets.get(j).move();
         }
 
+        //Killing enemies
         for (int i = 0; i < enemies.size(); i++)
             if (enemies.get(i).getCurrentHealth() <= 0) {
                 enemies.remove(i);
                 i--;
             }
+
+        //Enemies hit damage to target
+        for (int i = 0; i < enemies.size(); i++)
+            if (enemies.get(i).getCoordinate().equals(field.getTarget().getCoordinate())) {
+                player.takeDamage(enemies.get(i).getDamage());
+                enemies.remove(i); i--;
+            }
+
+        if (player.getLive() <= 0) gameLost();
     }
 
     public void render(){

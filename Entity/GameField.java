@@ -167,6 +167,10 @@ public class GameField {
         return spawner;
     }
 
+    public Target getTarget() {
+        return target;
+    }
+
     public void addTower(Tower tower) {
         towers.add(tower);
     }

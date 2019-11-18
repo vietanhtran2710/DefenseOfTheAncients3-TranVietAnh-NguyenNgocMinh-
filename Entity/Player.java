@@ -39,4 +39,10 @@ public class Player {
     public void setLive(int live) {
         this.live = live;
     }
+
+    public void takeDamage(int damage) {
+        if (this.live < damage)
+            this.live = 0;
+        else this.live  -= damage;
+    }
 }

@@ -49,4 +49,8 @@ public class Player {
     public void payMoney(int price) {
         this.cash -= price;
     }
+
+    public void earnMoney(int bounty) {
+        this.cash += bounty;
+    }
 }

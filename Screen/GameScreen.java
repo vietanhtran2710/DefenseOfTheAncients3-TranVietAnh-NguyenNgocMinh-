@@ -351,6 +351,7 @@ public class GameScreen extends Screen{
         //Killing enemies
         for (int i = 0; i < enemies.size(); i++)
             if (enemies.get(i).getCurrentHealth() <= 0) {
+                player.earnMoney(enemies.get(i).getBounty());
                 enemies.remove(i);
                 i--;
             }

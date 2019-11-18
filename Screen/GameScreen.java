@@ -71,6 +71,8 @@ public class GameScreen extends Screen{
         backgroundMusic = new Music("src/res/SFX/Underground_Battle.ogg");
         loseMusic = new Music("src/res/SFX/Death.ogg");
         winMusic = new Music("src/res/SFX/Victory_Theme.ogg");
+
+        this.player = new Player(100);
     }
 
     public void loop(long window) throws Exception {
@@ -384,6 +386,8 @@ public class GameScreen extends Screen{
         else {
             isMouseDown = false;
         }
+
+        this.player.playerInfo(580, 675);
 
         glfwSwapBuffers(window); // swap the color buffers
 

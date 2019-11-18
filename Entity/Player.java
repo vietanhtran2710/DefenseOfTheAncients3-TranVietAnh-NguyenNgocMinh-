@@ -1,14 +1,27 @@
 package Entity;
 
+import Utils.myText;
+
 import java.awt.*;
 
 public class Player {
     private int live;
     private int cash;
 
+    private myText liveInfo;
+    private myText cashInfo;
+
     public Player(int initCash) {
         this.cash = initCash;
         this.live = 1000;
+    }
+
+    public void playerInfo(int x, int y) {
+        this.liveInfo = new myText("Live" + "  " + this.live, 0.5);
+        this.liveInfo.render(x, y);
+
+        this.cashInfo = new myText("Cash" + " " + this.cash, 0.5);
+        this.cashInfo.render(x, y + 50);
     }
 
     public int getCash() {

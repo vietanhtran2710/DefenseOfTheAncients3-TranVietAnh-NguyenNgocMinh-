@@ -63,9 +63,9 @@ public class Spawner extends Road{
     public void setWave(String waveInfo) {
         this.wave = new ArrayList<>();
         this.spawnIndex = 0;
-        String[] enemyItem = waveInfo.split(" ");
+        String[] enemyItem = waveInfo.trim().split(" ");
         for (int i = 0; i < enemyItem.length; i++)
-            switch (enemyItem[i]) {
+            switch (enemyItem[i].trim()) {
                 case "0":
                     wave.add(new NormalEnemy(2,
                             this.texture.getTopLeft().getX(),

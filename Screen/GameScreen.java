@@ -64,8 +64,10 @@ public class GameScreen extends Screen{
         this.field = new GameField(gameStage);
         this.field.getSpawner().setWave(gameStage.getWaves()[gameStage.getWavesIndex()]);
         this.menu = new Menu();
+
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
         upgradeAndSell = new myTexture("src/res/GFX/Game/Tower/BuyNUpgrade.png", GL_QUADS);
 
         backgroundMusic = new Music("src/res/SFX/Underground_Battle.ogg");

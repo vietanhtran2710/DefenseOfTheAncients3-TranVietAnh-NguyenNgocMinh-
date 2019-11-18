@@ -77,6 +77,10 @@ public class GameScreen extends Screen{
         new CharacterWidth();
     }
 
+    public void loadGame() {
+
+    }
+
     public void loop(long window) throws Exception {
         this.window = window;
         glClearColor( 0.0f, 0.0f, 0.0f, 0.0f);
@@ -156,6 +160,10 @@ public class GameScreen extends Screen{
             field.addTower(newTower);
             isBuyingTower = 0;
         }
+    }
+
+    public void saveGame() {
+
     }
 
     public void mouseClickHandle() {

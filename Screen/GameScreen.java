@@ -73,6 +73,8 @@ public class GameScreen extends Screen{
         winMusic = new Music("src/res/SFX/Victory_Theme.ogg");
 
         this.player = new Player(100);
+
+        new CharacterWidth();
     }
 
     public void loop(long window) throws Exception {

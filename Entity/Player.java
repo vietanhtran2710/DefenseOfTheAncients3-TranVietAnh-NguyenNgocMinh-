@@ -43,6 +43,10 @@ public class Player {
     public void takeDamage(int damage) {
         if (this.live < damage)
             this.live = 0;
-        else this.live  -= damage;
+        else this.live -= damage;
+    }
+
+    public void payMoney(int price) {
+        this.cash -= price;
     }
 }

@@ -197,7 +197,9 @@ public class GameScreen extends Screen{
         }
 
         //System.out.println(cursorX + " " + cursorY);
-
+        //1: Normal tower
+        //2: Sniper tower
+        //3: Machine gun tower
         if ((0 <= cursorX) && (cursorX <= 348) && (624 <= cursorY) && (cursorY <= 768)) {
             List<myTexture> tiles = menu.getButtonList();
             for (int i = 0; i < tiles.size(); i++)
@@ -213,6 +215,7 @@ public class GameScreen extends Screen{
         if (isBuyingTower != 0) {
             if ((0 <= cursorX) && (cursorX <= 1366))
                 if ((0 <= cursorY) && (cursorY <= 624)) {
+                    player.payMoney(menu.getPriceList().get(isBuyingTower - 1));
                     this.isSelectingTower = 0;
                     placeTower(isBuyingTower, cursorX, cursorY);
                     //System.out.println("Clicked on map");

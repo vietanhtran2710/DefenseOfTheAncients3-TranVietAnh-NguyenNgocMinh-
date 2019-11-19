@@ -14,14 +14,15 @@ OOP Game Project
 │   ├── Enemies
 │   │   ├── BossEnemy.java
 │   │   ├── Enemy.java
+│   │   ├── HealthBar.java
 │   │   ├── NormalEnemy.java
 │   │   ├── SmallerEnemy.java
-│   │   ├── TankerEnemy.java
-|   |   └── HealthBar.java
+│   │   └── TankerEnemy.java
 │   ├── GameEntity.java
 │   ├── GameField.java
 │   ├── GameStage.java
 │   ├── Menu.java
+│   ├── Path.java
 │   ├── Player.java
 │   ├── Tile
 │   │   ├── GameTile.java
@@ -45,6 +46,10 @@ OOP Game Project
 │   │   │   │   ├── Boss Enemy
 │   │   │   │   │   ├── BossEnemy_Walk.png
 │   │   │   │   │   └── BossEnemy_Walk.psd
+│   │   │   │   ├── HealthBar
+│   │   │   │   │   ├── HealthBar_empty.png
+│   │   │   │   │   ├── HealthBar_green.png
+│   │   │   │   │   └── HealthBar_red.png
 │   │   │   │   ├── Normal Enemy
 │   │   │   │   │   ├── NormalEnemy_Walk.png
 │   │   │   │   │   └── NormalEnemy_Walk.psd
@@ -56,9 +61,10 @@ OOP Game Project
 │   │   │   │       └── TankerEnemy_Walk.psd
 │   │   │   ├── Tilemap
 │   │   │   │   ├── Ground
-│   │   │   │   │   ├── Background2.psd
 │   │   │   │   │   ├── Background.png
-│   │   │   │   │   └── Background.psd
+│   │   │   │   │   ├── Background.psd
+│   │   │   │   │   ├── lose.png
+│   │   │   │   │   └── win.png
 │   │   │   │   ├── Road
 │   │   │   │   │   ├── mountain.png
 │   │   │   │   │   ├── Road_doc.png
@@ -94,16 +100,34 @@ OOP Game Project
 │   │       └── Button
 │   │           ├── button.png
 │   │           ├── button-pressed.png
-│   │           └── button-selected.png
+│   │           ├── button-selected.png
+│   │           ├── LoadButton.png
+│   │           ├── LoadButton_selected.png
+│   │           ├── SaveButton.png
+│   │           ├── SaveButton_selected.png
+│   │           ├── Sound_off.png
+│   │           └── Sound_on.png
 │   └── SFX
+│       ├── Death.ogg
+│       ├── Underground_Battle.ogg
+│       ├── Underground_Prep.ogg
+│       └── Victory_Theme.ogg
 ├── Screen
 │   ├── GameScreen.java
 │   ├── GUI.java
 │   ├── Screen.java
 │   └── ShowScreen.java
-└── Utils
-    ├── myTexture.java
-    ├── Point.java
-    ├── Timer.java
-    └── Vertex.java
+├── Utils
+│   ├── CharacterWidth.java
+│   ├── Music.java
+│   ├── myCharacter.java
+│   ├── myText.java
+│   ├── myTexture.java
+│   ├── Point.java
+│   ├── SaveLoad.java
+│   ├── Sound.java
+│   ├── Timer.java
+│   └── Vertex.java
+└── waveInfo.txt
+
 ```

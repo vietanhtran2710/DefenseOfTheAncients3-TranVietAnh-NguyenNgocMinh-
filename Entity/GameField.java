@@ -181,4 +181,12 @@ public class GameField {
     public void addEnemy(Enemy enemy) {
         enemies.add(enemy);
     }
+
+    public void setTowers(List<Tower> towers) {
+        this.towers = towers;
+    }
+
+    public void setEnemies(List<Enemy> enemies) {
+        this.enemies = enemies;
+    }
 }

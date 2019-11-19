@@ -26,11 +26,14 @@ import static org.lwjgl.system.MemoryUtil.*;
 public class GUI extends Screen{
     private myTexture background;
     private myTexture StartButton;
+    private myTexture LoadButton;
     private myTexture road;
+    public boolean load = false;
     private long window;
     public boolean isPressed;
-    public boolean onMouseHover = false;
+    public boolean onMouseStartHover = false;
     public Music backgroundMusic;
+    public boolean onMouseLoadHover = false;
 
     public void initLoop () {
         String backgroundImageSource = "src/res/GFX/GUI/Background/Background_main_screen.jpg";
@@ -40,8 +43,12 @@ public class GUI extends Screen{
 
         // Button
         this.StartButton = new Utils.myTexture(buttonImageSource, GL_POLYGON, 541, 343);
+        this.LoadButton = new Utils.myTexture("src/res/GFX/GUI/Button/LoadButton.png", GL_POLYGON, 530, 500);
         StartButton.setDisplayHeight(110);
         StartButton.setDisplayWidth(300);
+
+        LoadButton.setDisplayHeight(110);
+        LoadButton.setDisplayWidth(300);
 
         System.out.println(StartButton.getTopLeft().getX() + " " + StartButton.getTopLeft().getY());
         System.out.println(StartButton.getBottomRight().getX() + " " + StartButton.getBottomRight().getY());
@@ -87,24 +94,45 @@ public class GUI extends Screen{
                 new Vertex(-0.25f, -0.2f)
         );
 
+        LoadButton.bind();
+        LoadButton.display();
+
         if (glfwGetMouseButton(this.window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_TRUE) {
             System.out.println(Screen.getCursorPosX(this.window) + " " + Screen.getCursorPosY(this.window));
-            if (onMouseHover) {
+            if (onMouseStartHover) {
                 this.isPressed = true;
+            }
+            else if (onMouseLoadHover) {
+                this.isPressed = true;
+                this.load = true;
             }
         }
 
         if (checkMouseHover(StartButton, this.window)) {
-            if (!onMouseHover) {
+            if (!onMouseStartHover) {
                 StartButton.changeImage("src/res/GFX/GUI/Button/button-selected.png");
-                onMouseHover = true;
+                onMouseStartHover = true;
             }
         }
         else
-            if (onMouseHover) {
+            if (onMouseStartHover) {
                 StartButton.changeImage("src/res/GFX/GUI/Button/button.png");
-                onMouseHover = false;
+                onMouseStartHover = false;
             }
+
+
+        if (checkMouseHover(LoadButton, this.window)) {
+            if (!onMouseLoadHover) {
+                LoadButton.changeImage("src/res/GFX/GUI/Button/LoadButton_selected.png");
+                onMouseLoadHover = true;
+            }
+        }
+        else
+        if (onMouseLoadHover) {
+            LoadButton.changeImage("src/res/GFX/GUI/Button/LoadButton.png");
+            onMouseLoadHover = false;
+        }
+
         backgroundMusic.playFor(52, false);
         glfwSwapBuffers(window); // swap the color buffers
 

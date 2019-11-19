@@ -48,6 +48,7 @@ public class GameScreen extends Screen{
     private int FPS = 50;
     private int dummyX = 0;
     private int dummyY = 0;
+    public boolean load;
 
     private HealthBar liveTarget;
 
@@ -56,6 +57,10 @@ public class GameScreen extends Screen{
     private Music winMusic;
 
     //private final double FPS = 20.0;
+
+    public GameScreen(boolean load) {
+        this.load = load;
+    }
 
     public void initLoop () throws Exception {
         this.isBuyingTower = 0; this.isSelectingTower = 0;
@@ -81,6 +86,19 @@ public class GameScreen extends Screen{
         this.liveTarget = new HealthBar("green");
 
         new CharacterWidth();
+
+        System.out.println(this.load);
+        if (this.load) {
+            loadGame();
+        }
+    }
+
+    public void loadGame() {
+        System.out.println("Game");
+    }
+
+    public void saveGame() {
+
     }
 
     public void loop(long window) throws Exception {

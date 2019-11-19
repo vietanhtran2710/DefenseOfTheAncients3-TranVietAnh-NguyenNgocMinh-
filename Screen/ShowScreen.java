@@ -26,8 +26,9 @@ public class ShowScreen {
         System.out.print("Game Start!");
 
         init();
-        new GUI().loop(this.window);
-        new GameScreen().loop(this.window);
+        GUI gui = new GUI();
+        gui.loop(this.window);
+        new GameScreen(gui.load).loop(this.window);
         destroy();
 
     }

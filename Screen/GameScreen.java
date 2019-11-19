@@ -356,6 +356,9 @@ public class GameScreen extends Screen{
         for (int i = 0; i < enemies.size(); i++)
             if (enemies.get(i).getCurrentHealth() <= 0) {
                 player.earnMoney(enemies.get(i).getBounty());
+                for (int j = 0; j < towers.size(); j++)
+                    if (towers.get(j).getTarget() == enemies.get(i))
+                        towers.get(j).setTarget(null);
                 enemies.remove(i);
                 i--;
             }
@@ -363,6 +366,9 @@ public class GameScreen extends Screen{
         //Enemies hit damage to target
         for (int i = 0; i < enemies.size(); i++)
             if (enemies.get(i).getCoordinate().equals(field.getTarget().getCoordinate())) {
+                for (int j = 0; j < towers.size(); j++)
+                    if (towers.get(j).getTarget() == enemies.get(i))
+                        towers.get(j).setTarget(null);
                 player.takeDamage(enemies.get(i).getDamage());
                 enemies.remove(i); i--;
             }
@@ -406,7 +412,7 @@ public class GameScreen extends Screen{
             isMouseDown = false;
         }
 
-        this.player.playerInfo(580, 675);
+        //this.player.playerInfo(580, 675);
 
         glfwSwapBuffers(window); // swap the color buffers
 

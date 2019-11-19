@@ -78,11 +78,6 @@ public class GameField {
                         tileList.add(new Road(modeBitMask ,j * 48, i * 48));
                     }
             }
-        for (int i = 0; i < path.getPath().size(); i++) {
-            for (int j = 0; j < 3; j++)
-                System.out.print(path.getPath().get(i).get(j) + " ");
-            System.out.println("");
-        }
     }
 
     public void checkEnemyDirection() {

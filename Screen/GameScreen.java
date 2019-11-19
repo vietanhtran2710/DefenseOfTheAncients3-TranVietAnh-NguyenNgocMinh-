@@ -100,7 +100,6 @@ public class GameScreen extends Screen{
     }
 
     public void loadGame() {
-        System.out.println("Game");
         SaveLoad loadFunction = new SaveLoad();
         String data = loadFunction.loadData();
         String[] lines = data.split("\n");
@@ -176,7 +175,6 @@ public class GameScreen extends Screen{
                 can_render = true;
                 if(frame_time >= 1.0) {
                     frame_time = 0;
-                    //System.out.println("FPS: " + frames);
                     frames = 0;
                 }
             }
@@ -221,7 +219,6 @@ public class GameScreen extends Screen{
                 validPosition = false; break;
             }
         }
-        //System.out.println(validPosition);
         if (validPosition) {
             int posX = (int) (Math.round(x) / 48 * 48);
             int posY = (int) (Math.round(y) / 48 * 48);
@@ -254,7 +251,6 @@ public class GameScreen extends Screen{
             if ((selectionX + 40 <= cursorX) && (cursorX <= selectionX + 80))
                 if ((selectionY + 6 <= cursorY) && (cursorY <= selectionY + 40)) {
                     field.upgradeTower(menu, player, selectionX, selectionY);
-                    //System.out.println("upgrade tower");
                     isSelectingTower = 0;
                     return;
                 }
@@ -263,7 +259,6 @@ public class GameScreen extends Screen{
             if ((selectionX + 50 <= cursorX) && (cursorX <= selectionX + 70))
                 if ((selectionY + 100 <= cursorY) && (cursorY <= selectionY + 120)) {
                     field.sellTower(menu, player, selectionX, selectionY);
-                    //System.out.println("sell tower");
                     isSelectingTower = 0;
                     return;
                 }
@@ -287,7 +282,6 @@ public class GameScreen extends Screen{
             return ;
         }
 
-        //System.out.println(cursorX + " " + cursorY);
         //1: Normal tower
         //2: Sniper tower
         //3: Machine gun tower
@@ -296,7 +290,6 @@ public class GameScreen extends Screen{
             for (int i = 0; i < tiles.size(); i++)
                 if (checkMouseHover(tiles.get(i), this.window))
                     if (player.getCash() >= menu.getPriceList().get(i)) {
-                        //System.out.println("Clicked on item");
                         this.isBuyingTower = i + 1;
                         this.isSelectingTower = 0;
                         return ;
@@ -312,7 +305,6 @@ public class GameScreen extends Screen{
                         player.payMoney(menu.getPriceList().get(isBuyingTower - 1));
                         isBuyingTower = 0;
                     }
-                    //System.out.println("Clicked on map");
                 }
         }
         else
@@ -355,7 +347,6 @@ public class GameScreen extends Screen{
 
         //Set up new wave
         List<Enemy> enemies = field.getEnemies();
-        //System.out.println(enemies.size() + " " + spawner.isSpawning() + " " + gameStarted);
         if ((enemies.size() == 0) && (!spawner.isSpawning()) && (gameStarted)) {
             gameStarted = false;
             gameStage.increaseWavesIndex();
@@ -373,7 +364,6 @@ public class GameScreen extends Screen{
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet currentBullet = bullets.get(j);
                 if (currentBullet.isHit()) {
-                    //System.out.println("hit");
                     currentBullet.hit();
                     if (currentBullet.getTarget().getCurrentHealth() <= 0)
                         currentTower.setTarget(null);
@@ -439,7 +429,6 @@ public class GameScreen extends Screen{
         for (int i = 0; i < towers.size(); i++) {
             Tower currentTower = towers.get(i);
             List<Bullet> bullets = currentTower.getBulletList();
-            //System.out.println(bullets.size());
             for (int j = 0; j < bullets.size(); j++)
                 bullets.get(j).move();
         }
@@ -495,13 +484,28 @@ public class GameScreen extends Screen{
             myTexture towerIcon = null;
             switch (isBuyingTower) {
                 case 1:
-                    towerIcon = new myTexture("src/res/GFX/Game/Tower/Normal Tower/NormalTower_transparent.png", GL_QUADS, (int)(getCursorPosX(this.window) - 24), (int)(getCursorPosY(this.window) - 24));
+                    towerIcon = new myTexture(
+                            "src/res/GFX/Game/Tower/Normal Tower/NormalTower_transparent.png",
+                            GL_QUADS,
+                            (int)(getCursorPosX(this.window) - 24),
+                            (int)(getCursorPosY(this.window) - 24)
+                    );
                     break;
                 case 2:
-                    towerIcon = new myTexture("src/res/GFX/Game/Tower/Sniper Tower/SniperTower_transparent.png", GL_QUADS, (int)(getCursorPosX(this.window) - 24), (int)(getCursorPosY(this.window) - 24));
+                    towerIcon = new myTexture(
+                            "src/res/GFX/Game/Tower/Sniper Tower/SniperTower_transparent.png",
+                            GL_QUADS,
+                            (int)(getCursorPosX(this.window) - 24),
+                            (int)(getCursorPosY(this.window) - 24)
+                    );
                     break;
                 case 3:
-                    towerIcon = new myTexture("src/res/GFX/Game/Tower/Machine Gun Tower/MachineGunTower_transparent.png", GL_QUADS, (int)(getCursorPosX(this.window) - 24), (int)(getCursorPosY(this.window) - 24));
+                    towerIcon = new myTexture(
+                            "src/res/GFX/Game/Tower/Machine Gun Tower/MachineGunTower_transparent.png",
+                            GL_QUADS,
+                            (int)(getCursorPosX(this.window) - 24),
+                            (int)(getCursorPosY(this.window) - 24)
+                    );
                     break;
             }
             towerIcon.display();

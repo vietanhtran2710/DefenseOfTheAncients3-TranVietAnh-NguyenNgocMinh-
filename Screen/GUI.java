@@ -50,9 +50,6 @@ public class GUI extends Screen{
         LoadButton.setDisplayHeight(110);
         LoadButton.setDisplayWidth(300);
 
-        System.out.println(StartButton.getTopLeft().getX() + " " + StartButton.getTopLeft().getY());
-        System.out.println(StartButton.getBottomRight().getX() + " " + StartButton.getBottomRight().getY());
-
         backgroundMusic = new Music("src/res/SFX/Underground_Prep.ogg");
 
         glEnable(GL_BLEND);
@@ -98,7 +95,6 @@ public class GUI extends Screen{
         LoadButton.display();
 
         if (glfwGetMouseButton(this.window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_TRUE) {
-            System.out.println(Screen.getCursorPosX(this.window) + " " + Screen.getCursorPosY(this.window));
             if (onMouseStartHover) {
                 this.isPressed = true;
             }

@@ -58,7 +58,7 @@ public class Bullet {
     }
 
     public void hit() {
-        enemy.setCurrentHealth(enemy.getCurrentHealth() - this.damage);
+        enemy.setCurrentHealth(enemy.getCurrentHealth() - this.damage + enemy.getAmor());
     }
 
     public void render() {

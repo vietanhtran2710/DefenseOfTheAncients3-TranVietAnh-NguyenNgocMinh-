@@ -12,6 +12,7 @@ public class BossEnemy extends Enemy{
         this.movementSpeed = 2;
         this.damage = 600;
         this.bounty = 50;
+        this.amor = 2;
         this.animationPartLength = 4;
         this.animationPart = 1;
         this.texture = new myTexture("src/res/GFX/Game/Enemy/Boss Enemy/BossEnemy_Walk.png", GL_QUADS, x, y);

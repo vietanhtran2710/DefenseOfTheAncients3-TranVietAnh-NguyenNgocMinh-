@@ -12,6 +12,7 @@ public class TankerEnemy extends Enemy{
         this.damage = 300;
         this.movementSpeed = 1;
         this.bounty = 20;
+        this.amor = 2;
         this.animationPartLength = 6;
         this.animationPart = 1;
         this.texture = new myTexture(

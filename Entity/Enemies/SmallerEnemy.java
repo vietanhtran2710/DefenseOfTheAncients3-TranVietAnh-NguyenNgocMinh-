@@ -12,6 +12,7 @@ public class SmallerEnemy extends Enemy{
         this.damage = 50;
         this.movementSpeed = 4;
         this.bounty = 5;
+        this.amor = 0;
         this.animationPartLength = 4;
         this.animationPart = 1;
         this.texture = new myTexture(

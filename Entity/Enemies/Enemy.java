@@ -10,6 +10,7 @@ public class Enemy {
     protected int movementSpeed;
     protected int bounty;
     protected int damage;
+    protected int amor;
     protected int animationPart;
     protected float animationPartLength;
     protected int direction;
@@ -106,6 +107,10 @@ public class Enemy {
 
     public int getDamage() {
         return damage;
+    }
+
+    public int getAmor() {
+        return amor;
     }
 
     public void setX(int x) {

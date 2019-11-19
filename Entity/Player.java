@@ -13,9 +13,8 @@ public class Player {
 
     public Player() {
         this.cash = 0;
-        this.live = 0;
-        this.liveInfo = new myText("Live" + "  " + this.live, 0.5);
-        this.cashInfo = new myText("Cash" + " " + this.cash, 0.5);
+        this.live = 1000;
+        this.cashInfo = new myText("" + this.cash, 1);
     }
 
     public Player(int initCash) {
@@ -35,11 +34,6 @@ public class Player {
         this.cashInfo = new myText("Cash" + " " + this.cash, 0.5);
     }
 
-
-    public void playerInfo(int x, int y) {
-        this.liveInfo.render(x, y);
-        this.cashInfo.render(x, y + 50);
-    }
 
     public int getCash() {
         return cash;

@@ -235,7 +235,6 @@ public class GameScreen extends Screen{
                     break;
             }
             field.addTower(newTower);
-            isBuyingTower = 0;
         }
         if (!validPosition) return false;
         return true;
@@ -303,10 +302,9 @@ public class GameScreen extends Screen{
             if ((0 <= cursorX) && (cursorX <= 1366))
                 if ((0 <= cursorY) && (cursorY <= 624)) {
                     this.isSelectingTower = 0;
-                    int tmp = isBuyingTower;
                     boolean placeResult = placeTower(isBuyingTower, cursorX, cursorY);
                     if (placeResult) {
-                        player.payMoney(menu.getPriceList().get(tmp - 1));
+                        player.payMoney(menu.getPriceList().get(isBuyingTower - 1));
                         isBuyingTower = 0;
                     }
                     //System.out.println("Clicked on map");

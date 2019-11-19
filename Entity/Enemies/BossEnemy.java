@@ -7,8 +7,8 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 public class BossEnemy extends Enemy{
     public BossEnemy(int initDirection, int x, int y) {
         super(initDirection, x, y);
-        this.health = 600;
-        this.currentHealth = 600;
+        this.health = 800;
+        this.currentHealth = 800;
         this.movementSpeed = 2;
         this.damage = 600;
         this.bounty = 100;

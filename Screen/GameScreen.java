@@ -268,9 +268,11 @@ public class GameScreen extends Screen{
 
         if ((1193 <= cursorX) && (cursorX <= 1193 + 48 * 2))
             if ((657 <= cursorY) && (cursorY <= 657 + 48 * 2)) {
-                Spawner spawner = field.getSpawner();
-                this.gameStarted = true;
-                spawner.setSpawning(true);
+                if (!this.gameStarted) {
+                    Spawner spawner = field.getSpawner();
+                    this.gameStarted = true;
+                    spawner.setSpawning(true);
+                }
             }
 
         if (checkMouseHover(menu.getSoundButton(), this.window)) {

@@ -7,8 +7,8 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 public class TankerEnemy extends Enemy{
     public TankerEnemy(int initDirection, int x, int y) {
         super(initDirection, x, y);
-        this.health = 300;
-        this.currentHealth = 300;
+        this.health = 500;
+        this.currentHealth = 500;
         this.damage = 300;
         this.movementSpeed = 1;
         this.bounty = 30;

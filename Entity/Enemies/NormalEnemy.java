@@ -12,7 +12,7 @@ public class NormalEnemy extends Enemy{
         this.currentHealth = 100;
         this.damage = 100;
         this.movementSpeed = 2;
-        this.bounty = 10;
+        this.bounty = 5;
         this.animationPartLength = 6;
         this.animationPart = 1;
         this.texture = new myTexture(

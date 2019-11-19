@@ -13,13 +13,17 @@ public class MachineGunTower extends Tower {
         this.texture.setDisplayHeight(48);
         this.texture.setDisplayWidth(48);
 
+        this.damage = 5;
+        this.range = 150;
+
+        this.setLevel(1);
+
         this.bulletPrototype = new Bullet(
                 "src/res/GFX/Game/Tower/Machine Gun Tower/MachineGunBullet.png",
-                10, 100, x, y
+                this.damage, 50, x, y
         );
 
         this.shootCooldown = 0;
-        this.cooldownTime = 10;
-        this.range = 150;
+        this.cooldownTime = 5;
     }
 }

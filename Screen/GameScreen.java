@@ -89,6 +89,8 @@ public class GameScreen extends Screen{
 
         new CharacterWidth();
 
+        if (this.load) loadGame();
+
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
@@ -126,8 +128,8 @@ public class GameScreen extends Screen{
         field.setEnemies(loadFunction.loadEnemies(enemyInfo));
 
         //Load wave info
-        gameStage.setWavesIndex(Integer.parseInt(waveInfo.get(0)));
-        field.getSpawner().setSpawnIndex(Integer.parseInt(waveInfo.get(1)));
+        gameStage.setWavesIndex(Integer.parseInt(waveInfo.get(0).trim()));
+        field.getSpawner().setSpawnIndex(Integer.parseInt(waveInfo.get(1).trim()));
         if (waveInfo.get(2).equals("true")) field.getSpawner().setSpawning(true);
         else field.getSpawner().setSpawning(false);
     }

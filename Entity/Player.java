@@ -30,8 +30,7 @@ public class Player {
     public Player(int initCash, int initLives) {
         this.cash = initCash;
         this.live = initLives;
-        this.liveInfo = new myText("Live" + "  " + this.live, 0.5);
-        this.cashInfo = new myText("Cash" + " " + this.cash, 0.5);
+        this.cashInfo = new myText("" + this.cash, 1);
     }
 
 

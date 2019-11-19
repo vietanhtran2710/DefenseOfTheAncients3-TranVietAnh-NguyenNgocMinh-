@@ -72,9 +72,9 @@ public class SaveLoad {
         //Load waves info
         fw.write("Waves\n");
         fw.write(stage.getWavesIndex() + "\n");
-        fw.write("End wave\n");
         fw.write(field.getSpawner().getSpawnIndex() + "\n");
         fw.write(field.getSpawner().isSpawning() + "\n");
+        fw.write("End wave\n");
         fw.close();
     }
 
@@ -98,20 +98,20 @@ public class SaveLoad {
         int lineIndex = 0;
         while (lineIndex < data.size()) {
             Tower newTower = null;
-            String type = data.get(lineIndex); lineIndex++;
-            String[] coordinate = data.get(lineIndex).split(" "); lineIndex++;
+            String type = data.get(lineIndex).trim(); lineIndex++;
+            String[] coordinate = data.get(lineIndex).trim().split(" "); lineIndex++;
             switch (type) {
                 case "0":
-                    newTower = new NormalTower(Integer.parseInt(coordinate[0]), Integer.parseInt(coordinate[1]));
+                    newTower = new NormalTower(Integer.parseInt(coordinate[0].trim()), Integer.parseInt(coordinate[1].trim()));
                     break;
                 case "1":
-                    newTower = new SniperTower(Integer.parseInt(coordinate[0]), Integer.parseInt(coordinate[1]));
+                    newTower = new SniperTower(Integer.parseInt(coordinate[0].trim()), Integer.parseInt(coordinate[1].trim()));
                     break;
                 case "2":
-                    newTower = new MachineGunTower(Integer.parseInt(coordinate[0]), Integer.parseInt(coordinate[1]));
+                    newTower = new MachineGunTower(Integer.parseInt(coordinate[0].trim()), Integer.parseInt(coordinate[1].trim()));
             }
             String level = data.get(lineIndex); lineIndex++;
-            newTower.setLevel(Integer.parseInt(level));
+            newTower.setLevel(Integer.parseInt(level.trim()));
             towers.add(newTower);
         }
         return towers;
@@ -125,16 +125,16 @@ public class SaveLoad {
         int lineIndex = 0;
         while (lineIndex < data.size()) {
             Enemy newEnemy = null;
-            String type = data.get(lineIndex);
+            String type = data.get(lineIndex).trim();
             lineIndex++;
             String[] coordinate = data.get(lineIndex).split(" ");
             lineIndex++;
             String currentHealth = data.get(lineIndex);
             lineIndex++;
-            String initDirection = data.get(lineIndex); lineIndex++;
-            int dir = Integer.parseInt(initDirection);
-            int x = Integer.parseInt(coordinate[0]);
-            int y = Integer.parseInt(coordinate[1]);
+            String initDirection = data.get(lineIndex).trim(); lineIndex++;
+            int dir = Integer.parseInt(initDirection.trim());
+            int x = Integer.parseInt(coordinate[0].trim());
+            int y = Integer.parseInt(coordinate[1].trim());
             switch (type) {
                 case "0":
                     newEnemy = new NormalEnemy(dir, x, y);
@@ -147,7 +147,7 @@ public class SaveLoad {
                 case "3":
                     newEnemy = new BossEnemy(dir, x, y);
             }
-            newEnemy.setCurrentHealth(Integer.parseInt(currentHealth));
+            newEnemy.setCurrentHealth(Integer.parseInt(currentHealth.trim()));
             enemies.add(newEnemy);
         }
         return enemies;
@@ -155,7 +155,7 @@ public class SaveLoad {
 
     public Player loadPlayer(String data) {
         String[] playerInfo = data.split(" ");
-        Player player = new Player(Integer.parseInt(playerInfo[0]), Integer.parseInt(playerInfo[1]));
+        Player player = new Player(Integer.parseInt(playerInfo[0].trim()), Integer.parseInt(playerInfo[1].trim()));
         return player;
     }
 }

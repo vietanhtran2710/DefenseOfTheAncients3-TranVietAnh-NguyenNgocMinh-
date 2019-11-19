@@ -90,6 +90,8 @@ public class Tower {
 
     public void setLevel(int level) {
         this.level = level;
+        this.range = (int) (this.range * (Math.pow(1.2, level)));
+        this.damage = (int) (this.damage * (Math.pow(1.5, level)));
     }
 
     public void setDamage(int damage) {

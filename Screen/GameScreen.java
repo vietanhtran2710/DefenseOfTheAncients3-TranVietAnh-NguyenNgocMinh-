@@ -185,11 +185,15 @@ public class GameScreen extends Screen{
 
     public void gameWon() {
         this.backgroundMusic.delete();
+        this.isSelectingTower = 0;
+        this.isBuyingTower = 0;
         this.winMusic.playFor(56, false);
     }
 
     public void gameLost() {
         this.backgroundMusic.delete();
+        this.isSelectingTower = 0;
+        this.isBuyingTower = 0;
         this.loseMusic.playFor(2, false);
     }
 

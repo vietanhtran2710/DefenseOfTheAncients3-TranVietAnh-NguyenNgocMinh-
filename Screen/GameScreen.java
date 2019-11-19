@@ -84,7 +84,7 @@ public class GameScreen extends Screen{
         this.loseMusic = new Music("src/res/SFX/Death.ogg");
         this.winMusic = new Music("src/res/SFX/Victory_Theme.ogg");
 
-        this.player = new Player(50);
+        this.player = new Player(30);
         this.liveTarget = new HealthBar("green");
 
         new CharacterWidth();

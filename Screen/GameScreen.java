@@ -435,7 +435,7 @@ public class GameScreen extends Screen{
         if (player.getLive() <= 0) gameLost();
     }
 
-    public void render(){
+    public void render() throws IOException{
 
         backgroundMusic.playLoop(56, this.menu.isMuted());
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer

@@ -105,6 +105,10 @@ public class Spawner extends Road{
         return spawnIndex;
     }
 
+    public void setSpawnIndex(int index) {
+        spawnIndex = index;
+    }
+
     public int getSpawnCooldown() {
         return spawnCooldown;
     }

@@ -57,6 +57,10 @@ public class GameStage {
         return wavesIndex;
     }
 
+    public void setWavesIndex(int index) {
+        this.wavesIndex = index;
+    }
+
     public void increaseWavesIndex() {
         this.wavesIndex++;
     }

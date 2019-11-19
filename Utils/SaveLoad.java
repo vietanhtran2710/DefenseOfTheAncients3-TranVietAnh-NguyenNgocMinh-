@@ -43,7 +43,7 @@ public class SaveLoad {
             }
             Point towerPosition = currentTower.getCoordinate();
             fw.write(towerPosition.getX() + " " + towerPosition.getY() + "\n");
-            fw.write(currentTower.getLevel() + " " + currentTower.getRange() + " " + currentTower.getDamage() + "\n");
+            fw.write(currentTower.getLevel() + "\n");
         }
         fw.write("End Tower\n");
 
@@ -71,9 +71,6 @@ public class SaveLoad {
 
         //Load waves info
         fw.write("Waves\n");
-        String[] waves = stage.getWaves();
-        for (int i = 0; i < waves.length; i++)
-            fw.write(waves[i] + "\n");
         fw.write(stage.getWavesIndex() + "\n");
         fw.write("End wave\n");
         fw.write(field.getSpawner().getSpawnIndex() + "\n");
@@ -113,10 +110,8 @@ public class SaveLoad {
                 case "2":
                     newTower = new MachineGunTower(Integer.parseInt(coordinate[0]), Integer.parseInt(coordinate[1]));
             }
-            String[] properties = data.get(lineIndex).split(" "); lineIndex++;
-            newTower.setLevel(Integer.parseInt(properties[0]));
-            newTower.setRange(Integer.parseInt(properties[1]));
-            newTower.setDamage(Integer.parseInt(properties[2]));
+            String level = data.get(lineIndex); lineIndex++;
+            newTower.setLevel(Integer.parseInt(level));
             towers.add(newTower);
         }
         return towers;

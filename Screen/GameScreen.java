@@ -126,7 +126,10 @@ public class GameScreen extends Screen{
         field.setEnemies(loadFunction.loadEnemies(enemyInfo));
 
         //Load wave info
-        
+        gameStage.setWavesIndex(Integer.parseInt(waveInfo.get(0)));
+        field.getSpawner().setSpawnIndex(Integer.parseInt(waveInfo.get(1)));
+        if (waveInfo.get(2).equals("true")) field.getSpawner().setSpawning(true);
+        else field.getSpawner().setSpawning(false);
     }
 
     public void saveGame() throws IOException {

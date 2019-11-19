@@ -15,11 +15,11 @@ public class MachineGunTower extends Tower {
 
         this.bulletPrototype = new Bullet(
                 "src/res/GFX/Game/Tower/Machine Gun Tower/MachineGunBullet.png",
-                10, 20, x, y
+                10, 100, x, y
         );
 
         this.shootCooldown = 0;
         this.cooldownTime = 10;
-        this.range = 100;
+        this.range = 200;
     }
 }

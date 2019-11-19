@@ -10,7 +10,7 @@ public class NormalEnemy extends Enemy{
         super(initDirection, x, y);
         this.health = 100;
         this.currentHealth = 100;
-        this.damage = 1;
+        this.damage = 100;
         this.movementSpeed = 2;
         this.bounty = 10;
         this.animationPartLength = 6;

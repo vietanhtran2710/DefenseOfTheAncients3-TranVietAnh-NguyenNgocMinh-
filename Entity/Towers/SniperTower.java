@@ -15,12 +15,12 @@ public class SniperTower extends Tower {
 
         this.bulletPrototype = new Bullet(
                 "src/res/GFX/Game/Tower/Sniper Tower/SniperBullet.png",
-                20, 10, x, y
+                10, 30, x, y
         );
 
         this.shootCooldown = 0;
         this.cooldownTime = 10;
-        this.range = 500;
+        this.range = 700;
     }
 
 }

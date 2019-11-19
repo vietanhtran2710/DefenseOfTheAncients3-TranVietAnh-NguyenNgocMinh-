@@ -16,7 +16,7 @@ public class NormalTower extends Tower {
 
         this.bulletPrototype = new Bullet(
                 "src/res/GFX/Game/Tower/Normal Tower/NormalBullet.png",
-                1, 50, x, y
+                10, 50, x, y
                 );
 
         this.shootCooldown = 0;

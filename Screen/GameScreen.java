@@ -38,6 +38,8 @@ public class GameScreen extends Screen{
     private myTexture background;
     private myTexture upgradeAndSell;
     private myTexture SaveButton;
+    private myTexture winPanel = new myTexture("src/res/GFX/Game/Tilemap/Ground/win.png", GL_QUADS, 269, 127);
+    private myTexture losePanel = new myTexture("src/res/GFX/Game/Tilemap/Ground/lose.png", GL_QUADS, 269, 127);
     private GameStage gameStage;
     private GameField field;
     private Menu menu;
@@ -46,6 +48,7 @@ public class GameScreen extends Screen{
     private Player player;
     private boolean isMouseDown = false, gameStarted = false;
     private boolean onMouseSaveHover = false;
+    private int finished = 0;
     private int tick, rate = 3;
     private int FPS = 50;
     private int dummyX = 0;
@@ -181,10 +184,13 @@ public class GameScreen extends Screen{
             }
         }
         this.backgroundMusic.delete();
+        this.winMusic.delete();
+        this.loseMusic.delete();
     }
 
     public void gameWon() {
         this.backgroundMusic.delete();
+        this.finished = 1;
         this.isSelectingTower = 0;
         this.isBuyingTower = 0;
         this.winMusic.playFor(56, false);
@@ -192,6 +198,7 @@ public class GameScreen extends Screen{
 
     public void gameLost() {
         this.backgroundMusic.delete();
+        this.finished = 2;
         this.isSelectingTower = 0;
         this.isBuyingTower = 0;
         this.loseMusic.playFor(2, false);
@@ -228,6 +235,7 @@ public class GameScreen extends Screen{
                     break;
             }
             field.addTower(newTower);
+            isBuyingTower = 0;
         }
         if (!validPosition) return false;
         return true;
@@ -295,10 +303,10 @@ public class GameScreen extends Screen{
             if ((0 <= cursorX) && (cursorX <= 1366))
                 if ((0 <= cursorY) && (cursorY <= 624)) {
                     this.isSelectingTower = 0;
+                    int tmp = isBuyingTower;
                     boolean placeResult = placeTower(isBuyingTower, cursorX, cursorY);
-                    System.out.println(placeResult);
                     if (placeResult) {
-                        player.payMoney(menu.getPriceList().get(isBuyingTower - 1));
+                        player.payMoney(menu.getPriceList().get(tmp - 1));
                         isBuyingTower = 0;
                     }
                     //System.out.println("Clicked on map");
@@ -347,7 +355,7 @@ public class GameScreen extends Screen{
         if ((enemies.size() == 0) && (!spawner.isSpawning()) && (gameStarted)) {
             gameStarted = false;
             gameStage.increaseWavesIndex();
-            if (gameStage.getWavesIndex() == gameStage.getWaves().length) {
+            if ((gameStage.getWavesIndex() == gameStage.getWaves().length) && (player.getLive() > 0)) {
                 gameWon(); return;
             }
             else spawner.setWave(gameStage.getWaves()[gameStage.getWavesIndex()]);
@@ -477,6 +485,15 @@ public class GameScreen extends Screen{
         field.render();
 
         menu.render();
+
+        if (finished == 1) {
+            winPanel.bind();
+            winPanel.display();
+        }
+        else if (finished == 2) {
+            losePanel.bind();
+            losePanel.display();
+        }
 
         if (isSelectingTower == 1)
             renderUpgradeAndSell();

@@ -491,6 +491,22 @@ public class GameScreen extends Screen{
 
         menu.render();
 
+        if (isBuyingTower != 0) {
+            myTexture towerIcon = null;
+            switch (isBuyingTower) {
+                case 1:
+                    towerIcon = new myTexture("src/res/GFX/Game/Tower/Normal Tower/NormalTower_transparent.png", GL_QUADS, (int)(getCursorPosX(this.window) - 24), (int)(getCursorPosY(this.window) - 24));
+                    break;
+                case 2:
+                    towerIcon = new myTexture("src/res/GFX/Game/Tower/Sniper Tower/SniperTower_transparent.png", GL_QUADS, (int)(getCursorPosX(this.window) - 24), (int)(getCursorPosY(this.window) - 24));
+                    break;
+                case 3:
+                    towerIcon = new myTexture("src/res/GFX/Game/Tower/Machine Gun Tower/MachineGunTower_transparent.png", GL_QUADS, (int)(getCursorPosX(this.window) - 24), (int)(getCursorPosY(this.window) - 24));
+                    break;
+            }
+            towerIcon.display();
+        }
+
         if (finished == 1) {
             winPanel.bind();
             winPanel.display();

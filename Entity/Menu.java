@@ -1,5 +1,8 @@
 package Entity;
 
+import Entity.Towers.NormalTower;
+import Entity.Towers.SniperTower;
+import Entity.Towers.Tower;
 import Utils.Vertex;
 import Utils.myTexture;
 
@@ -46,9 +49,9 @@ public class Menu {
         machineGunTower.setDisplayWidth(48 * 2); machineGunTower.setDisplayHeight(48 * 2);
         buttonList.add(machineGunTower);
 
-        priceList.add(2);
-        priceList.add(5);
         priceList.add(10);
+        priceList.add(20);
+        priceList.add(30);
     }
 
     public void render() {
@@ -63,6 +66,26 @@ public class Menu {
         }
         soundButton.bind();
         soundButton.display();
+    }
+
+    public int getUpgradePrice(Tower tower) {
+        if (tower instanceof NormalTower) {
+            return (int) (priceList.get(0) * 1.5);
+        }
+        else if (tower instanceof SniperTower) {
+            return (int) (priceList.get(1) * 1.5);
+        }
+        else return (int) (priceList.get(2) * 1.5);
+    }
+
+    public int getSellPrice(Tower tower) {
+        if (tower instanceof NormalTower) {
+            return (int) ((priceList.get(0) * (1.5 * tower.getLevel() + 1)));
+        }
+        else if (tower instanceof SniperTower) {
+            return (int) ((priceList.get(0) * (1.5 * tower.getLevel() + 1)));
+        }
+        else return (int) ((priceList.get(0) * (1.5 * tower.getLevel() + 1)));
     }
 
     public List<myTexture> getButtonList() {

@@ -77,7 +77,7 @@ public class GameScreen extends Screen{
         loseMusic = new Music("src/res/SFX/Death.ogg");
         winMusic = new Music("src/res/SFX/Victory_Theme.ogg");
 
-        this.player = new Player(100);
+        this.player = new Player(50);
         this.liveTarget = new HealthBar("green");
 
         new CharacterWidth();
@@ -170,18 +170,20 @@ public class GameScreen extends Screen{
         dummyX = (int)cursorX;
         dummyY = (int)cursorY;
 
+        //Upgrade tower
         if (isSelectingTower != 0) {
             if ((selectionX + 40 <= cursorX) && (cursorX <= selectionX + 80))
                 if ((selectionY + 6 <= cursorY) && (cursorY <= selectionY + 40)) {
-                    field.upgradeTower(player, selectionX, selectionY);
+                    field.upgradeTower(menu, player, selectionX, selectionY);
                     //System.out.println("upgrade tower");
                     isSelectingTower = 0;
                     return;
                 }
 
+            //Sell tower
             if ((selectionX + 50 <= cursorX) && (cursorX <= selectionX + 70))
                 if ((selectionY + 100 <= cursorY) && (cursorY <= selectionY + 120)) {
-                    field.sellTower(player, selectionX, selectionY);
+                    field.sellTower(menu, player, selectionX, selectionY);
                     //System.out.println("sell tower");
                     isSelectingTower = 0;
                     return;

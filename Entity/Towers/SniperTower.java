@@ -20,7 +20,7 @@ public class SniperTower extends Tower {
 
         this.shootCooldown = 0;
         this.cooldownTime = 10;
-        this.range = 700;
+        this.range = 500;
     }
 
 }

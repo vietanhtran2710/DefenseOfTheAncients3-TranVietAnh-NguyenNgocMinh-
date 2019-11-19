@@ -20,6 +20,6 @@ public class MachineGunTower extends Tower {
 
         this.shootCooldown = 0;
         this.cooldownTime = 10;
-        this.range = 200;
+        this.range = 150;
     }
 }

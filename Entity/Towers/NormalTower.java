@@ -21,7 +21,7 @@ public class NormalTower extends Tower {
 
         this.shootCooldown = 0;
         this.cooldownTime = 10;
-        this.range = 500;
+        this.range = 250;
     }
 
 }

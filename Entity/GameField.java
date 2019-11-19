@@ -114,26 +114,29 @@ public class GameField {
             }
     }
 
-    public void upgradeTower(Player player, int selectionX, int selectionY) {
+    public void upgradeTower(Menu menu, Player player, int selectionX, int selectionY) {
         int towerX = selectionX + 40;
         int towerY = selectionY + 50;
         for (int i = 0; i < towers.size(); i++) {
             Point towerTopLeft = towers.get(i).getTexture().getTopLeft();
             if ((towerX == towerTopLeft.getX()) && (towerY == towerTopLeft.getY())) {
-                if (towers.get(i).getLevel() < 4) {
+                int upgradePrice = menu.getUpgradePrice(towers.get(i));
+                if ((towers.get(i).getLevel() < 5) && (player.getCash() >= upgradePrice)) {
                     towers.get(i).setLevel();
+                    player.payMoney(upgradePrice);
                     return ;
                 }
             }
         }
     }
 
-    public void sellTower(Player player, int selectionX, int selectionY) {
+    public void sellTower(Menu menu, Player player, int selectionX, int selectionY) {
         int towerX = selectionX + 40;
         int towerY = selectionY + 50;
         for (int i = 0; i < towers.size(); i++) {
             Point towerTopLeft = towers.get(i).getTexture().getTopLeft();
             if ((towerX == towerTopLeft.getX()) && (towerY == towerTopLeft.getY())) {
+                player.earnMoney(menu.getSellPrice(towers.get(i)));
                 towers.remove(i);
                 return ;
             }

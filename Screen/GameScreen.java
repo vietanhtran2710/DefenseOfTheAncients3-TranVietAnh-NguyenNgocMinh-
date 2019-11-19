@@ -37,6 +37,7 @@ public class GameScreen extends Screen{
     private long window;
     private myTexture background;
     private myTexture upgradeAndSell;
+    private myTexture SaveButton;
     private GameStage gameStage;
     private GameField field;
     private Menu menu;
@@ -44,6 +45,7 @@ public class GameScreen extends Screen{
     private int selectionX, selectionY;
     private Player player;
     private boolean isMouseDown = false, gameStarted = false;
+    private boolean onMouseSaveHover = false;
     private int tick, rate = 3;
     private int FPS = 50;
     private int dummyX = 0;
@@ -73,24 +75,22 @@ public class GameScreen extends Screen{
         this.field.getSpawner().setWave(gameStage.getWaves()[gameStage.getWavesIndex()]);
         this.menu = new Menu();
 
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        this.upgradeAndSell = new myTexture("src/res/GFX/Game/Tower/BuyNUpgrade.png", GL_QUADS);
+        this.SaveButton = new myTexture("src/res/GFX/GUI/Button/SaveButton.png", GL_QUADS, 1200, 15);
+        SaveButton.setDisplayWidth(160);
+        SaveButton.setDisplayHeight(55);
 
-        upgradeAndSell = new myTexture("src/res/GFX/Game/Tower/BuyNUpgrade.png", GL_QUADS);
-
-        backgroundMusic = new Music("src/res/SFX/Underground_Battle.ogg");
-        loseMusic = new Music("src/res/SFX/Death.ogg");
-        winMusic = new Music("src/res/SFX/Victory_Theme.ogg");
+        this.backgroundMusic = new Music("src/res/SFX/Underground_Battle.ogg");
+        this.loseMusic = new Music("src/res/SFX/Death.ogg");
+        this.winMusic = new Music("src/res/SFX/Victory_Theme.ogg");
 
         this.player = new Player(50);
         this.liveTarget = new HealthBar("green");
 
         new CharacterWidth();
 
-        System.out.println(this.load);
-        if (this.load) {
-            loadGame();
-        }
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     public void loadGame() {
@@ -146,10 +146,12 @@ public class GameScreen extends Screen{
     }
 
     public void gameWon() {
+        this.backgroundMusic.delete();
         this.winMusic.playFor(56, false);
     }
 
     public void gameLost() {
+        this.backgroundMusic.delete();
         this.loseMusic.playFor(2, false);
     }
 
@@ -434,6 +436,27 @@ public class GameScreen extends Screen{
         }
         else {
             isMouseDown = false;
+        }
+
+        SaveButton.bind();
+        SaveButton.display();
+
+        if (glfwGetMouseButton(this.window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_TRUE) {
+            if (onMouseSaveHover) {
+                saveGame();
+            }
+        }
+
+        if (checkMouseHover(SaveButton, this.window)) {
+            if (!onMouseSaveHover) {
+                SaveButton.changeImage("src/res/GFX/GUI/Button/SaveButton_selected.png");
+                onMouseSaveHover = true;
+            }
+        }
+        else
+        if (onMouseSaveHover) {
+            SaveButton.changeImage("src/res/GFX/GUI/Button/SaveButton.png");
+            onMouseSaveHover = false;
         }
 
         this.player.renderMoney(710, 675);

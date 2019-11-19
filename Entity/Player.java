@@ -11,6 +11,13 @@ public class Player {
     private myText liveInfo;
     private myText cashInfo;
 
+    public Player() {
+        this.cash = 0;
+        this.live = 0;
+        this.liveInfo = new myText("Live" + "  " + this.live, 0.5);
+        this.cashInfo = new myText("Cash" + " " + this.cash, 0.5);
+    }
+
     public Player(int initCash) {
         this.cash = initCash;
         this.live = 1000;
@@ -19,6 +26,19 @@ public class Player {
 
     public void renderMoney(int x, int y) {
         this.cashInfo.render(x, y);
+    }
+
+    public Player(int initCash, int initLives) {
+        this.cash = initCash;
+        this.live = initLives;
+        this.liveInfo = new myText("Live" + "  " + this.live, 0.5);
+        this.cashInfo = new myText("Cash" + " " + this.cash, 0.5);
+    }
+
+
+    public void playerInfo(int x, int y) {
+        this.liveInfo.render(x, y);
+        this.cashInfo.render(x, y + 50);
     }
 
     public int getCash() {

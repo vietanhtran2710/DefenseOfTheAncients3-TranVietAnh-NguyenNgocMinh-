@@ -64,6 +64,14 @@ public class Tower {
         return bulletList;
     }
 
+    public Point getCoordinate() {
+        return this.texture.getTopLeft();
+    }
+
+    public myTexture getTexture() {
+        return texture;
+    }
+
     public void setCooldown() {
         this.shootCooldown = this.cooldownTime;
     }
@@ -80,11 +88,15 @@ public class Tower {
         this.target = target;
     }
 
-    public Point getCoordinate() {
-        return this.texture.getTopLeft();
+    public void setLevel(int level) {
+        this.level = level;
     }
 
-    public myTexture getTexture() {
-        return texture;
+    public void setDamage(int damage) {
+        this.damage = damage;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
     }
 }

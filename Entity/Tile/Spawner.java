@@ -101,6 +101,10 @@ public class Spawner extends Road{
         isSpawning = spawning;
     }
 
+    public int getSpawnIndex() {
+        return spawnIndex;
+    }
+
     public int getSpawnCooldown() {
         return spawnCooldown;
     }

@@ -52,8 +52,6 @@ public class GameScreen extends Screen{
     private Music loseMusic;
     private Music winMusic;
 
-    public myText test;
-
     //private final double FPS = 20.0;
 
     public void initLoop () throws Exception {
@@ -77,8 +75,6 @@ public class GameScreen extends Screen{
         winMusic = new Music("src/res/SFX/Victory_Theme.ogg");
 
         this.player = new Player(100);
-
-        test = new myText("H" , 0.5);
 
         new CharacterWidth();
     }
@@ -410,7 +406,7 @@ public class GameScreen extends Screen{
             isMouseDown = false;
         }
 
-        //this.player.playerInfo(580, 675);
+        this.player.playerInfo(580, 675);
 
         glfwSwapBuffers(window); // swap the color buffers
 

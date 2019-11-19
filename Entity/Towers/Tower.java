@@ -16,6 +16,7 @@ public class Tower {
     protected List<Bullet> bulletList;
     protected Enemy target;
     protected int shootCooldown, cooldownTime;
+    protected int damage;
 
     public Tower() {
         this.level = 1;
@@ -53,6 +54,10 @@ public class Tower {
 
     public int getShootCooldown() {
         return shootCooldown;
+    }
+
+    public int getDamage() {
+        return damage;
     }
 
     public List<Bullet> getBulletList() {

@@ -95,10 +95,43 @@ public class GameScreen extends Screen{
 
     public void loadGame() {
         System.out.println("Game");
+        SaveLoad loadFunction = new SaveLoad();
+        String data = loadFunction.loadData();
+        String[] lines = data.split("\n");
+        this.player = loadFunction.loadPlayer(lines[0]);
+        boolean updateTowerInfo = false, updateEnemyInfo = false, updateWaveInfo = false;
+        List<String> towerInfo = new ArrayList<>();
+        List<String> enemyInfo = new ArrayList<>();
+        List<String> waveInfo = new ArrayList<>();
+        for (int i = 0; i < lines.length; i++) {
+            if (lines[i].equals("Tower"))
+                updateTowerInfo = true;
+            else if (lines[i].equals("End Tower"))
+                updateTowerInfo = false;
+            else if (lines[i].equals("Enemy"))
+                updateEnemyInfo = true;
+            else if (lines[i].equals("End Enemy"))
+                updateEnemyInfo = false;
+            else if (lines[i].equals("Waves"))
+                updateWaveInfo = true;
+            else if (lines[i].equals("End wave"))
+                updateWaveInfo = false;
+            else {
+                if (updateEnemyInfo) enemyInfo.add(lines[i]);
+                else if (updateTowerInfo) towerInfo.add(lines[i]);
+                else if (updateWaveInfo) waveInfo.add(lines[i]);
+            }
+        }
+        field.setTowers(loadFunction.loadTowers(towerInfo));
+        field.setEnemies(loadFunction.loadEnemies(enemyInfo));
+
+        //Load wave info
+        
     }
 
-    public void saveGame() {
-
+    public void saveGame() throws IOException {
+        SaveLoad saveFunction = new SaveLoad();
+        saveFunction.save(field, player, gameStage);
     }
 
     public void loop(long window) throws Exception {

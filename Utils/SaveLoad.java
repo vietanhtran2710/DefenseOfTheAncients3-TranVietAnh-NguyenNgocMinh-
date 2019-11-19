@@ -158,8 +158,8 @@ public class SaveLoad {
         return enemies;
     }
 
-    public Player loadPlayer(List<String> data) {
-        String[] playerInfo = data.get(0).split(" ");
+    public Player loadPlayer(String data) {
+        String[] playerInfo = data.split(" ");
         Player player = new Player(Integer.parseInt(playerInfo[0]), Integer.parseInt(playerInfo[1]));
         return player;
     }

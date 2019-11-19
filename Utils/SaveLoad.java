@@ -21,10 +21,12 @@ public class SaveLoad {
 
     }
 
-    public void save(GameField field, Player player, GameStage stage) throws IOException {
+    public void save(GameField field, Player player, GameStage stage, boolean gameStarted) throws IOException {
         FileWriter fw = new FileWriter("save.txt");
 
         //Save player info
+        if (gameStarted) fw.write("true\n");
+        else fw.write("false\n");
         fw.write(player.getCash() + " " + player.getLive() + "\n");
 
         //Save towers + bullets info

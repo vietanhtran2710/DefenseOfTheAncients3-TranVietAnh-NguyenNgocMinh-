@@ -8,8 +8,8 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 public class NormalEnemy extends Enemy{
     public NormalEnemy(int initDirection ,int x, int y) {
         super(initDirection, x, y);
-        this.health = 150;
-        this.currentHealth = 150;
+        this.health = 200;
+        this.currentHealth = 200;
         this.damage = 100;
         this.movementSpeed = 2;
         this.bounty = 5;

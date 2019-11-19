@@ -104,7 +104,9 @@ public class GameScreen extends Screen{
         SaveLoad loadFunction = new SaveLoad();
         String data = loadFunction.loadData();
         String[] lines = data.split("\n");
-        this.player = loadFunction.loadPlayer(lines[0]);
+        if (lines[0].trim().equals("true")) gameStarted = true;
+        else gameStarted = false;
+        this.player = loadFunction.loadPlayer(lines[1]);
         boolean updateTowerInfo = false, updateEnemyInfo = false, updateWaveInfo = false;
         List<String> towerInfo = new ArrayList<>();
         List<String> enemyInfo = new ArrayList<>();
@@ -140,7 +142,7 @@ public class GameScreen extends Screen{
 
     public void saveGame() throws IOException {
         SaveLoad saveFunction = new SaveLoad();
-        saveFunction.save(field, player, gameStage);
+        saveFunction.save(field, player, gameStage, gameStarted);
     }
 
     public void loop(long window) throws Exception {
@@ -353,9 +355,11 @@ public class GameScreen extends Screen{
 
         //Set up new wave
         List<Enemy> enemies = field.getEnemies();
+        //System.out.println(enemies.size() + " " + spawner.isSpawning() + " " + gameStarted);
         if ((enemies.size() == 0) && (!spawner.isSpawning()) && (gameStarted)) {
             gameStarted = false;
             gameStage.increaseWavesIndex();
+            System.out.println("Index: " + gameStage.getWavesIndex());
             if ((gameStage.getWavesIndex() == gameStage.getWaves().length) && (player.getLive() > 0)) {
                 gameWon(); return;
             }

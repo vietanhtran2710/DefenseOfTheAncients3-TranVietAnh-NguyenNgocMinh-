@@ -12,6 +12,7 @@ public class myCharacter {
     private myTexture charTexture;
 
     public myCharacter() {
+
     }
 
     public void render(char c, double scale, int x, int y, int width) {

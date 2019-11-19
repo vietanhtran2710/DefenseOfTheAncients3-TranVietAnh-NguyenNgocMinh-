@@ -80,12 +80,12 @@ public class Menu {
 
     public int getSellPrice(Tower tower) {
         if (tower instanceof NormalTower) {
-            return (int) ((priceList.get(0) * (1.5 * tower.getLevel() + 1)));
+            return (int) ((priceList.get(0) * (0.5 * tower.getLevel())));
         }
         else if (tower instanceof SniperTower) {
-            return (int) ((priceList.get(0) * (1.5 * tower.getLevel() + 1)));
+            return (int) ((priceList.get(1) * (0.5 * tower.getLevel())));
         }
-        else return (int) ((priceList.get(0) * (1.5 * tower.getLevel() + 1)));
+        else return (int) ((priceList.get(2) * (0.5 * tower.getLevel())));
     }
 
     public List<myTexture> getButtonList() {

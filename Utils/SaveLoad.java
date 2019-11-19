@@ -63,7 +63,7 @@ public class SaveLoad {
             else if (currentEnemy instanceof TankerEnemy){
                 fw.write("2\n");
             }
-            else fw.write("3\n");
+            else if (currentEnemy instanceof BossEnemy) fw.write("3\n");
             Point enemyPosition = currentEnemy.getCoordinate();
             fw.write(enemyPosition.getX() + " " + enemyPosition.getY() + "\n");
             fw.write(currentEnemy.getCurrentHealth() + " " + "\n");
@@ -146,8 +146,10 @@ public class SaveLoad {
                     break;
                 case "2":
                     newEnemy = new TankerEnemy(dir, x, y);
+                    break;
                 case "3":
                     newEnemy = new BossEnemy(dir, x, y);
+                    break;
             }
             newEnemy.setCurrentHealth(Integer.parseInt(currentHealth.trim()));
             enemies.add(newEnemy);

@@ -197,11 +197,17 @@ public class GameScreen extends Screen{
         this.loseMusic.playFor(2, false);
     }
 
-    public void placeTower(int tower, double x, double y) {
+    public boolean placeTower(int tower, double x, double y) {
         boolean validPosition = true;
         List<GameTile> roads = field.getTileList();
         for (int i = 0; i < roads.size(); i++) {
             if (checkMouseHover(roads.get(i).getTexture(), this.window)) {
+                validPosition = false; break;
+            }
+        }
+        List<Tower> towers = field.getTowers();
+        for (int i = 0; i < towers.size(); i++) {
+            if (checkMouseHover(towers.get(i).getTexture(), this.window)) {
                 validPosition = false; break;
             }
         }
@@ -222,8 +228,9 @@ public class GameScreen extends Screen{
                     break;
             }
             field.addTower(newTower);
-            isBuyingTower = 0;
         }
+        if (!validPosition) return false;
+        return true;
     }
 
     public void mouseClickHandle() {
@@ -287,9 +294,13 @@ public class GameScreen extends Screen{
         if (isBuyingTower != 0) {
             if ((0 <= cursorX) && (cursorX <= 1366))
                 if ((0 <= cursorY) && (cursorY <= 624)) {
-                    player.payMoney(menu.getPriceList().get(isBuyingTower - 1));
                     this.isSelectingTower = 0;
-                    placeTower(isBuyingTower, cursorX, cursorY);
+                    boolean placeResult = placeTower(isBuyingTower, cursorX, cursorY);
+                    System.out.println(placeResult);
+                    if (placeResult) {
+                        player.payMoney(menu.getPriceList().get(isBuyingTower - 1));
+                        isBuyingTower = 0;
+                    }
                     //System.out.println("Clicked on map");
                 }
         }

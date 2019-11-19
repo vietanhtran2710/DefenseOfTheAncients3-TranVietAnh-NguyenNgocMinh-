@@ -21,7 +21,7 @@ public class Enemy {
 
     public Enemy(int initDirection, int x, int y) {
         this.direction = initDirection;
-        bar = new HealthBar();
+        bar = new HealthBar("red");
 
         this.x = x;
         this.y = y;
@@ -36,7 +36,7 @@ public class Enemy {
         Vertex bottomRight = new Vertex((this.animationPart - 1) * range, 1);
         texture.displayByPartitionVertex(topLeft, topRight, bottomLeft, bottomRight);
 
-        bar.render("red", this.health, this.currentHealth, this.x, this.y - 15);
+        bar.render(this.health, this.currentHealth, this.x, this.y - 15);
     }
 
     public void updateAnimation() {

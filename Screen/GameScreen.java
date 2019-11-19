@@ -3,6 +3,7 @@ package Screen;
 import Entity.*;
 import Entity.Enemies.BossEnemy;
 import Entity.Enemies.Enemy;
+import Entity.Enemies.HealthBar;
 import Entity.Enemies.SmallerEnemy;
 import Entity.Menu;
 import Entity.Tile.GameTile;
@@ -48,6 +49,8 @@ public class GameScreen extends Screen{
     private int dummyX = 0;
     private int dummyY = 0;
 
+    private HealthBar liveTarget;
+
     private Music backgroundMusic;
     private Music loseMusic;
     private Music winMusic;
@@ -75,6 +78,7 @@ public class GameScreen extends Screen{
         winMusic = new Music("src/res/SFX/Victory_Theme.ogg");
 
         this.player = new Player(100);
+        this.liveTarget = new HealthBar("green");
 
         new CharacterWidth();
     }
@@ -412,7 +416,9 @@ public class GameScreen extends Screen{
             isMouseDown = false;
         }
 
-        //this.player.playerInfo(580, 675);
+        this.player.renderMoney(710, 675);
+
+        this.liveTarget.render(1000, this.player.getLive(), 1296, 517);
 
         glfwSwapBuffers(window); // swap the color buffers
 

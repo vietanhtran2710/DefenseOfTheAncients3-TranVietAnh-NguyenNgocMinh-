@@ -75,7 +75,6 @@ public class GameScreen extends Screen{
         this.gameStage = new GameStage("src/mapInfo.txt", "src/waveInfo.txt");
         this.player = new Player(gameStage.getMoney());
         this.field = new GameField(gameStage);
-        this.field.getSpawner().setWave(gameStage.getWaves()[gameStage.getWavesIndex()]);
         this.menu = new Menu();
 
         this.upgradeAndSell = new myTexture("src/res/GFX/Game/Tower/BuyNUpgrade.png", GL_QUADS);
@@ -93,6 +92,8 @@ public class GameScreen extends Screen{
         new CharacterWidth();
 
         if (this.load) loadGame();
+
+        this.field.getSpawner().setWave(gameStage.getWaves()[gameStage.getWavesIndex()]);
 
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

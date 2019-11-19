@@ -1,6 +1,7 @@
 package Entity.Towers;
 
 import Entity.Enemies.Enemy;
+import Entity.GameEntity;
 import Utils.Vertex;
 import Utils.myTexture;
 import Utils.Point;
@@ -8,7 +9,7 @@ import Utils.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tower {
+public class Tower implements GameEntity {
     protected myTexture texture;
     protected int level;
     protected Bullet bulletPrototype;

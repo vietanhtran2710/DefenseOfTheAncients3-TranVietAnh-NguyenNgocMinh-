@@ -1,10 +1,11 @@
 package Entity.Enemies;
 
+import Entity.GameEntity;
 import Utils.Point;
 import Utils.Vertex;
 import Utils.myTexture;
 
-public class Enemy {
+public class Enemy implements GameEntity {
     protected int health;
     protected int currentHealth;
     protected int movementSpeed;

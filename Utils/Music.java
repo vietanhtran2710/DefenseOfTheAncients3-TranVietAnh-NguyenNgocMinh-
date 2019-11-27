@@ -3,7 +3,6 @@ package Utils;
 public class Music {
     private Sound sound;
     private boolean isPlay;
-    private boolean isPlayed;
     private double time_1;
     private double time_2;
 
@@ -12,7 +11,6 @@ public class Music {
         this.time_1 = Timer.getTime();
         this.time_2 = 0.0;
         this.isPlay = false;
-        this.isPlayed = false;
     }
 
     public void playFor (double second, boolean isMuted) {

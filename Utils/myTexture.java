@@ -46,6 +46,7 @@ public class myTexture {
 //        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this.width, this.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        assert data != null;
         stbi_image_free(data);
     }
 
@@ -76,6 +77,7 @@ public class myTexture {
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this.width, this.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        assert data != null;
         stbi_image_free(data);
     }
 
@@ -218,46 +220,6 @@ public class myTexture {
         glEnd();
     }
 
-    public void displayByOtherCoordinatePartitionVertex(
-            int x, int y,
-            Vertex topLeft, Vertex topRight, Vertex bottomLeft, Vertex bottomRight
-    ) {
-        final int midX = 1366 / 2;
-        final int midY = 768 / 2;
-
-        float topLeftVertexX = (float)(x - midX) / midX;
-        float topLeftVertexY = (float)(midY - y) / midY;
-
-        float topRightVertexX = (float)(x + this.displayWidth - midX) / midX;
-        float topRightVertexY = (float)(midY - y) / midY;
-
-        float bottomLeftVertexX = (float)(x - midX) / midX;
-        float bottomLeftVertexY = (float)(midY - (y + this.displayHeight)) / midY;
-
-        float bottomRightVertexX = (float)(x + this.displayWidth - midX) / midX;
-        float bottomRightVertexY = (float)(midY - (y + this.displayHeight)) / midY;
-
-        glBegin(this.mode);
-        {
-            // Top left
-            glTexCoord2f(topLeft.getX(), topLeft.getY());
-            glVertex2f(topLeftVertexX, topLeftVertexY);
-
-            // Top right
-            glTexCoord2f(topRight.getX(), topRight.getY());
-            glVertex2f(topRightVertexX, topRightVertexY);
-
-            // Bottom left
-            glTexCoord2f(bottomLeft.getX(), bottomLeft.getY());
-            glVertex2f(bottomRightVertexX, bottomRightVertexY);
-
-            // Bottom right
-            glTexCoord2f(bottomRight.getX(), bottomRight.getY());
-            glVertex2f(bottomLeftVertexX, bottomLeftVertexY);
-        }
-        glEnd();
-    }
-
     public void changeImage(String imagePath) {
         IntBuffer width = BufferUtils.createIntBuffer(1);
         IntBuffer height = BufferUtils.createIntBuffer(1);
@@ -275,20 +237,13 @@ public class myTexture {
         glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, this.width, this.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+        assert data != null;
         stbi_image_free(data);
         this.bind();
     }
 
     public Point getTopLeft() {
         return topLeft;
-    }
-
-    public Point getTopRight() {
-        return topRight;
-    }
-
-    public Point getBottomLeft() {
-        return bottomLeft;
     }
 
     public Point getBottomRight() {

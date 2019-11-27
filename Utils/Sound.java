@@ -12,7 +12,6 @@ import static org.lwjgl.system.MemoryStack.*;
 import static org.lwjgl.system.libc.LibCStdlib.*;
 
 public class Sound {
-    private String defaultDeviceName;
     private long   device;
 
     private int[] attributes = {0};
@@ -37,7 +36,7 @@ public class Sound {
     public void init() {
         this.isPlay = false;
 
-        this.defaultDeviceName = alcGetString(0, ALC_DEFAULT_DEVICE_SPECIFIER);
+        String defaultDeviceName = alcGetString(0, ALC_DEFAULT_DEVICE_SPECIFIER);
         this.device = alcOpenDevice(defaultDeviceName);
 
         this.context = alcCreateContext(device, attributes);

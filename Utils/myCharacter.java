@@ -1,27 +1,25 @@
 package Utils;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 
 public class myCharacter {
-    private String filepath = "src/res/GFX/Font/";
-    private int height = 58;
-    private Map<Character, Integer> width;
-    private myTexture charTexture;
 
     public myCharacter() {
 
     }
 
     public void render(char c, double scale, int x, int y, int width) {
-        if (c == ' ') charTexture = new myTexture(this.filepath + "space.png", GL_QUADS, x, y);
+        String filepath = "src/res/GFX/Font/";
+        myTexture charTexture;
+        if (c == ' ') charTexture = new myTexture(filepath + "space.png", GL_QUADS, x, y);
         else
-            if ((int)c <= 90 && (int)c >= 65) charTexture = new myTexture(this.filepath + c +"(1).png", GL_QUADS, x, y);
+            if ((int)c <= 90 && (int)c >= 65) charTexture = new myTexture(
+                    filepath + c +"(1).png", GL_QUADS, x, y
+            );
                 else
-                    charTexture = new myTexture(this.filepath + c +".png", GL_QUADS, x, y);
+                    charTexture = new myTexture(filepath + c +".png", GL_QUADS, x, y);
 
+        int height = 58;
         charTexture.setDisplayHeight((int)(height * scale));
         charTexture.setDisplayWidth((int)(width * scale));
 

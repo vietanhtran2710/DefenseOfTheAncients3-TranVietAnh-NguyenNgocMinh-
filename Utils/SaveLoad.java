@@ -32,15 +32,12 @@ public class SaveLoad {
         //Save towers + bullets info
         List<Tower> towers = field.getTowers();
         fw.write("Tower\n");
-        for (int i = 0; i < towers.size(); i++) {
-            Tower currentTower = towers.get(i);
+        for (Tower currentTower : towers) {
             if (currentTower instanceof NormalTower) {
                 fw.write("0\n");
-            }
-            else if (currentTower instanceof SniperTower) {
+            } else if (currentTower instanceof SniperTower) {
                 fw.write("1\n");
-            }
-            else {
+            } else {
                 fw.write("2\n");
             }
             Point towerPosition = currentTower.getCoordinate();
@@ -52,18 +49,14 @@ public class SaveLoad {
         //Save enemies info
         fw.write("Enemy\n");
         List<Enemy> enemies = field.getEnemies();
-        for (int i = 0; i < enemies.size(); i++) {
-            Enemy currentEnemy = enemies.get(i);
+        for (Enemy currentEnemy : enemies) {
             if (currentEnemy instanceof NormalEnemy) {
                 fw.write("0\n");
-            }
-            else if (currentEnemy instanceof SmallerEnemy) {
+            } else if (currentEnemy instanceof SmallerEnemy) {
                 fw.write("1\n");
-            }
-            else if (currentEnemy instanceof TankerEnemy){
+            } else if (currentEnemy instanceof TankerEnemy) {
                 fw.write("2\n");
-            }
-            else if (currentEnemy instanceof BossEnemy) fw.write("3\n");
+            } else if (currentEnemy instanceof BossEnemy) fw.write("3\n");
             Point enemyPosition = currentEnemy.getCoordinate();
             fw.write(enemyPosition.getX() + " " + enemyPosition.getY() + "\n");
             fw.write(currentEnemy.getCurrentHealth() + " " + "\n");
@@ -82,9 +75,7 @@ public class SaveLoad {
 
     public String loadData() {
         try {
-            String data = "";
-            data = new String(Files.readAllBytes(Paths.get("save.txt")));
-            return data;
+            return new String(Files.readAllBytes(Paths.get("save.txt")));
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -113,6 +104,7 @@ public class SaveLoad {
                     newTower = new MachineGunTower(Integer.parseInt(coordinate[0].trim()), Integer.parseInt(coordinate[1].trim()));
             }
             String level = data.get(lineIndex); lineIndex++;
+            assert newTower != null;
             newTower.setLevel(Integer.parseInt(level.trim()));
             towers.add(newTower);
         }
@@ -151,6 +143,7 @@ public class SaveLoad {
                     newEnemy = new BossEnemy(dir, x, y);
                     break;
             }
+            assert newEnemy != null;
             newEnemy.setCurrentHealth(Integer.parseInt(currentHealth.trim()));
             enemies.add(newEnemy);
         }
@@ -159,7 +152,6 @@ public class SaveLoad {
 
     public Player loadPlayer(String data) {
         String[] playerInfo = data.split(" ");
-        Player player = new Player(Integer.parseInt(playerInfo[0].trim()), Integer.parseInt(playerInfo[1].trim()));
-        return player;
+        return new Player(Integer.parseInt(playerInfo[0].trim()), Integer.parseInt(playerInfo[1].trim()));
     }
 }

@@ -38,14 +38,6 @@ public class Spawner extends Road{
         texture.displayByPartitionVertex(topLeft, topRight, bottomLeft, bottomRight);
     }
 
-    public int getAnimationPart() {
-        return animationPart;
-    }
-
-    public void setAnimationPart(int animationPart) {
-        this.animationPart = animationPart;
-    }
-
     public void spawnEnemy(GameField field) {
         field.getEnemies().add(this.wave.get(this.spawnIndex));
         this.spawnIndex++;
@@ -64,8 +56,8 @@ public class Spawner extends Road{
         this.wave = new ArrayList<>();
         this.spawnIndex = 0;
         String[] enemyItem = waveInfo.trim().split(" ");
-        for (int i = 0; i < enemyItem.length; i++)
-            switch (enemyItem[i].trim()) {
+        for (String s : enemyItem)
+            switch (s.trim()) {
                 case "0":
                     wave.add(new NormalEnemy(2,
                             this.texture.getTopLeft().getX(),

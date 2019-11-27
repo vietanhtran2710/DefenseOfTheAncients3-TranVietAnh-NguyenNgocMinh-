@@ -2,13 +2,9 @@ package Entity;
 
 import Utils.myText;
 
-import java.awt.*;
-
 public class Player {
     private int live;
     private int cash;
-
-    private myText liveInfo;
     private myText cashInfo;
 
     public Player() {
@@ -40,15 +36,6 @@ public class Player {
 
     public int getLive() {
         return live;
-    }
-
-    public void setCash(int cash) {
-        this.cash = cash;
-        this.cashInfo = new myText("" + this.cash, 1);
-    }
-
-    public void setLive(int live) {
-        this.live = live;
     }
 
     public void takeDamage(int damage) {

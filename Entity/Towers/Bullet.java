@@ -48,7 +48,6 @@ public class Bullet {
                     ((bulletPosition.getY() - target.getY())) /
                     (bulletPosition.getX() - target.getX());
             double angle = Math.atan(fraction);
-//            System.out.println(angle);
             if (bulletPosition.getX() <= target.getX())
                 angle += Math.PI;
             int newX = (int) Math.round(bulletPosition.getX() - this.speed * Math.cos(angle));
@@ -70,10 +69,6 @@ public class Bullet {
         return enemy;
     }
 
-    public Point getTargetCoordinate() {
-        return target;
-    }
-
     public myTexture getTexture() {
         return texture;
     }
@@ -82,7 +77,4 @@ public class Bullet {
         return hit;
     }
 
-    public int getSpeed() {
-        return speed;
-    }
 }

@@ -1,6 +1,5 @@
 package Entity.Towers;
 
-import Utils.Vertex;
 import Utils.myTexture;
 
 import static org.lwjgl.opengl.GL11.GL_QUADS;

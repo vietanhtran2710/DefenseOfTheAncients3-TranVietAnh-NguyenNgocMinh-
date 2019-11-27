@@ -37,8 +37,7 @@ public class Tower implements GameEntity {
         Vertex bottomRight = new Vertex((this.level - 1) * 0.2f, 1);
         texture.displayByPartitionVertex(topLeft, topRight, bottomLeft, bottomRight);
 
-        for (int i = 0; i < bulletList.size(); i++)
-            bulletList.get(i).render();
+        for (Bullet bullet : bulletList) bullet.render();
     }
 
     public int getLevel() {
@@ -99,7 +98,4 @@ public class Tower implements GameEntity {
         this.damage = damage;
     }
 
-    public void setRange(int range) {
-        this.range = range;
-    }
 }

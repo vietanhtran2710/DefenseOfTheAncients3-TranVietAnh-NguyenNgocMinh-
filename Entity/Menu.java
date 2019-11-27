@@ -14,15 +14,15 @@ import static org.lwjgl.opengl.GL11.GL_QUADS;
 public class Menu {
     private List<myTexture> buttonList;
     private List<Integer> priceList;
-    private final int playX = 1193;
-    private int playY = 657;
     private boolean isMuted = false;
     private myTexture soundButton;
 
     public Menu() {
         buttonList = new ArrayList<>();
         priceList = new ArrayList<>();
-        soundButton = new myTexture("src/res/GFX/GUI/Button/Sound_on.png", GL_QUADS, 1193 - 20 - 48 * 2, 657);
+        soundButton = new myTexture(
+                "src/res/GFX/GUI/Button/Sound_on.png", GL_QUADS, 1193 - 20 - 48 * 2, 657
+        );
         soundButton.setDisplayWidth(48 * 2);
         soundButton.setDisplayHeight(48 * 2);
         myTexture normalTowerTexture = new myTexture(
@@ -55,9 +55,9 @@ public class Menu {
     }
 
     public void render() {
-        for (int i = 0; i < buttonList.size(); i++) {
-            buttonList.get(i).bind();
-            buttonList.get(i).displayByPartitionVertex(
+        for (Utils.myTexture myTexture : buttonList) {
+            myTexture.bind();
+            myTexture.displayByPartitionVertex(
                     new Vertex(0, 0),
                     new Vertex(0.2f, 0),
                     new Vertex(0.2f, 1),

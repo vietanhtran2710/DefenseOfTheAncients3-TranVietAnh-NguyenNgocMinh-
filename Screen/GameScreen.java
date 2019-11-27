@@ -1,37 +1,22 @@
 package Screen;
 
 import Entity.*;
-import Entity.Enemies.BossEnemy;
 import Entity.Enemies.Enemy;
 import Entity.Enemies.HealthBar;
-import Entity.Enemies.SmallerEnemy;
 import Entity.Menu;
 import Entity.Tile.GameTile;
-import java.util.List;
-import java.util.ArrayList;
-
 import Entity.Tile.Spawner;
 import Entity.Towers.*;
-import Utils.Point;
-import org.lwjgl.*;
-import org.lwjgl.glfw.*;
-import org.lwjgl.opengl.*;
-import org.lwjgl.openvr.Texture;
-import org.lwjgl.system.*;
 
-import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.nio.*;
+import Utils.Point;
 import Utils.*;
 
-import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.system.MemoryStack.*;
-import static org.lwjgl.system.MemoryUtil.*;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.io.IOException;
 
 public class GameScreen extends Screen{
     private long window;
@@ -49,10 +34,7 @@ public class GameScreen extends Screen{
     private boolean isMouseDown = false, gameStarted = false;
     private boolean onMouseSaveHover = false;
     private int finished = 0;
-    private int tick, rate = 3;
-    private int FPS = 50;
-    private int dummyX = 0;
-    private int dummyY = 0;
+    private int tick;
     public boolean load;
 
     private HealthBar liveTarget;
@@ -61,13 +43,11 @@ public class GameScreen extends Screen{
     private Music loseMusic;
     private Music winMusic;
 
-    //private final double FPS = 20.0;
-
     public GameScreen(boolean load) {
         this.load = load;
     }
 
-    public void initLoop () throws Exception {
+    public void initLoop () {
         this.isBuyingTower = 0; this.isSelectingTower = 0;
         this.tick = 0;
         String backgroundImageSource = "src/res/GFX/Game/Tilemap/Ground/Background.png";
@@ -78,7 +58,9 @@ public class GameScreen extends Screen{
         this.menu = new Menu();
 
         this.upgradeAndSell = new myTexture("src/res/GFX/Game/Tower/BuyNUpgrade.png", GL_QUADS);
-        this.SaveButton = new myTexture("src/res/GFX/GUI/Button/SaveButton.png", GL_QUADS, 1200, 15);
+        this.SaveButton = new myTexture(
+                "src/res/GFX/GUI/Button/SaveButton.png", GL_QUADS, 1200, 15
+        );
         SaveButton.setDisplayWidth(160);
         SaveButton.setDisplayHeight(55);
 
@@ -103,30 +85,37 @@ public class GameScreen extends Screen{
         SaveLoad loadFunction = new SaveLoad();
         String data = loadFunction.loadData();
         String[] lines = data.split("\n");
-        if (lines[0].trim().equals("true")) gameStarted = true;
-        else gameStarted = false;
+        gameStarted = lines[0].trim().equals("true");
         this.player = loadFunction.loadPlayer(lines[1]);
         boolean updateTowerInfo = false, updateEnemyInfo = false, updateWaveInfo = false;
         List<String> towerInfo = new ArrayList<>();
         List<String> enemyInfo = new ArrayList<>();
         List<String> waveInfo = new ArrayList<>();
-        for (int i = 0; i < lines.length; i++) {
-            if (lines[i].equals("Tower"))
-                updateTowerInfo = true;
-            else if (lines[i].equals("End Tower"))
-                updateTowerInfo = false;
-            else if (lines[i].equals("Enemy"))
-                updateEnemyInfo = true;
-            else if (lines[i].equals("End Enemy"))
-                updateEnemyInfo = false;
-            else if (lines[i].equals("Waves"))
-                updateWaveInfo = true;
-            else if (lines[i].equals("End wave"))
-                updateWaveInfo = false;
-            else {
-                if (updateEnemyInfo) enemyInfo.add(lines[i]);
-                else if (updateTowerInfo) towerInfo.add(lines[i]);
-                else if (updateWaveInfo) waveInfo.add(lines[i]);
+        for (String line : lines) {
+            switch (line) {
+                case "Tower":
+                    updateTowerInfo = true;
+                    break;
+                case "End Tower":
+                    updateTowerInfo = false;
+                    break;
+                case "Enemy":
+                    updateEnemyInfo = true;
+                    break;
+                case "End Enemy":
+                    updateEnemyInfo = false;
+                    break;
+                case "Waves":
+                    updateWaveInfo = true;
+                    break;
+                case "End wave":
+                    updateWaveInfo = false;
+                    break;
+                default:
+                    if (updateEnemyInfo) enemyInfo.add(line);
+                    else if (updateTowerInfo) towerInfo.add(line);
+                    else if (updateWaveInfo) waveInfo.add(line);
+                    break;
             }
         }
         field.setTowers(loadFunction.loadTowers(towerInfo));
@@ -148,41 +137,9 @@ public class GameScreen extends Screen{
         this.window = window;
         glClearColor( 0.0f, 0.0f, 0.0f, 0.0f);
 
-        // Init attributes before loop
         initLoop();
-
-        // Limit frame per second
-        double frame_cap = 1.0 / FPS;
-        double time = Timer.getTime();
-        double unprocessed = 0;
-
-        double frame_time = 0;
-        double frames = 0;
-
-        // Run the rendering loop until the user has attempted to close
-        // the window or has pressed the ESCAPE key.
         while ( !glfwWindowShouldClose(this.window)) {
-            // limit frame
-            boolean can_render = false;
-            double time_2 = Timer.getTime();
-            double timePassed = time_2 - time;
-            unprocessed += timePassed;
-            frame_time += timePassed;
-            time = time_2;
-
-            while (unprocessed >= frame_cap) {
-                unprocessed -= frame_cap;
-                can_render = true;
-                if(frame_time >= 1.0) {
-                    frame_time = 0;
-                    frames = 0;
-                }
-            }
-
-            if (can_render) {
-                render();
-                frames++;
-            }
+            render();
         }
         this.backgroundMusic.delete();
         this.winMusic.delete();
@@ -208,15 +165,17 @@ public class GameScreen extends Screen{
     public boolean placeTower(int tower, double x, double y) {
         boolean validPosition = true;
         List<GameTile> roads = field.getTileList();
-        for (int i = 0; i < roads.size(); i++) {
-            if (checkMouseHover(roads.get(i).getTexture(), this.window)) {
-                validPosition = false; break;
+        for (GameTile road : roads) {
+            if (checkMouseHover(road.getTexture(), this.window)) {
+                validPosition = false;
+                break;
             }
         }
         List<Tower> towers = field.getTowers();
-        for (int i = 0; i < towers.size(); i++) {
-            if (checkMouseHover(towers.get(i).getTexture(), this.window)) {
-                validPosition = false; break;
+        for (Tower value : towers) {
+            if (checkMouseHover(value.getTexture(), this.window)) {
+                validPosition = false;
+                break;
             }
         }
         if (validPosition) {
@@ -236,15 +195,12 @@ public class GameScreen extends Screen{
             }
             field.addTower(newTower);
         }
-        if (!validPosition) return false;
-        return true;
+        return validPosition;
     }
 
     public void mouseClickHandle() {
         double cursorX = getCursorPosX(this.window);
         double cursorY = getCursorPosY(this.window);
-        dummyX = (int)cursorX;
-        dummyY = (int)cursorY;
 
         //Upgrade tower
         if (isSelectingTower != 0) {
@@ -311,8 +267,8 @@ public class GameScreen extends Screen{
             {
                 List<Tower> towers = field.getTowers();
                 boolean towerClicked = false;
-                for (int i = 0; i < towers.size(); i++) {
-                    if (checkMouseHover(towers.get(i).getTexture(), this.window)) {
+                for (Tower tower : towers) {
+                    if (checkMouseHover(tower.getTexture(), this.window)) {
                         towerClicked = true;
                         this.isSelectingTower = 1;
                         this.selectionX = (int) (Math.round(cursorX) / 48 * 48) - 40;
@@ -358,8 +314,7 @@ public class GameScreen extends Screen{
         }
 
         //Bullets hitting
-        for (int i = 0; i < towers.size(); i++) {
-            Tower currentTower = towers.get(i);
+        for (Tower currentTower : towers) {
             List<Bullet> bullets = currentTower.getBulletList();
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet currentBullet = bullets.get(j);
@@ -367,34 +322,34 @@ public class GameScreen extends Screen{
                     currentBullet.hit();
                     if (currentBullet.getTarget().getCurrentHealth() <= 0)
                         currentTower.setTarget(null);
-                    bullets.remove(j); j--;
+                    bullets.remove(j);
+                    j--;
                 }
             }
         }
 
         //Remove bullets whose target is already killed
-        for (int i = 0; i < towers.size(); i++) {
-            Tower currentTower = towers.get(i);
+        for (Tower currentTower : towers) {
             List<Bullet> bullets = currentTower.getBulletList();
             for (int j = 0; j < bullets.size(); j++) {
                 Bullet currentBullet = bullets.get(j);
                 if (currentBullet.getTarget().getCurrentHealth() <= 0) {
-                    bullets.remove(j); j--;
+                    bullets.remove(j);
+                    j--;
                 }
             }
         }
 
         //Move enemies and update new direction on the road
-        for (int i = 0; i < enemies.size(); i++) {
-            enemies.get(i).updateAnimation();
-            enemies.get(i).move();
+        for (Enemy value : enemies) {
+            value.updateAnimation();
+            value.move();
         }
         field.checkEnemyDirection();
 
 
         //Update target for towers
-        for (int i = 0; i < towers.size(); i++) {
-            Tower currentTower = towers.get(i);
+        for (Tower currentTower : towers) {
             if (currentTower.getShootCooldown() != 0)
                 currentTower.decreaseCooldown();
             Point towerPosition = currentTower.getCoordinate();
@@ -406,8 +361,8 @@ public class GameScreen extends Screen{
             }
             if (currentTower.getTarget() == null) {
                 List<Enemy> enemyList = field.getEnemies();
-                for (int j = 0; j < enemyList.size(); j++) {
-                    currentTarget = enemyList.get(j);
+                for (Enemy enemy : enemyList) {
+                    currentTarget = enemy;
                     Point enemyPosition = currentTarget.getCoordinate();
                     if (towerPosition.distanceTo(enemyPosition) <= currentTower.getRange())
                         currentTower.setTarget(currentTarget);
@@ -416,8 +371,7 @@ public class GameScreen extends Screen{
         }
 
         //Towers shooting
-        for (int i = 0; i < towers.size(); i++) {
-            Tower currentTower = towers.get(i);
+        for (Tower currentTower : towers) {
             //currentTower.setTarget(new BossEnemy(0, dummyX, dummyY));
             if ((currentTower.getShootCooldown() == 0) && (currentTower.getTarget() != null)) {
                 currentTower.shoot();
@@ -426,20 +380,18 @@ public class GameScreen extends Screen{
         }
 
         //Bullets moving
-        for (int i = 0; i < towers.size(); i++) {
-            Tower currentTower = towers.get(i);
+        for (Tower currentTower : towers) {
             List<Bullet> bullets = currentTower.getBulletList();
-            for (int j = 0; j < bullets.size(); j++)
-                bullets.get(j).move();
+            for (Bullet bullet : bullets) bullet.move();
         }
 
         //Killing enemies
         for (int i = 0; i < enemies.size(); i++)
             if (enemies.get(i).getCurrentHealth() <= 0) {
                 player.earnMoney(enemies.get(i).getBounty());
-                for (int j = 0; j < towers.size(); j++)
-                    if (towers.get(j).getTarget() == enemies.get(i))
-                        towers.get(j).setTarget(null);
+                for (Tower tower : towers)
+                    if (tower.getTarget() == enemies.get(i))
+                        tower.setTarget(null);
                 enemies.remove(i);
                 i--;
             }
@@ -447,9 +399,9 @@ public class GameScreen extends Screen{
         //Enemies hit damage to target
         for (int i = 0; i < enemies.size(); i++)
             if (enemies.get(i).getCoordinate().equals(field.getTarget().getCoordinate())) {
-                for (int j = 0; j < towers.size(); j++)
-                    if (towers.get(j).getTarget() == enemies.get(i))
-                        towers.get(j).setTarget(null);
+                for (Tower tower : towers)
+                    if (tower.getTarget() == enemies.get(i))
+                        tower.setTarget(null);
                 player.takeDamage(enemies.get(i).getDamage());
                 enemies.remove(i); i--;
             }
@@ -463,6 +415,7 @@ public class GameScreen extends Screen{
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // clear the framebuffer
 
         tick++;
+        int rate = 3;
         if (tick == rate) {
             updateDisplay();
             tick = 0;
@@ -508,6 +461,7 @@ public class GameScreen extends Screen{
                     );
                     break;
             }
+            assert towerIcon != null;
             towerIcon.display();
         }
 
@@ -558,10 +512,7 @@ public class GameScreen extends Screen{
 
         this.liveTarget.render(1000, this.player.getLive(), 1296, 517);
 
-        glfwSwapBuffers(window); // swap the color buffers
-
-        // Poll for window events. The key callback above will only be
-        // invoked during this call.
+        glfwSwapBuffers(window);
         glfwPollEvents();
     }
 }

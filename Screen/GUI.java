@@ -1,33 +1,14 @@
 package Screen;
 
 import Utils.*;
-import Utils.Point;
-import org.lwjgl.*;
-import org.lwjgl.glfw.*;
-import org.lwjgl.opengl.*;
-import org.lwjgl.openvr.Texture;
-import org.lwjgl.system.*;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.*;
-
-import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.system.MemoryStack.*;
-import static org.lwjgl.system.MemoryUtil.*;
 
 public class GUI extends Screen{
     private myTexture background;
     private myTexture StartButton;
     private myTexture LoadButton;
-    private myTexture road;
     public boolean load = false;
     private long window;
     public boolean isPressed;
@@ -60,11 +41,7 @@ public class GUI extends Screen{
         this.window = window;
         glClearColor( 0.0f, 0.0f, 0.0f, 0.0f);
 
-        // Init attributes before loop
         initLoop();
-
-        // Run the rendering loop until the user has attempted to close
-        // the window or has pressed the ESCAPE key.
         while ( !glfwWindowShouldClose(this.window) && !this.isPressed) {
             render();
         }
@@ -130,10 +107,8 @@ public class GUI extends Screen{
         }
 
         backgroundMusic.playFor(52, false);
-        glfwSwapBuffers(window); // swap the color buffers
 
-        // Poll for window events. The key callback above will only be
-        // invoked during this call.
+        glfwSwapBuffers(window);
         glfwPollEvents();
     }
 

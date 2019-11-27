@@ -1,15 +1,11 @@
 package Screen;
 
-import org.lwjgl.*;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.*;
-import org.lwjgl.openvr.Texture;
 import org.lwjgl.system.*;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.nio.*;
+import java.util.Objects;
 
 import static org.lwjgl.glfw.Callbacks.*;
 import static org.lwjgl.glfw.GLFW.*;
@@ -19,7 +15,6 @@ import static org.lwjgl.system.MemoryUtil.*;
 
 public class ShowScreen {
     private long window;
-    private boolean isFullsrceen = false;
 
     public void run() throws Exception {
 
@@ -34,27 +29,18 @@ public class ShowScreen {
     }
 
     public void init() {
-
-        // Setup an error callback. The default implementation
-        // will print the error messenger in System.err
         GLFWErrorCallback.createPrint(System.err).set();
 
-        // Initialize game window
         if (!glfwInit()) {
             throw new IllegalStateException("Unable to initialize GLFW");
         }
 
-        // Configure game window
         glfwDefaultWindowHints();
         glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // the window will stay hidden after creation
         glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // the window won't be resizable
 
         // Create the game window
-        if (!isFullsrceen)
         window = glfwCreateWindow(1366, 768, "Defense of the Ancients 3", NULL, NULL);
-        //Fullscreen mode
-        else
-            window = glfwCreateWindow(1366, 768, "Defense of the Ancients 3", glfwGetPrimaryMonitor(), NULL);
 
         if (window == NULL)
             throw new RuntimeException("Failed to create the game window");
@@ -78,6 +64,7 @@ public class ShowScreen {
             GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
 
             // Center the window
+            assert vidmode != null;
             glfwSetWindowPos(
                     window,
                     (vidmode.width() - pWidth.get(0)) / 2,
@@ -109,7 +96,7 @@ public class ShowScreen {
 
         // Terminate GLFW and free error callback
         glfwTerminate();
-        glfwSetErrorCallback(null).free();
+        Objects.requireNonNull(glfwSetErrorCallback(null)).free();
 
     }
 }

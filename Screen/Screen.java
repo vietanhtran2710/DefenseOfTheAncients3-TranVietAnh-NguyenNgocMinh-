@@ -28,8 +28,7 @@ public class Screen {
         double posX = getCursorPosX(window);
         double posY = getCursorPosY(window);
         if ((posX >= texture.getTopLeft().getX()) && (posX <= texture.getBottomRight().getX()))
-            if ((posY >= texture.getTopLeft().getY()) && (posY <= texture.getBottomRight().getY()))
-                return true;
+            return (posY >= texture.getTopLeft().getY()) && (posY <= texture.getBottomRight().getY());
         return false;
     }
 }

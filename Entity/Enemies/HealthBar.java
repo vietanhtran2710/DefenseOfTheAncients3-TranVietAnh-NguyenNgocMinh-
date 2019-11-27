@@ -10,9 +10,7 @@ public class HealthBar {
     private myTexture green;
     private myTexture red;
     private myTexture emptyBar;
-
     private String color;
-
 
     public HealthBar(String color) {
         this.color = color;

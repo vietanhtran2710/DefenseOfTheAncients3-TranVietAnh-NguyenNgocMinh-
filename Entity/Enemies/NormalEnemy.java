@@ -1,8 +1,6 @@
 package Entity.Enemies;
 
-import Utils.Vertex;
 import Utils.myTexture;
-
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 
 public class NormalEnemy extends Enemy{

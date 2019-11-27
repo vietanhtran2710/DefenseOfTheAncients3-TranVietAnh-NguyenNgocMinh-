@@ -72,16 +72,8 @@ public class Enemy implements GameEntity {
         }
     }
 
-    public int getMovementSpeed() {
-        return movementSpeed;
-    }
-
     public void setCurrentHealth(int health) {
         this.currentHealth = health;
-    }
-
-    public void setMovementSpeed(int movementSpeed) {
-        this.movementSpeed = movementSpeed;
     }
 
     public myTexture getTexture() {

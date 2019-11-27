@@ -1,7 +1,6 @@
 package Entity.Enemies;
 
 import Utils.myTexture;
-
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 
 public class SmallerEnemy extends Enemy{

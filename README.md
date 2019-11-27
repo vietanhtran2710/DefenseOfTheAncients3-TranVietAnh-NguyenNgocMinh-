@@ -41,6 +41,17 @@ OOP Game Project
 ├── README.md
 ├── res
 │   ├── GFX
+│   │   ├── Font
+│   │   │   ├── 0.png
+│   │   │   ├── 1.png
+│   │   │   ├── 2.png
+│   │   │   ├── 3.png
+│   │   │   ├── 4.png
+│   │   │   ├── 5.png
+│   │   │   ├── 6.png
+│   │   │   ├── 7.png
+│   │   │   ├── 8.png
+│   │   │   └── 9.png
 │   │   ├── Game
 │   │   │   ├── Enemy
 │   │   │   │   ├── Boss Enemy
@@ -85,15 +96,18 @@ OOP Game Project
 │   │   │       ├── Machine Gun Tower
 │   │   │       │   ├── MachineGunBullet.png
 │   │   │       │   ├── MachineGunTower.png
-│   │   │       │   └── MachineGunTower.psd
+│   │   │       │   ├── MachineGunTower.psd
+│   │   │       │   └── MachineGunTower_transparent.png
 │   │   │       ├── Normal Tower
 │   │   │       │   ├── NormalBullet.png
 │   │   │       │   ├── NormalTower.png
-│   │   │       │   └── Normal Tower.psd
+│   │   │       │   ├── Normal Tower.psd
+│   │   │       │   └── NormalTower_transparent.png
 │   │   │       └── Sniper Tower
 │   │   │           ├── SniperBullet.png
 │   │   │           ├── SniperTower.png
-│   │   │           └── SniperTower.psd
+│   │   │           ├── SniperTower.psd
+│   │   │           └── SniperTower_transparent.png
 │   │   └── GUI
 │   │       ├── Background
 │   │       │   └── Background_main_screen.jpg
@@ -130,4 +144,5 @@ OOP Game Project
 │   └── Vertex.java
 └── waveInfo.txt
 
+29 directories, 104 files
 ```
